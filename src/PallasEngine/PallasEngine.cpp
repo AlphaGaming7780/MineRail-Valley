@@ -12,7 +12,7 @@ namespace pallas
 	Generator<bool> PallasEngine::Init()
 	{
 		// Create an async load methode later, and wait it.
-		AssetDatabase::Instance().Load();
+		AssetDatabase::Instance().Discover();
 
 		co_return true;
 	}

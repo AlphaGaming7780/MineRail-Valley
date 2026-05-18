@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <unordered_map>
 #include <string>
@@ -12,6 +12,7 @@
 
 #include <PallasEngine/AssetDatabase/IAsset.hpp>
 #include <PallasEngine/AssetDatabase/AssetTypes.hpp>
+#include <typeindex>
 
 namespace pallas {
 
@@ -25,9 +26,15 @@ namespace pallas {
         // --- Singleton ---
         static AssetDatabase& Instance();
 
-        // --- Ajouter un type supporté ---
+        // --- Ajouter un type supportÃ© ---
         template<typename T>
         void AddSupportedType(const std::vector<std::string>& extensions);
+
+        template<typename T>
+        void AddSupportedType(const std::vector<std::string>& extensions, const std::string& defaultAssetPath);
+
+        template<typename T>
+        T* GetDefaultAsset();
 
         std::string GetDatabasePath() 
         {
@@ -36,10 +43,10 @@ namespace pallas {
         }
 
         // --- Charger la database ---
-        void Load();
-        void Unload();
+        void Discover();
+        void UnloadAssets();
 
-        // --- Récupérer un asset ---
+        // --- RÃ©cupÃ©rer un asset ---
         IAsset* GetAsset(const std::string& path);
 
         bool TryGetAsset(const std::string& path, IAsset*& outAsset);
@@ -55,8 +62,8 @@ namespace pallas {
 
     private:
         AssetDatabase() {
-            AddSupportedType<TextureAsset>({ ".png", ".jpg" });
-            AddSupportedType<FontAsset>({ ".ttf" });
+            AddSupportedType<TextureAsset>({ ".png", ".jpg" }, TextureAsset::DefaultTexturePath);
+            AddSupportedType<FontAsset>({ ".ttf" }, FontAsset::DefaultPath);
         }
 
         template<typename T>
@@ -72,6 +79,7 @@ namespace pallas {
 
         std::unordered_map<std::string, IAsset*> m_Assets;
         std::unordered_map<std::string, IAsset* (*)(Logger* logger, const std::string&)> m_SupportedTypes;
+        std::unordered_map<std::type_index, std::string> m_DefaultAssets;
     };
 
     template<typename T>
@@ -81,6 +89,21 @@ namespace pallas {
 
         for (const auto& ext : extensions)
             m_SupportedTypes[ext] = &AssetDatabase::CreateAsset<T>;
+    }
+
+    template<typename T>
+    void AssetDatabase::AddSupportedType(const std::vector<std::string>& extensions, const std::string& defaultAssetPath)
+    {
+        AddSupportedType<T>(extensions);
+
+        m_DefaultAssets[typeid(T)] = assetPath;
+    }
+
+    template<typename T>
+    inline T* AssetDatabase::GetDefaultAsset()
+    {
+        std::string path = m_DefaultAssets.at(typeid(T));
+        return GetAsset(path);
     }
 
     template<typename T, typename>

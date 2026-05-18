@@ -3,7 +3,7 @@
 namespace pallas {
     AssetDatabase::~AssetDatabase()
     {
-        Unload();
+        UnloadAssets();
     }
 
     AssetDatabase& AssetDatabase::Instance() {
@@ -11,7 +11,7 @@ namespace pallas {
         return instance;
     }
 
-    void AssetDatabase::Load()
+    void AssetDatabase::Discover()
     {
         namespace fs = std::filesystem;
 
@@ -52,7 +52,7 @@ namespace pallas {
         m_Logger.InfoF("Found %i assets.", m_Assets.size());
     }
 
-    void AssetDatabase::Unload()
+    void AssetDatabase::UnloadAssets()
     {
         m_Logger.Info("Unloading AssetDatabase...");
 
