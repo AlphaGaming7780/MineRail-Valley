@@ -72,7 +72,6 @@ namespace pallas {
 
         std::unordered_map<std::string, IAsset*> m_Assets;
         std::unordered_map<std::string, IAsset* (*)(Logger* logger, const std::string&)> m_SupportedTypes;
-        //std::unordered_map<std::string, std::function<IAsset*()>> m_Factories;
     };
 
     template<typename T>

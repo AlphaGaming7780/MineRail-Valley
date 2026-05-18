@@ -261,7 +261,6 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\PallasEngine\Utils\Coroutine\CoroutineScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\EnTT\entt.hpp" />
     <ClInclude Include="include\Game\AssetDatabase\AssetTypes\BiomeAsset.hpp" />
     <ClInclude Include="include\Game\AssetDatabase\AssetTypes\WorldGenPresetAsset.hpp" />
     <ClInclude Include="include\Game\GameManager.hpp" />
@@ -346,6 +345,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

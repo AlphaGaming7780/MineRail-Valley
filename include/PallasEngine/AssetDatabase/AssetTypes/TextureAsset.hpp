@@ -17,7 +17,7 @@ namespace pallas {
         sf::Texture* GetDefaultObject() override;
 
 
-    protected:
+    protected:  
         void Load_Impl() override;
     };
 

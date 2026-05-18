@@ -17,7 +17,6 @@ namespace pallas {
 
 }
 
-// Macros façon C# attributes
 #define UPDATE_AFTER(...) \
     using After = pallas::AfterDependencies<__VA_ARGS__>;
 

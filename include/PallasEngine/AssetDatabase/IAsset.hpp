@@ -7,24 +7,8 @@ namespace pallas {
     class IAsset
     {
     public:
-        virtual ~IAsset() = default;
 
         const std::string& GetPath() const { return m_Path; }
-
-    protected:
-        friend class AssetDatabase; // pour que AssetDatabase puisse assigner le logger et le path.
-        std::string m_Path;
-        Logger* m_Logger = nullptr;
-    };
-
-    class ILoadableAsset : public IAsset
-    {
-    public:
-        
-        //virtual ~ILoadableAsset()
-        //{
-        //    Unload(true);
-        //}
 
         virtual bool IsLoaded() const = 0;
 
@@ -60,6 +44,10 @@ namespace pallas {
         virtual void Load_Impl() = 0;
         virtual void Unload_Impl() = 0;
 
+        friend class AssetDatabase; // pour que AssetDatabase puisse assigner le logger et le path.
+        std::string m_Path;
+        Logger* m_Logger = nullptr;
+
         bool IncrementRefCount()
         {
             if (++m_InstanceRefCount <= 0)
@@ -87,18 +75,13 @@ namespace pallas {
 
     };
 
-    class IDataAsset : public ILoadableAsset
-    {
-
-    };
-
-    class IObjectAssetBase : public ILoadableAsset
+    class IDataAsset : public IAsset
     {
 
     };
 
     template<typename T>
-    class IObjectAsset : public IObjectAssetBase
+    class IObjectAsset : public IAsset
     {
     public:
 

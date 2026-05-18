@@ -1,7 +1,6 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <EnTT/entt.hpp>
 #include <typeindex>
 #include <unordered_map>
 #include <vector>
