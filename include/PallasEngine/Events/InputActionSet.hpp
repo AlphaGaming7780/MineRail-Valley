@@ -73,7 +73,7 @@ namespace pallas {
                 : action(a), mouse(m) {
             }
 
-            // 3) Action + Mouse
+            // 3) Action + Wheel
             constexpr Mapping(Enum a, sf::Mouse::Wheel w)
                 : action(a), wheel(w) {
             }

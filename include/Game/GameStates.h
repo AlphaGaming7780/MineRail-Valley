@@ -6,11 +6,9 @@ namespace Game
 	{
 		Booting,
 		Terminated,
-		//BootingPrefabs,
-		//WorldDisposed,
+		Loading,
 		WorldReady,
-		Quitting,
-		Loading
+		Quitting
 	};
 
 	enum class GameMode

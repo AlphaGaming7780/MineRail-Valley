@@ -1,36 +1,43 @@
 #pragma once
 
-#include <PallasEngine/PallasEngine.hpp>
-#include <Game/GameManager.hpp>
+#include <PallasEngine/Logging/Logger.hpp>
+
+//#include <Game/World.h>
 
 namespace Game
 {
-	class SystemBase : public pallas::SystemBase
-	{
-	public:
-		SystemBase(pallas::World* world, entt::registry* registry, pallas::Logger& logger) : pallas::SystemBase(world, registry, logger) {}
-		~SystemBase() {};
+    class World;
 
-		void OnCreate() override 
-		{
-			GameManager& gm = GameManager::Instance();
-			gm.OnGameLoadingComplete += pallas::Delegate<GameMode, Purpose>(this, &Game::SystemBase::OnGameLoadingStart);
-			gm.OnGameLoadingComplete += pallas::Delegate<GameMode, Purpose>(this, &Game::SystemBase::OnGameLoadingComplete);
-			m_Logger.InfoO("SystemBase subscribed to GameManager events.");
-		};
+    class SystemBase // : IEventObserver<GameEvent>, IEventObserver<...> ...
+    {
+    public:
+        SystemBase() = default;
 
-		virtual void OnDestroy() override 
-		{
-			GameManager& gm = GameManager::Instance();
-			gm.OnGameLoadingComplete -= pallas::Delegate<GameMode, Purpose>(this, &Game::SystemBase::OnGameLoadingStart);
-			gm.OnGameLoadingComplete -= pallas::Delegate<GameMode, Purpose>(this, &Game::SystemBase::OnGameLoadingComplete);
-			m_Logger.InfoO("SystemBase unsubscribed from GameManager events.");
-		};
+        explicit SystemBase(World* world, pallas::Logger& logger)
+            : m_World(world), m_Logger(logger)
+        {
+        }
 
-		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) {};
-		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) {};
+        virtual ~SystemBase() = default;
 
-	private:
+        virtual void OnCreate() {};
+        virtual void Update() = 0;
+        virtual void OnDestroy() {};
 
-	};
+        void SetEnable(bool enable);
+        bool IsEnabled() const;
+        virtual void OnEnabled(bool enabled) {};
+
+    protected:
+        World* m_World;
+        pallas::Logger& m_Logger;
+
+        // Bind c'est func a des event sur l'event manager ?
+        virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) {};
+        virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) {};
+
+    private:
+        bool m_Enabled = true;
+
+    };
 }

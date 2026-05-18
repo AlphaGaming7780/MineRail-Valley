@@ -5,7 +5,7 @@
 
 namespace Game
 {
-	CameraSystem::CameraSystem(pallas::World* world, entt::registry* registry, pallas::Logger& logger) : SystemBase(world, registry, logger)
+	CameraSystem::CameraSystem(pallas::World* world, pallas::Logger& logger) : SystemBase(world, logger)
 	{
 
 	}

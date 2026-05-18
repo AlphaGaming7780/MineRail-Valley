@@ -1,6 +1,5 @@
 #pragma once
 
-#include <PallasEngine/PallasEngine.hpp>
 #include <Game/Systems.hpp>
 
 namespace Game
@@ -14,7 +13,7 @@ namespace Game
 		const float CamZoomMin = 0.5f;
 		const float CamZoomMax = 3.f;
 
-		CameraSystem(pallas::World* world, entt::registry* registry, pallas::Logger& logger);
+		CameraSystem(pallas::World* world, pallas::Logger& logger);
 
 		~CameraSystem() { };
 

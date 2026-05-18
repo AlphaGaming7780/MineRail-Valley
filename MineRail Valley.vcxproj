@@ -242,8 +242,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="include\PallasEngine\ECS\Components\Animated.hpp" />
     <ClCompile Include="src\PallasEngine\Events\EventManager.cpp" />
     <ClCompile Include="src\PallasEngine\UI\Widgets\UILabel.cpp" />
-    <ClCompile Include="src\PallasEngine\AssetDatabase\AssetDatabase.cpp" />
-    <ClCompile Include="src\PallasEngine\AssetDatabase\AssetTypes\FontAsset.cpp" />
+    <ClCompile Include="src\PallasEngine\AssetDatabaseOLD\AssetDatabase.cpp" />
+    <ClCompile Include="src\PallasEngine\AssetDatabaseOLD\AssetTypes\FontAsset.cpp" />
     <ClCompile Include="src\PallasEngine\ECS\SystemBase.cpp" />
     <ClCompile Include="src\PallasEngine\ECS\World.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\PerformanceLogger.cpp" />
@@ -253,7 +253,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\PallasEngine\UI\Widgets\UIProgressBar.cpp" />
     <ClCompile Include="include\PallasEngine\AssetDatabase\AssetTypes.hpp" />
     <ClCompile Include="src\PallasEngine\Logging\Logger.cpp" />
-    <ClCompile Include="src\PallasEngine\AssetDatabase\AssetTypes\TextureAsset.cpp" />
+    <ClCompile Include="src\PallasEngine\AssetDatabaseOLD\AssetTypes\TextureAsset.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\LogManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="src\PallasEngine\Utils\Time.cpp" />
@@ -261,16 +261,15 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\PallasEngine\Utils\Coroutine\CoroutineScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Game\AssetDatabase\AssetTypes\BiomeAsset.hpp" />
-    <ClInclude Include="include\Game\AssetDatabase\AssetTypes\WorldGenPresetAsset.hpp" />
+    <ClInclude Include="include\Game\AssetDatabase\TextureDatabase.h" />
     <ClInclude Include="include\Game\GameManager.hpp" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
-    <ClInclude Include="include\Game\InputsActionSets\GameInputSet.hpp" />
-    <ClInclude Include="include\Game\MapGenerator.hpp" />
     <ClInclude Include="include\Game\Systems.hpp" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
+    <ClInclude Include="include\Game\World.h" />
     <ClInclude Include="include\PallasEngine\AssetDatabase\AssetDatabase.hpp" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetDatabase.h" />
     <ClInclude Include="include\PallasEngine\ECS\Components\CameraComponent.hpp" />
     <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems.hpp" />
     <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems\CameraSyncInSystem.hpp" />
@@ -345,9 +344,6 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Resource.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

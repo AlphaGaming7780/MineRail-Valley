@@ -1,4 +1,5 @@
 #include <PallasEngine/AssetDatabase/AssetDatabase.hpp>
+#include "AssetDatabase.h"
 
 namespace pallas {
     AssetDatabase::~AssetDatabase()

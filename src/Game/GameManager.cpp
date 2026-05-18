@@ -150,8 +150,6 @@ namespace Game
         float n = (float)(OnGameLoadingStart.count() + OnGameLoadingComplete.count());
         int i = 0;
 
-		//OnGameLoadingStart(gameMode, purpose);
-
         for (auto& x : OnGameLoadingStart)
         {
             x(gameMode, purpose);
@@ -163,8 +161,6 @@ namespace Game
         // Maybe do more stuff here ?
         // Like serialization (loading save game or other stuff);
 
-
-        //OnGameLoadingComplete(gameMode, purpose);
 
         for (auto& x : OnGameLoadingComplete)
         {

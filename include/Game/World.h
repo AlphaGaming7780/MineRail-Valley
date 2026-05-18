@@ -1,0 +1,69 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+#include <typeindex>
+#include <unordered_map>
+#include <vector>
+
+#include <PallasEngine/Logging/Logger.hpp>
+
+#include <Game/Systems/SystemBase.hpp>
+
+namespace Game {
+
+    class SystemBase;
+
+    class World {
+    public:
+
+        static World& Instance();
+
+        ~World();
+
+        World(const World&) = delete;
+        World& operator=(const World&) = delete;
+
+        template<typename TSystemBase>
+        TSystemBase* GetOrCreateSystem();
+
+        void Pause(bool paused = true) { m_Paused = paused; }
+        void UnPause() { Pause(false); }
+
+        void Update();
+
+        void Shutdown();
+
+    private:
+
+        World() = default;
+
+        pallas::Logger m_Logger = Logger("World");
+
+        bool m_Paused = false;
+
+        std::unordered_map<std::type_index, SystemBase*> m_Systems;
+    };
+
+    template<typename TSystemBase>
+    TSystemBase* World::GetOrCreateSystem()
+    {
+        static_assert(std::is_base_of_v<SystemBase, TSystemBase>,
+            "TSystemBase must inherit from SystemBase");
+
+        std::type_index type = typeid(TSystemBase);
+
+        auto it = m_Systems.find(type);
+        if (it != m_Systems.end()) {
+            return static_cast<TSystemBase*>(it->second);
+        }
+
+        // IMPORTANT : passer le registry au constructeur
+        TSystemBase* instance = new TSystemBase(this, &m_Registry, m_Logger);
+
+        m_Systems.emplace(type, instance);
+
+        instance->OnCreate();
+
+        return instance;
+    }
+}
