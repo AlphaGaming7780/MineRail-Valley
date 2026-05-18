@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{7333d09e-ff54-4bab-b152-d9075efcff98}</ProjectGuid>
+    <RootNamespace>SFMLTest</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>MineRail Valley</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CustomBuildAfterTargets>
+    </CustomBuildAfterTargets>
+    <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)build\$(Platform)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>DEBUG;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/include</AdditionalIncludeDirectories>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)lib\SFML</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;sfml-graphics-d.lib;sfml-window-d.lib;sfml-audio-d.lib;sfml-network-d.lib;sfml-system-d.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>@echo ====== Copying SFML DLLs to output directory ======
+
+:: 📁 Chemin vers le dossier bin de ta SFML (à adapter si besoin)
+set "SFML_DIR=$(ProjectDir)SFML\bin"
+
+:: 📁 Dossier de sortie du projet (x64\Debug ou x64\Release)
+set "TARGET_DIR=$(TargetDir)"
+
+:: 🔍 Détection automatique du suffixe (-d pour Debug)
+if /I "$(Configuration)"=="Debug" (
+    set "SUFFIX=-d-3"
+) else (
+    set "SUFFIX=-3"
+)
+
+:: 🧩 Liste des modules SFML que ton projet utilise
+set DLLS=sfml-system sfml-window sfml-graphics sfml-audio sfml-network
+
+:: 🚀 Boucle de copie automatique
+for %%D in (%DLLS%) do (
+    set "FILE=%%D%SUFFIX%.dll"
+    setlocal enabledelayedexpansion
+    if exist "%SFML_DIR%\!FILE!" (
+        echo Copying !FILE! ...
+        copy /Y "%SFML_DIR%\!FILE!" "%TARGET_DIR%" &gt;nul
+    ) else (
+        echo WARNING: !FILE! not found in %SFML_DIR%
+    )
+    endlocal
+)
+
+@echo ====== SFML DLL copy complete ======
+
+@echo ====== Copy ressources folder ========
+xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
+@echo ======== Copy completed ==========
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>RELEASE;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>$(SolutionDir)/include</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opengl32.lib;sfml-graphics.lib;sfml-window.lib;sfml-audio.lib;sfml-network.lib;sfml-system.lib;$(CoreLibraryDependencies);%(AdditionalDependencies)</AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
+      <AdditionalLibraryDirectories>$(SolutionDir)lib;$(SolutionDir)lib\SFML</AdditionalLibraryDirectories>
+    </Link>
+    <PostBuildEvent>
+      <Command>@echo ====== Copying SFML DLLs to output directory ======
+
+:: 📁 Chemin vers le dossier bin de ta SFML (à adapter si besoin)
+set "SFML_DIR=$(ProjectDir)SFML\bin"
+
+:: 📁 Dossier de sortie du projet (x64\Debug ou x64\Release)
+set "TARGET_DIR=$(TargetDir)"
+
+:: 🔍 Détection automatique du suffixe (-d pour Debug)
+if /I "$(Configuration)"=="Debug" (
+    set "SUFFIX=-d-3"
+) else (
+    set "SUFFIX=-3"
+)
+
+:: 🧩 Liste des modules SFML que ton projet utilise
+set DLLS=sfml-system sfml-window sfml-graphics sfml-audio sfml-network
+
+:: 🚀 Boucle de copie automatique
+for %%D in (%DLLS%) do (
+    set "FILE=%%D%SUFFIX%.dll"
+    setlocal enabledelayedexpansion
+    if exist "%SFML_DIR%\!FILE!" (
+        echo Copying !FILE! ...
+        copy /Y "%SFML_DIR%\!FILE!" "%TARGET_DIR%" &gt;nul
+    ) else (
+        echo WARNING: !FILE! not found in %SFML_DIR%
+    )
+    endlocal
+)
+
+@echo ====== SFML DLL copy complete ======
+
+@echo ====== Copy ressources folder ========
+xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
+@echo ======== Copy completed ==========
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClCompile Include="src\Game\MapGenerator.cpp" />
+    <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\PallasEngine\ECS\Systems\RenderSystems\CameraSyncInSystem.cpp" />
+    <ClCompile Include="src\PallasEngine\ECS\Systems\RenderSystems\CameraSyncOutSystem.cpp" />
+    <ClCompile Include="src\PallasEngine\ECS\Systems\RenderSystems\RenderSystemBase.cpp" />
+    <ClCompile Include="include\PallasEngine\UI\UIGroups\UIBootstrap.hpp" />
+    <ClCompile Include="src\PallasEngine\ECS\Systems\RenderSystems\SpriteRenderSystem.cpp" />
+    <ClCompile Include="src\PallasEngine\Events\InputManager.cpp" />
+    <ClCompile Include="src\PallasEngine\Rendering\Camera.cpp" />
+    <ClCompile Include="src\PallasEngine\Rendering\RenderingManager.cpp" />
+    <ClCompile Include="src\PallasEngine\Utils\Coroutine\Coroutine.cpp" />
+    <ClCompile Include="src\Game\GameManager.cpp" />
+    <ClCompile Include="src\PallasEngine\PallasEngine.cpp" />
+    <ClCompile Include="src\PallasEngine\Utils\Coroutine\CoroutineHandle.cpp" />
+    <ClCompile Include="src\Game\UI\LoadingScreen.cpp" />
+    <ClCompile Include="include\PallasEngine\ECS\Components.hpp" />
+    <ClCompile Include="include\PallasEngine\ECS\Components\Animated.hpp" />
+    <ClCompile Include="src\PallasEngine\Events\EventManager.cpp" />
+    <ClCompile Include="src\PallasEngine\UI\Widgets\UILabel.cpp" />
+    <ClCompile Include="src\PallasEngine\AssetDatabase\AssetDatabase.cpp" />
+    <ClCompile Include="src\PallasEngine\AssetDatabase\AssetTypes\FontAsset.cpp" />
+    <ClCompile Include="src\PallasEngine\ECS\SystemBase.cpp" />
+    <ClCompile Include="src\PallasEngine\ECS\World.cpp" />
+    <ClCompile Include="src\PallasEngine\Logging\PerformanceLogger.cpp" />
+    <ClCompile Include="src\PallasEngine\UI\UIManager.cpp" />
+    <ClCompile Include="src\PallasEngine\UI\UIElement.cpp" />
+    <ClCompile Include="src\PallasEngine\UI\Widgets\UIButton.cpp" />
+    <ClCompile Include="src\PallasEngine\UI\Widgets\UIProgressBar.cpp" />
+    <ClCompile Include="include\PallasEngine\AssetDatabase\AssetTypes.hpp" />
+    <ClCompile Include="src\PallasEngine\Logging\Logger.cpp" />
+    <ClCompile Include="src\PallasEngine\AssetDatabase\AssetTypes\TextureAsset.cpp" />
+    <ClCompile Include="src\PallasEngine\Logging\LogManager.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\PallasEngine\Utils\Time.cpp" />
+    <ClCompile Include="src\PallasEngine\Utils\Coroutine\CoroutineOwner.cpp" />
+    <ClCompile Include="src\PallasEngine\Utils\Coroutine\CoroutineScheduler.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\EnTT\entt.hpp" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetTypes\BiomeAsset.hpp" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetTypes\WorldGenPresetAsset.hpp" />
+    <ClInclude Include="include\Game\GameManager.hpp" />
+    <ClInclude Include="include\Game\InputsActionSets.hpp" />
+    <ClInclude Include="include\Game\InputsActionSets\GameInputSet.hpp" />
+    <ClInclude Include="include\Game\MapGenerator.hpp" />
+    <ClInclude Include="include\Game\Systems.hpp" />
+    <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
+    <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
+    <ClInclude Include="include\PallasEngine\AssetDatabase\AssetDatabase.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Components\CameraComponent.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems\CameraSyncInSystem.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems\CameraSyncOutSystem.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems\RenderSystemBase.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems\RenderSystems\SpriteRenderSystem.hpp" />
+    <ClInclude Include="include\PallasEngine\Events\EventManager.hpp" />
+    <ClInclude Include="include\PallasEngine\Events\InputActionSet.hpp" />
+    <ClInclude Include="include\PallasEngine\IGame.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering\Camera.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering\GameWindow.hpp" />
+    <ClInclude Include="include\PallasEngine\PallasEngine.hpp" />
+    <ClInclude Include="include\PallasEngine\AssetDatabase\AssetTypes\FontAsset.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering\RenderCommand.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering\RenderingManager.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering\RenderTarget3D.hpp" />
+    <ClInclude Include="include\PallasEngine\Rendering\RenderWindow3D.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\EcsComponents.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\EcsComponents\AnimatedTextureUtils.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine\Coroutine.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine\CoroutineHandle.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine\Generator.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine\Waiters.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine\CoroutineOwner.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Coroutine\CoroutineScheduler.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Delegate.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\EcsComponents\TransformUtils.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Event.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Task.h" />
+    <ClInclude Include="include\PallasEngine\Utils\Vector2.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Components\Renderer.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Components\Transform.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Dependencies.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems\SystemBase.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\Systems.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\UpdatePhase.hpp" />
+    <ClInclude Include="include\PallasEngine\ECS\World.hpp" />
+    <ClInclude Include="include\PallasEngine\Logging.hpp" />
+    <ClInclude Include="include\PallasEngine\Logging\PerformanceLogger.hpp" />
+    <ClInclude Include="include\PallasEngine\UI.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\UIGroups\UIRoot.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\UIManager.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\UIAnchor.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\UIElement.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\UIGroup.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\UIWidget.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\Widgets.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\Widgets\UIButton.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\Widgets\UILabel.hpp" />
+    <ClInclude Include="include\PallasEngine\UI\Widgets\UIProgressBar.hpp" />
+    <ClInclude Include="include\PallasEngine\Logging\Logger.hpp" />
+    <ClInclude Include="include\PallasEngine\AssetDatabase\IAsset.hpp" />
+    <ClInclude Include="include\PallasEngine\AssetDatabase\AssetTypes\TextureAsset.hpp" />
+    <ClInclude Include="include\PallasEngine\Logging\LogManager.hpp" />
+    <ClInclude Include="include\Game\UI\LoadingScreen.hpp" />
+    <ClInclude Include="include\PallasEngine\Utils\Time.hpp" />
+    <ClInclude Include="include\Game\GameStates.h" />
+    <ClInclude Include="include\PallasEngine\Events\InputManager.hpp" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="assets\PallasEngine\Bootstrap.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+    <Image Include="assets\PallasEngine\DEFAULT.png">
+      <DeploymentContent>true</DeploymentContent>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

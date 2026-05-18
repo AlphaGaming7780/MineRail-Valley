@@ -1,0 +1,8 @@
+class Game::CameraSystem : avg=0.00740709 ms, min=0.0031 ms, max=0.1669 ms, samples=75539
+UIManager.Draw() : avg=0.00634317 ms, min=0.0018 ms, max=0.6962 ms, samples=75544
+class pallas::CameraSyncInSystem : avg=0.0151764 ms, min=0.0042 ms, max=1.211 ms, samples=75539
+GameWindow.Display() : avg=0.402195 ms, min=0.0003 ms, max=52.547 ms, samples=75544
+CoroutineScheduler::Update : avg=0.00836829 ms, min=0.0025 ms, max=5.4265 ms, samples=75543
+EventManager::process : avg=0.043802 ms, min=0.0043 ms, max=253.759 ms, samples=75543
+class pallas::SpriteRenderSystem : avg=0.126746 ms, min=0.0081 ms, max=1.2796 ms, samples=75539
+class pallas::CameraSyncOutSystem : avg=0.00268117 ms, min=0.0011 ms, max=0.1755 ms, samples=75539

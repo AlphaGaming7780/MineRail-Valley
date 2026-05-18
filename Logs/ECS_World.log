@@ -1,0 +1,10 @@
+[2026-05-18 09:09:02] [INFO]	Created singleton entity for component 'struct pallas::CameraComponent'.
+[2026-05-18 09:09:02] [INFO]	SystemBase subscribed to GameManager events.
+[2026-05-18 09:09:02] [INFO]	CameraSystem received OnGameLoadingStart, GameMode: MainMenu | Purpose: Cleanup
+[2026-05-18 09:09:02] [INFO]	CameraSystem disabled
+[2026-05-18 09:09:02] [INFO]	CameraSystem received OnGameLoadingComplete, GameMode: MainMenu | Purpose: Cleanup
+[2026-05-18 09:09:02] [INFO]	CameraSystem received OnGameLoadingStart, GameMode: InGame | Purpose: NewGame
+[2026-05-18 09:09:02] [INFO]	CameraSystem disabled
+[2026-05-18 09:09:02] [INFO]	CameraSystem received OnGameLoadingComplete, GameMode: InGame | Purpose: NewGame
+[2026-05-18 09:09:02] [INFO]	CameraSystem enabled
+[2026-05-18 09:09:08] [INFO]	SystemBase unsubscribed from GameManager events.
