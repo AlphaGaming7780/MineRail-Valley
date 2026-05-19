@@ -9,7 +9,7 @@ namespace Game
 	{
 		Purpose m_Purpose;
 		GameMode m_GameMode;
-		MapAsset* m_MapAsset;
+		MapData* m_MapData;
 
 		LoadingStart() = default;
 
@@ -17,14 +17,14 @@ namespace Game
 		{
 			m_Purpose = purpose;
 			m_GameMode = gameMode;
-			m_MapAsset = nullptr;
+			m_MapData = nullptr;
 		}
 
-		LoadingStart(Purpose purpose, GameMode gameMode, MapAsset* mapAsset)
+		LoadingStart(Purpose purpose, GameMode gameMode, MapData* mapData)
 		{
 			m_Purpose = purpose;
 			m_GameMode = gameMode;
-			m_MapAsset = mapAsset;
+			m_MapData = mapData;
 		}
 	};
 }

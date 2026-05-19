@@ -1,6 +1,7 @@
 
 #include <PallasEngine/Logging.hpp>
 #include <Game/AssetDatabase/AssetType/MapAsset.h>
+#include <Game/AssetDatabase/TileDatabase.h>
 
 #include <Game/World.h>
 
@@ -11,6 +12,23 @@ namespace Game
     World::~World()
     {
         Shutdown();
+    }
+
+    void World::DestroyObject(GameObject* gameObject)
+    {
+        // Trouver l'objet dans le vector
+        auto it = std::find(m_GameObjects.begin(), m_GameObjects.end(), gameObject);
+
+        if (it == m_GameObjects.end())
+        {
+            m_Logger.ErrorO("[DestroyObject] GameObject isn't in the vector.");
+            delete gameObject;
+            return;
+        }
+
+        gameObject->OnDestroy();
+        m_GameObjects.erase(it);
+        delete gameObject;
     }
 
     void World::Update()
@@ -53,7 +71,7 @@ namespace Game
     {
         Purpose purpose = ev.m_Purpose;
         GameMode gameMode = ev.m_GameMode;
-        MapData* mapData = ev.m_MapAsset;
+        MapData* mapData = ev.m_MapData;
 
         if (purpose == Purpose::NewGame)
         {
@@ -68,30 +86,31 @@ namespace Game
 
     void World::CreateMap(MapData* mapData)
     {
-        const float tileSize = 50.f;
         int mapEdgeSize = mapData->MapSize;
 
         for (int i = 0; i < mapData->tiles.size(); ++i)
         {
-            TileData* t = mapData->tiles[i];
+            const TileData& t = *TileDatabase::Instance().Load(mapData->tiles[i]);
 
             int xIndex = i % mapEdgeSize;
             int yIndex = i / mapEdgeSize;
 
-            float X = xIndex * tileSize;
-            float Y = yIndex * tileSize;
+            float x = xIndex * t.m_Size.x;
+            float y = yIndex * t.m_Size.y;
 
-            TileObject* to = CreateGameObject<TileObject>();
-
-            to->m_Index = sf::Vector2i(xIndex, yIndex);
-            to->m_Position = sf::Vector2f(X, Y);
-            to->m_Size = sf::Vector2f(tileSize, tileSize);
-            to->CanBuild = t->CanBuild;
-            to->m_Texture = t->TextureAsset;
+            CreateGameObject<TileObject>(t, sf::Vector2i(xIndex, yIndex));
         }
     }
 
     void World::ClearWorld()
     {
+        for (GameObject* go : m_GameObjects)
+        {
+            if (!go) continue;
+            go->OnDestroy();
+            delete go;
+        }
+
+        m_GameObjects.clear();
     }
 }

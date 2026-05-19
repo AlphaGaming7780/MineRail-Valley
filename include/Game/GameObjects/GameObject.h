@@ -1,6 +1,11 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include <SFML/System/Vector2.hpp>
+
+#include <Game/AssetDatabase/TextureDatabase.h>
+#include <Game/AssetDatabase/AssetType/ObjectData.h>
+#include <Game/Rendering/RenderLayer.h>
 
 namespace Game
 {
@@ -10,13 +15,18 @@ namespace Game
 		
 		~GameObject() = default;
 
-		sf::Vector2f m_Position = { 0.f, 0.f };
-		sf::Vector2f m_Origin = { 0.f, 0.f };
+		std::string m_Texture = "Textures\\DEFAULT.png";
 		sf::Vector2f m_Size = { 1.f, 1.f };
-		sf::Vector2f m_Scale = { 1.f, 1.f };
-		sf::Angle    m_Rotation = sf::Angle::Zero;
 
-		sf::Texture* m_Texture = nullptr;
+		bool m_Animated = false;
+		int m_AnimFramesX = 1;
+		int m_AnimFramesY = 1;
+		float m_AnimCurrentTime = 0;
+		float m_AnimDuration = 0.f;
+
+		sf::Sprite* m_Sprite = nullptr;
+		int zIndex = 0;
+		RenderLayer m_RenderLayer = RenderLayer::None;
 
 		bool m_Enabled = false;
 
@@ -24,12 +34,26 @@ namespace Game
 		GameObject& operator=(const GameObject&) = delete;
 
 		virtual void OnCreate() {};
-		virtual void Update() {};
-		virtual void OnDestroy() {};
-		virtual void Draw() {};
+		virtual void Update();
+		virtual void OnDestroy();
+
+		void SetSize(const sf::Vector2f& size);
+		sf::Vector2f GetSize() const { return m_Size; }
+
+		void Move(const sf::Vector2f& move);
+
+		void SetPosition(const sf::Vector2f& position);
+		sf::Vector2f GetPosition() const;
+
+		sf::FloatRect GetGlobalBounds() const;
+		sf::FloatRect GetLocalBounds() const;
+
 
 	protected:
 		friend class World;
-		GameObject() = default;
+		GameObject();
+		GameObject(const ObjectData& data);
+
+		sf::Vector2f GetActualScale();
 	};
 }

@@ -3,9 +3,12 @@
 #include <SFML/Graphics.hpp>
 #include <Game/Rendering/RenderCommand.hpp>
 #include <Game/Rendering/Camera.hpp>
+#include <Game/Rendering/RenderLayer.h>
+#include <Game/GameObjects/GameObject.h>
 
 namespace Game
 {
+
     class RenderingManager
     {
     public:
@@ -20,7 +23,7 @@ namespace Game
         RenderingManager() = default;
 
         Camera m_Camera;
-        std::vector<RenderCommand> m_Merged; // buffer temporaire pour fusionner
+        std::unordered_map<RenderLayer, std::vector<GameObject*>> m_RenderList;
 
         sf::Vector2f GetActualScale(const RenderCommand& cmd);
     };

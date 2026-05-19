@@ -1,4 +1,5 @@
 #include <Game/Rendering/RenderingManager.hpp>
+#include <Game/World.h>
 
 namespace Game
 {
@@ -10,49 +11,40 @@ namespace Game
 
     void RenderingManager::Render(sf::RenderWindow& window)
     {
-
         window.setView(m_Camera.GetView());
 
+        for (auto& [layer, vec] : m_RenderList)
+            vec.clear();
 
-        m_Merged.clear();
+        const auto& gameObjects = World::Instance().GetAllGameObject();
 
-        // Tri global par zIndex
-        std::sort(m_Merged.begin(), m_Merged.end(),
-            [](const RenderCommand& a, const RenderCommand& b)
-            {
-                return a.zIndex < b.zIndex;
-            });
-
-        // Draw
-        for (auto& cmd : m_Merged)
+        for (GameObject* obj : gameObjects)
         {
-            if (cmd.type == RenderCommand::Type::Sprite)
-            {
-                if (!cmd.texture) continue;
+            if (!obj->m_Sprite)
+                continue;
 
-                sf::Sprite sprite(*cmd.texture);
-                sprite.setColor(cmd.color);
-                sprite.setPosition(cmd.position);
-                sprite.setOrigin(cmd.origin);
-                sprite.setScale(GetActualScale(cmd));
-                sprite.setRotation(cmd.rotation);
+            m_RenderList[obj->m_RenderLayer].push_back(obj);
+        }
 
-                if (cmd.animated)
+        for (auto& [layer, vec] : m_RenderList)
+        {
+            std::sort(vec.begin(), vec.end(),
+                [](GameObject* a, GameObject* b)
                 {
-                    sprite.setTextureRect(sf::IntRect({
-                        {
-                            cmd.frameX * cmd.frameWidth,
-                            cmd.frameY * cmd.frameHeight,
-                        },{
-                            cmd.frameWidth,
-                            cmd.frameHeight
-                        }
-                    }));
-                }
+                    return a->zIndex < b->zIndex;
+                });
+        }
 
-                window.draw(sprite);
+        for (int layer = 0; layer < (int)RenderLayer::COUNT; ++layer)
+        {
+            for (GameObject* obj : m_RenderList[(RenderLayer)layer])
+            {
+                window.draw(*obj->m_Sprite);
             }
         }
+
+        for (auto& [layer, vec] : m_RenderList)
+            vec.clear();
     }
 
     sf::Vector2f RenderingManager::GetActualScale(const RenderCommand& cmd)

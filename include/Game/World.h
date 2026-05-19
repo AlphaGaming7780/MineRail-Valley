@@ -15,7 +15,7 @@ namespace Game {
 
     class SystemBase;
 
-    class World : IEventObserver<LoadingStart>
+    class World : public IEventObserver<LoadingStart>
     {
     public:
 
@@ -32,8 +32,12 @@ namespace Game {
         template<typename TSystemBase>
         TSystemBase* GetOrCreateSystem();
 
-        template<typename TGameObject>
-        TGameObject* CreateGameObject();
+        template<typename TGameObject, typename... Args>
+        TGameObject* CreateGameObject(Args&&... args);
+
+        void DestroyObject(GameObject* gameObject);
+
+        const std::vector<GameObject*>& GetAllGameObject() const { return m_GameObjects; }
 
         void Pause(bool paused = true) { m_Paused = paused; }
         void UnPause() { Pause(false); }
@@ -82,13 +86,14 @@ namespace Game {
 
         return instance;
     }
-    template<typename TGameObject>
-    inline TGameObject* World::CreateGameObject()
+
+    template<typename TGameObject, typename... Args>
+    TGameObject* World::CreateGameObject(Args&&... args)
     {
         static_assert(std::is_base_of_v<GameObject, TGameObject>,
             "TGameObject must inherit from GameObject");
 
-        TGameObject* instance = new TGameObject();
+        TGameObject* instance = new TGameObject(std::forward<Args>(args)...);
 
         m_GameObjects.push_back(instance);
 
@@ -96,4 +101,5 @@ namespace Game {
 
         return instance;
     }
+
 }
