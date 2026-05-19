@@ -1,5 +1,7 @@
 #pragma once
 
+#include <magic_enum/magic_enum.hpp>
+
 #include <SFML/Window.hpp>
 #include <Game/Events/InputActionSet.hpp>
 
@@ -12,7 +14,7 @@ enum class CameraAction : uint8_t {
     COUNT
 };
 
-struct CameraInputs : pallas::InputActionSet<CameraAction> {
+struct CameraInputs : Game::InputActionSet<CameraAction> {
     static inline std::array<Mapping, (size_t)CameraAction::COUNT> DefaultMap = { {
         { Enum::MoveUp,       sf::Keyboard::Scan::W },
         { Enum::MoveDown,     sf::Keyboard::Scan::S },

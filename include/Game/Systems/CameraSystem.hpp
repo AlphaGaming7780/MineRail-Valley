@@ -13,13 +13,11 @@ namespace Game
 		const float CamZoomMin = 0.5f;
 		const float CamZoomMax = 3.f;
 
-		CameraSystem(pallas::World* world, pallas::Logger& logger);
+		CameraSystem(World* world, pallas::Logger& logger);
 
 		~CameraSystem() { };
 
 		virtual void OnCreate() override;
-
-		virtual pallas::UpdatePhase Phase() const {return pallas::UpdatePhase::LateUpdate; };
 
 		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
 
@@ -30,11 +28,11 @@ namespace Game
 		virtual void Update() override;
 
 	private:
-		pallas::InputManager &m_inputManager = pallas::InputManager::Instance();;
-		pallas::InputBindingState* m_moveUpBinding = nullptr;
-		pallas::InputBindingState* m_moveDownBinding = nullptr;
-		pallas::InputBindingState* m_moveLeftBinding = nullptr;
-		pallas::InputBindingState* m_moveRightBinding = nullptr;
-		pallas::InputBindingState* m_zoomBinding = nullptr;
+		InputManager &m_inputManager = InputManager::Instance();;
+		InputBindingState* m_moveUpBinding = nullptr;
+		InputBindingState* m_moveDownBinding = nullptr;
+		InputBindingState* m_moveLeftBinding = nullptr;
+		InputBindingState* m_moveRightBinding = nullptr;
+		InputBindingState* m_zoomBinding = nullptr;
 	};
 }
