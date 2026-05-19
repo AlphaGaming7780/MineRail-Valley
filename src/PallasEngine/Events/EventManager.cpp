@@ -137,30 +137,6 @@ namespace pallas
         // On conserve m_nextId pour garantir l’unicité des ids dans le temps.
     }
 
-    // ---------- Dispatch ----------
-    void EventManager::dispatch(const sf::Event& ev)
-    {
-        ++m_dispatchDepth;
-
-        // 1) On visite l'event pour déterminer le type concret
-        ev.visit([this](auto const& concrete) {
-            using T = std::decay_t<decltype(concrete)>;
-            const auto key = std::type_index(typeid(T));
-            emitToTyped(key, &concrete);   // passe &T
-            }
-        );
-
-        // 2) Listeners "any" : une seule fois par event
-        emitToAny(ev);
-
-        --m_dispatchDepth;
-
-        // Déplacer dans Process pour plus de perf.
-        //if (m_dispatchDepth == 0) {
-        //    sweepGarbage();
-        //}
-    }
-
     void EventManager::emitToTyped(std::type_index key, const void* payload)
     {
         auto it = m_byType.find(key);

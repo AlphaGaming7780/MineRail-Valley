@@ -224,6 +224,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   <ItemGroup>
     <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
     <ClCompile Include="src\Game\MapGenerator.cpp" />
+    <ClCompile Include="src\Game\Rendering\Camera.cpp" />
+    <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\PallasEngine\ECS\Systems\RenderSystems\CameraSyncInSystem.cpp" />
     <ClCompile Include="src\PallasEngine\ECS\Systems\RenderSystems\CameraSyncOutSystem.cpp" />
@@ -264,6 +266,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\AssetDatabase\TextureDatabase.h" />
     <ClInclude Include="include\Game\GameManager.hpp" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
+    <ClInclude Include="include\Game\Rendering\Camera.hpp" />
+    <ClInclude Include="include\Game\Rendering\GameWindow.hpp" />
     <ClInclude Include="include\Game\Systems.hpp" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
