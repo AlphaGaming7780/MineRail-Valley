@@ -82,7 +82,7 @@ namespace Game
 		m_MusicVolume = volume / 100.f;
 		_UpdateVolume();
 	}
-	void AudioManager::UnloadAll()
+	void AudioManager::StopAll()
 	{
 		for (auto& m : m_MusicDatabase.GetAssets())
 		{
@@ -94,6 +94,10 @@ namespace Game
 			if (s == nullptr || s->getStatus() == sf::Sound::Status::Stopped) continue;
 			s->stop();
 		}
+	}
+	void AudioManager::UnloadAll()
+	{
+		StopAll();
 		m_SoundDatabase.UnloadAssets();
 		m_MusicDatabase.UnloadAssets();
 	}

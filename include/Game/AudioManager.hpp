@@ -27,6 +27,7 @@ namespace Game
 		void SetSoundVolume(float volume);
 		void SetMusicVolume(float volume);
 
+		void StopAll();
 		void UnloadAll();
 
 		void Update();
