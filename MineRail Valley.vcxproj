@@ -249,9 +249,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game\AssetDatabase.h" />
-    <ClInclude Include="include\Game\AssetDatabase\AssetType\MapAsset.h" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetType\MapData.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetType\ObjectData.h" />
-    <ClInclude Include="include\Game\AssetDatabase\AssetType\TileAsset.h" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetType\TileData.h" />
     <ClInclude Include="include\Game\AssetDatabase\FontDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MapDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MusicDatabase.h" />

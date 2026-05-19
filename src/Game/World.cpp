@@ -1,6 +1,6 @@
 
 #include <PallasEngine/Logging.hpp>
-#include <Game/AssetDatabase/AssetType/MapAsset.h>
+#include <Game/AssetDatabase/AssetType/MapData.h>
 #include <Game/AssetDatabase/TileDatabase.h>
 
 #include <Game/World.h>

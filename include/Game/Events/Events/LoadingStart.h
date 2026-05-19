@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Game/GameStates.h>
-#include <Game/AssetDatabase/AssetType/MapAsset.h>
+#include <Game/AssetDatabase/AssetType/MapData.h>
 
 namespace Game
 {
