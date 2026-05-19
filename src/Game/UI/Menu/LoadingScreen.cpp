@@ -1,11 +1,11 @@
-#include <Game/UI/LoadingScreen.hpp>
+#include <Game/UI/Menus/LoadingScreen.hpp>
 
 namespace Game
 {
-	UILoadingScreen::UILoadingScreen() : pallas::UIGroup()
+	UILoadingScreen::UILoadingScreen() : UIGroup()
 	{
-		pb = new pallas::UIProgressBar();
-		pb->SetAnchor(pallas::UIAnchor::BottomLeft);
+		pb = new UIProgressBar();
+		pb->SetAnchor(UIAnchor::BottomLeft);
 		AddChild(pb);
 	}
 
