@@ -8,12 +8,14 @@
 #include <PallasEngine/Logging/Logger.hpp>
 
 #include <Game/Systems/SystemBase.hpp>
+#include <Game/Events/IEventObserver.hpp>
 
 namespace Game {
 
     class SystemBase;
 
-    class World {
+    class World
+    {
     public:
 
         static World& Instance();

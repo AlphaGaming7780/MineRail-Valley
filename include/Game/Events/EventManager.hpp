@@ -45,9 +45,6 @@ namespace Game
         template<class TEvent>
         void Register(IEventObserver<TEvent>& eventHandler)
         {
-            static_assert(std::is_base_of_v<sf::Event, TEvent>,
-                "TEvent must inherit from sf::Event");
-
             if (m_IsNotifying)
             {
                 m_Logger.ErrorO("Can't register EventObserver durint notifying.");
@@ -61,8 +58,6 @@ namespace Game
         template<class TEvent>
         bool UnRegister(IEventObserver<TEvent>& eventHandler)
         {
-            static_assert(std::is_base_of_v<sf::Event, TEvent>,
-                "TEvent must inherit from sf::Event");
 
             if (m_IsNotifying)
             {
