@@ -26,6 +26,7 @@ namespace Game
 
 		void UnloadAssets();
 		void Unload(const std::string& path, bool force = false);
+		void Unload(const T*, bool force = false);
 
 		bool IsLoaded(const std::string& path) const;
 
@@ -176,6 +177,24 @@ namespace Game
 		delete m_Assets[path];
 		m_Assets.erase(path);
 		m_RefCount.erase(path);
+	}
+
+	template<typename T>
+	void AssetDatabase<T>::Unload(const T* asset, bool force)
+	{
+		if (!asset)
+			return;
+
+		for (auto it = m_Assets.begin(); it != m_Assets.end(); ++it)
+		{
+			if (it->second == asset)
+			{
+				Unload(it->first, force);
+				return;
+			}
+		}
+
+		m_Logger.WarnO("Unload(T*): asset pointer not found in database.");
 	}
 
 	template<typename T>
