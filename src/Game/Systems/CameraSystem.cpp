@@ -2,7 +2,6 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include <Game/InputsActionSets/CameraInputSet.hpp>
-#include <Game/GameStates.h>
 
 namespace Game
 {

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Game/Systems.hpp>
+#include <Game/GameStates.h>
 
 namespace Game
 {
@@ -28,7 +29,7 @@ namespace Game
 		virtual void Update() override;
 
 	private:
-		InputManager &m_inputManager = InputManager::Instance();;
+		InputManager &m_inputManager = InputManager::Instance();
 		InputBindingState* m_moveUpBinding = nullptr;
 		InputBindingState* m_moveDownBinding = nullptr;
 		InputBindingState* m_moveLeftBinding = nullptr;

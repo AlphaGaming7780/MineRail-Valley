@@ -90,7 +90,7 @@ namespace Game
         template<class TEvent>
         bool UnRegister(IEventObserver<TEvent>& eventHandler)
         {
-            return UnRegister<TEvent>(&eventHandler)
+            return UnRegister<TEvent>(&eventHandler);
         }
 
         // Tout nettoyer
