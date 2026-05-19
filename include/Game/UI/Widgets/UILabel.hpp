@@ -30,16 +30,10 @@ namespace Game
         void SetCharacterSize(unsigned int size);
 
     private:
-        // Asset ref
-        sf::Font* m_FontAsset = nullptr;
-
         // Loaded font
         sf::Font* m_Font = nullptr;
 
         // SFML text
         sf::Text* m_Text = nullptr;
-
-        // Internal helper
-        sf::Font* LoadFont(sf::Font** asset, const char* fallbackPath);
     };
 }
