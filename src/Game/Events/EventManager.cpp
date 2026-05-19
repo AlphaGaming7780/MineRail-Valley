@@ -11,6 +11,12 @@ namespace Game
     {
     }
 
+    void EventManager::Dispatch(const sf::Event& ev)
+    {
+        ev.visit([this](auto const& concrete) { Notify(concrete); }
+        );
+    }
+
     EventManager::~EventManager()
     {
         clear();
@@ -32,21 +38,21 @@ namespace Game
     // ---------- Process (poll + dispatch) ----------
     void EventManager::process()
     {
-        if (!m_Window) return;
+        if (!m_Window) 
+            return;
 
         process(*m_Window);
     }
 
     void EventManager::process(sf::Window& window)
     {
-        {
 #ifdef DEBUG
-            auto perf = pallas::PerformanceLogger::Scoped("EventManager::process");
-#endif // DEBUG
-            while (auto ev = window.pollEvent())
-            {
-                Notify(ev.value());
-            }
+        auto perf = pallas::PerformanceLogger::Scoped("EventManager::process");
+#endif
+
+        while (auto ev = window.pollEvent())
+        {
+            Dispatch(*ev);
         }
     }
 

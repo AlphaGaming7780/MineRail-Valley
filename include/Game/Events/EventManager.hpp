@@ -100,20 +100,45 @@ namespace Game
         void Notify(const T& event)
         {
             m_IsNotifying = true;
-            auto it = m_Observers.find(typeid(T));
-            if (it == m_Observers.end())
-                return;
 
-            for (IEventObserverBase* baseObs : it->second)
+            const std::type_index key = typeid(T);
+
+            auto it = m_Observers.find(key);
+            if (it == m_Observers.end())
             {
+                m_IsNotifying = false;
+                return;
+            }
+
+            auto& vec = it->second;
+
+            if (vec.empty())
+            {
+                m_Logger.WarnO("Observer list found for type ", key.name(), " but it is EMPTY.");
+                m_IsNotifying = false;
+                return;
+            }
+
+            for (IEventObserverBase* baseObs : vec)
+            {
+                if (!baseObs)
+                {
+                    m_Logger.ErrorO("Null observer pointer detected for event type: ", key.name());
+                    continue;
+                }
+
                 auto* obs = static_cast<IEventObserver<T>*>(baseObs);
                 obs->OnEvent(event);
             }
+
             m_IsNotifying = false;
         }
 
+
     private:
         EventManager();
+
+        void Dispatch(const sf::Event& ev);
 
         // Helpers
         template <class TEvent>

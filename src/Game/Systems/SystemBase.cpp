@@ -12,4 +12,14 @@ namespace Game
 	{
 		return m_Enabled;
 	}
+	void SystemBase::OnEvent(const LoadingStart& ev)
+	{
+		OnGameLoadingStart(ev.m_GameMode, ev.m_Purpose);
+	}
+
+	void SystemBase::OnEvent(const LoadingComplete& ev)
+	{
+		OnGameLoadingComplete(ev.m_GameMode, ev.m_Purpose);
+	}
+
 }

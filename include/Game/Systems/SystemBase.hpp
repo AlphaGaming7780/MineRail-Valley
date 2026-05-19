@@ -3,11 +3,13 @@
 #include <PallasEngine/Logging/Logger.hpp>
 #include <Game/GameStates.h>
 
+#include <Game/Events.h>
+
 namespace Game
 {
     class World;
 
-    class SystemBase // : IEventObserver<GameEvent>, IEventObserver<...> ...
+    class SystemBase : public IEventObserver<LoadingStart>, public IEventObserver<LoadingComplete>
     {
     public:
         SystemBase() = default;
@@ -15,9 +17,17 @@ namespace Game
         explicit SystemBase(World* world, pallas::Logger& logger)
             : m_World(world), m_Logger(logger)
         {
+            EventManager& em = EventManager::Instance();
+            em.Register<LoadingStart>(this);
+            em.Register<LoadingComplete>(this);
         }
 
-        virtual ~SystemBase() = default;
+        virtual ~SystemBase()
+        {
+            EventManager& em = EventManager::Instance();
+            em.UnRegister<LoadingStart>(this);
+            em.UnRegister<LoadingComplete>(this);
+        }
 
         virtual void OnCreate() {};
         virtual void Update() = 0;
@@ -26,6 +36,9 @@ namespace Game
         void SetEnable(bool enable);
         bool IsEnabled() const;
         virtual void OnEnabled(bool enabled) {};
+
+        void OnEvent(const LoadingStart& ev);
+        void OnEvent(const LoadingComplete& ev);
 
     protected:
         World* m_World;

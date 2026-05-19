@@ -5,3 +5,5 @@
 #include <Game/Events/Events/PlaySoundEvent.h>
 #include <Game/Events/Events/PlayMusicEvent.h>
 #include <Game/Events/Events/PauseEvent.h>
+#include <Game/Events/Events/LoadingStart.h>
+#include <Game/Events/Events/LoadingComplete.h>

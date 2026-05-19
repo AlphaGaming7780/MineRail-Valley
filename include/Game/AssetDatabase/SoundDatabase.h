@@ -32,5 +32,9 @@ namespace Game
 		{
 			return (std::filesystem::path("Sound") / "DEFAULT.mp3").string();
 		}
+
+	private:
+		SoundDatabase() : AssetDatabase("SoundDatabase") {}
+
 	};
 }

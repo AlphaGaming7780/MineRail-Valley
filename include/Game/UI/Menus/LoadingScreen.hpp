@@ -10,6 +10,7 @@ namespace Game
 	{
 	public:
 		UILoadingScreen();
+		~UILoadingScreen();
 
 		void UpdateLayout(const sf::View& view) override;
 
@@ -18,7 +19,6 @@ namespace Game
 		void SetValue(float v);
 
 	private:
-
 		UIProgressBar* pb = nullptr;
 	};
 }

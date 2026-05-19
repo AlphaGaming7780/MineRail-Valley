@@ -1,6 +1,12 @@
 #include <Game/GameManager.hpp>
 #include <magic_enum/magic_enum.hpp>
 #include <Game/Systems.hpp>
+#include <Game/Rendering/RenderingManager.hpp>
+
+extern "C" {
+	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001; // NVIDIA
+	__declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;   // AMD
+}
 
 namespace Game
 {
@@ -8,22 +14,22 @@ namespace Game
 	{
 		// Init du LogManager
 		pallas::LogManager::instance();
-		pallas::Logger logger = pallas::Logger("PallasEngine");
-		logger.InfoO("PallasEngine starting");
+		m_Logger.InfoO("GameManager starting");
 
 		// Init de la window SFML
 		auto& gw = GameWindow::Instance();
 
-		if (!gw.Create("PallasEngine starting..."))
+		if (!gw.Create("MineRail Valley starting..."))
 		{
-			logger.ErrorO("Failed to create the SFML window.");
+			m_Logger.ErrorO("Failed to create the SFML window.");
 			return 1;
 		}
-		logger.InfoO("SFML window created.");
+		m_Logger.InfoO("SFML window created.");
 
 		// Init de l'EventManager
 		auto& ev = EventManager::Instance().initialize(gw.Get());
 
+		RenderingManager& renderManager = RenderingManager::Instance();
 
 		World& world = World::Instance();
 
@@ -38,12 +44,14 @@ namespace Game
 
     void GameManager::OnStart()
     {
-        m_Logger.Info("Start");
+        m_Logger.Info("OnStart");
 
         GameWindow::Instance().SetTitle("MineRail Valley");
 
 		World::Instance().GetOrCreateSystem<CameraSystem>();
-        
+     
+		Load(GameMode::InGame, Purpose::NewGame);
+
     }
 
     void GameManager::OnUpdate()
@@ -51,10 +59,9 @@ namespace Game
 
     }
 
-
     void GameManager::OnShutdown()
     {
-		m_Logger.Info("Shutdown");
+		m_Logger.Info("OnShutdown");
     }
 
     void GameManager::MainLoop()
@@ -66,7 +73,7 @@ namespace Game
 		InputManager& inputManager = InputManager::Instance();
 		UIManager& uiManager = UIManager::Instance();
 		AudioManager& audioManager = AudioManager::Instance();
-
+		
 		OnStart();
 
 		while (gameWindow.IsOpen())
@@ -102,41 +109,26 @@ namespace Game
     {
         m_Logger.InfoO("GameLoading started, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));
 
-        return;
+        World::Instance().Pause();
+		GameMode oldMode = m_CurrentMode;
+		m_CurrentMode = gameMode;
+		m_CurrentState = GameState::Loading;
 
-  //      pallas::World::Instance().Pause();
-		//GameMode oldMode = m_CurrentMode;
-		//m_CurrentMode = gameMode;
-		//m_CurrentState = GameState::Loading;
+		EventManager& eventManager = EventManager::Instance();
+		UIManager& uiManager = UIManager::Instance();
+        UILoadingScreen& loadingScreen = uiManager.SetRoot<UILoadingScreen>();
 
-		//pallas::UIManager& uiManager = pallas::UIManager::Instance();
+		eventManager.Notify(LoadingStart(purpose, gameMode));
 
-  //      UILoadingScreen& loadingScreen = uiManager.SetRoot<UILoadingScreen>();
-
-  //      float n = (float)(OnGameLoadingStart.count() + OnGameLoadingComplete.count());
-  //      int i = 0;
-
-  //      for (auto& x : OnGameLoadingStart)
-  //      {
-  //          x(gameMode, purpose);
-  //          i++;
-  //          loadingScreen.SetValue(i / n);
-  //      }
-
-  //      // Maybe do more stuff here ?
-  //      // Like serialization (loading save game or other stuff);
+        // Maybe do more stuff here ?
+        // Like serialization (loading save game or other stuff);
 
 
-  //      for (auto& x : OnGameLoadingComplete)
-  //      {
-  //          x(gameMode, purpose);
-  //          i++;
-  //          loadingScreen.SetValue(i / n);
-  //      }
+		eventManager.Notify(LoadingComplete(purpose, gameMode));
 
-  //      pallas::World::Instance().UnPause();
-		//m_CurrentState = GameState::WorldReady;
+        World::Instance().UnPause();
+		m_CurrentState = GameState::WorldReady;
 
-		//m_Logger.InfoO("GameLoading done, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));
+		m_Logger.InfoO("GameLoading done, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));
     }
 }

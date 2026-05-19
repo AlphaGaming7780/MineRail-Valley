@@ -4,9 +4,23 @@ namespace Game
 {
 	UILoadingScreen::UILoadingScreen() : UIGroup()
 	{
-		pb = new UIProgressBar();
+		TextureDatabase& tDB = TextureDatabase::Instance();
+
+		sf::Texture* frameTex = tDB.Load("UI\\Loading_bar_frame.png");
+		sf::Texture* barTex = tDB.Load("UI\\Loading_bar_inner.png");
+		sf::Texture* endCapTex = tDB.Load("UI\\Progress_pivot.png");
+
+		pb = new UIProgressBar(frameTex, barTex, endCapTex);
 		pb->SetAnchor(UIAnchor::BottomLeft);
 		AddChild(pb);
+	}
+
+	UILoadingScreen::~UILoadingScreen()
+	{
+		TextureDatabase& tDB = TextureDatabase::Instance();
+		tDB.Unload("UI\\Loading_bar_frame.png");
+		tDB.Unload("UI\\Loading_bar_inner.png");
+		tDB.Unload("UI\\Progress_pivot.png");
 	}
 
 	void UILoadingScreen::UpdateLayout(const sf::View& view)

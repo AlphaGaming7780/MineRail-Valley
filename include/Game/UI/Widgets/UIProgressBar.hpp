@@ -8,12 +8,12 @@ namespace Game
     {
     public:
         UIProgressBar(
+            sf::Texture* frameTex,
+            sf::Texture* barTex,
+            sf::Texture* endCapTex,
             sf::Vector2f position = { 0,0 },
             sf::Vector2f size = { 100,20 },
-            UIAnchor anchor = UIAnchor::TopLeft,
-            sf::Texture* frameTex = nullptr,
-            sf::Texture* barTex = nullptr,
-            sf::Texture* endCapTex = nullptr
+            UIAnchor anchor = UIAnchor::TopLeft
         );
 
         ~UIProgressBar();

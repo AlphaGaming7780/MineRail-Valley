@@ -2,6 +2,8 @@
 #include <magic_enum/magic_enum.hpp>
 
 #include <Game/InputsActionSets/CameraInputSet.hpp>
+#include <Game/Utils/Time.hpp>
+#include <Game/Rendering/Camera.hpp>
 
 namespace Game
 {
@@ -44,26 +46,30 @@ namespace Game
 
 	void CameraSystem::Update()
 	{
-		//entt::entity e = GetOrCreateSingletonEntity<pallas::CameraComponent>();
-		//pallas::CameraComponent& cam = m_Registry->get<pallas::CameraComponent>(e);
 
-		//const float dt = pallas::Time::GetDeltaTime().asSeconds();
+		Camera& cam = Camera::Instance();
 
-		//if (m_zoomBinding->wheelDelta != 0.f)
-		//{
-		//	cam.zoom -= m_zoomBinding->wheelDelta * 0.1f;
-		//	cam.zoom = std::clamp(cam.zoom, CamZoomMin, CamZoomMax);
-		//}
+		float zoom = cam.GetZoom();
 
-		//sf::Vector2f dir{ 0.f, 0.f };
+		const float dt = Time::GetDeltaTime().asSeconds();
 
-		//if (m_moveUpBinding->pressed)		dir.y -= 1.f;
-		//if (m_moveDownBinding->pressed)		dir.y += 1.f;
-		//if (m_moveLeftBinding->pressed)     dir.x -= 1.f;
-		//if (m_moveRightBinding->pressed)    dir.x += 1.f;
+		if (m_zoomBinding->wheelDelta != 0.f)
+		{
+			zoom -= m_zoomBinding->wheelDelta * 0.1f;
+			zoom = std::clamp(zoom, CamZoomMin, CamZoomMax);
+		}
 
-		//if(dir == sf::Vector2f{ 0.f, 0.f }) return;
+		sf::Vector2f dir{ 0.f, 0.f };
 
-		//cam.position += dir.normalized() * (CamMoveSpeed * dt * cam.zoom);
+		if (m_moveUpBinding->pressed)		dir.y -= 1.f;
+		if (m_moveDownBinding->pressed)		dir.y += 1.f;
+		if (m_moveLeftBinding->pressed)     dir.x -= 1.f;
+		if (m_moveRightBinding->pressed)    dir.x += 1.f;
+
+		if(dir == sf::Vector2f{ 0.f, 0.f }) return;
+
+		m_Logger.InfoO(dir);
+
+		cam.SetCenter( cam.GetCenter() + dir.normalized() * (CamMoveSpeed * dt * zoom));
 	}
 }

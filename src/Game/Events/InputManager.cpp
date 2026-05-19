@@ -1,4 +1,5 @@
 #include <Game/Events/InputManager.hpp>
+#include <magic_enum/magic_enum.hpp>
 
 namespace Game
 {

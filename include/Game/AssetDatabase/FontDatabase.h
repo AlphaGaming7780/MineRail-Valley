@@ -32,5 +32,9 @@ namespace Game
 		{
 			return (std::filesystem::path("Fonts") / "DEFAULT.png").string();
 		}
+
+	private:
+		FontDatabase() : AssetDatabase("FontDatabase") {}
+
 	};
 }

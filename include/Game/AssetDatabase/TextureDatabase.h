@@ -32,5 +32,9 @@ namespace Game
 		{
 			return (std::filesystem::path("Music") / "DEFAULT.png").string();
 		}
+
+	private:
+		TextureDatabase() : AssetDatabase("TextureDatabase") {}
+
 	};
 }

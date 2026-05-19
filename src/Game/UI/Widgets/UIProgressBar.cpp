@@ -8,14 +8,17 @@
 namespace Game
 {
     UIProgressBar::UIProgressBar(
+        sf::Texture* frameTex,
+        sf::Texture* barTex,
+        sf::Texture* endCapTex,
         sf::Vector2f position, 
         sf::Vector2f size, 
-        UIAnchor anchor, 
-        sf::Texture* frameTex, 
-        sf::Texture* barTex, 
-        sf::Texture* endCapTex
+        UIAnchor anchor
     ) : UIWidget(position, size, anchor)
     {
+        m_FrameTex = frameTex;
+        m_BarTex = barTex;
+        m_EndCapTex = endCapTex;
         m_FrameSprite = new sf::Sprite(*m_FrameTex);
         m_BarSprite = new sf::Sprite(*m_BarTex);
         m_EndCapSprite = new sf::Sprite(*m_EndCapTex);

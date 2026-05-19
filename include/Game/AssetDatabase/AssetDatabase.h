@@ -40,11 +40,11 @@ namespace Game
 
 	protected:
 
-		AssetDatabase() = default;
+		AssetDatabase(const std::string& loggerName);
 
 		std::unordered_map<std::string, T*> m_Assets;
 		std::unordered_map<std::string, int> m_RefCount;
-		pallas::Logger m_Logger = pallas::Logger(std::string(typeid(*this).name()));
+		pallas::Logger m_Logger;
 
 		virtual std::string GetDefaultPath() = 0;
 		virtual T* Load_Impl(const std::string& path) = 0;
@@ -95,13 +95,13 @@ namespace Game
 		}
 
 		// Pas encore chargé -> charger
-		m_Logger.InfoO(typeid(*this).name(), ".Load(): Loading asset: ", path);
+		m_Logger.InfoO("Load(): Loading asset: ", path);
 
 		T* instance = Load_Impl(path);
 
 		if (!instance)
 		{
-			m_Logger.ErrorO(typeid(*this).name(), ".Load(): Failed to load asset: ", path);
+			m_Logger.ErrorO("Load(): Failed to load asset: ", path);
 			instance = GetDefault();
 		}
 
@@ -133,6 +133,12 @@ namespace Game
 		m_RefCount[path] = 1;
 
 		return instance;
+
+	}
+
+	template<typename T>
+	AssetDatabase<T>::AssetDatabase(const std::string& loggerName) : m_Logger(loggerName)
+	{
 
 	}
 
