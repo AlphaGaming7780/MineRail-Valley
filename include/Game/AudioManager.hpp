@@ -34,8 +34,8 @@ namespace Game
 	private:
 		void _PurgedFinishedSounds();
 
-		AssetDatabase<sf::SoundBuffer>& m_SoundDatabase;
-		AssetDatabase<sf::Music>& m_MusicDatabase;
+		SoundDatabase& m_SoundDatabase;
+		MusicDatabase& m_MusicDatabase;
 
 		std::vector<sf::Sound*> m_PlayingSounds;
 		std::map<std::string, sf::Music*> m_PlayingMusics;

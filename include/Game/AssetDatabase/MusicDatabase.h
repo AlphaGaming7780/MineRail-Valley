@@ -8,6 +8,13 @@ namespace Game
 	class MusicDatabase : public AssetDatabase<sf::Music>
 	{
 	public:
+
+		static MusicDatabase& Instance()
+		{
+			static MusicDatabase inst;
+			return inst;
+		}
+
 		sf::Music* Load_Impl(const std::string& path) override
 		{
 			sf::Music* music = new sf::Music();

@@ -9,6 +9,7 @@
 
 #include <Game/Systems/SystemBase.hpp>
 #include <Game/Events/IEventObserver.hpp>
+#include <Game/GameObjects/GameObject.h>
 
 namespace Game {
 
@@ -28,6 +29,9 @@ namespace Game {
         template<typename TSystemBase>
         TSystemBase* GetOrCreateSystem();
 
+        template<typename TGameObject>
+        TGameObject* CreateGameObject();
+
         void Pause(bool paused = true) { m_Paused = paused; }
         void UnPause() { Pause(false); }
 
@@ -39,11 +43,12 @@ namespace Game {
 
         World() = default;
 
-        pallas::Logger m_Logger = Logger("World");
+        pallas::Logger m_Logger = pallas::Logger("World");
 
         bool m_Paused = false;
 
         std::unordered_map<std::type_index, SystemBase*> m_Systems;
+        std::vector<GameObject*> m_GameObjects;
     };
 
     template<typename TSystemBase>
@@ -59,10 +64,23 @@ namespace Game {
             return static_cast<TSystemBase*>(it->second);
         }
 
-        // IMPORTANT : passer le registry au constructeur
         TSystemBase* instance = new TSystemBase(this, &m_Registry, m_Logger);
 
         m_Systems.emplace(type, instance);
+
+        instance->OnCreate();
+
+        return instance;
+    }
+    template<typename TGameObject>
+    inline TGameObject* World::CreateGameObject()
+    {
+        static_assert(std::is_base_of_v<GameObject, TGameObject>,
+            "TGameObject must inherit from GameObject");
+
+        TGameObject* instance = new TGameObject();
+
+        m_GameObjects.push_back(instance);
 
         instance->OnCreate();
 

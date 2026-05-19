@@ -9,26 +9,26 @@
 
 namespace Game
 {
-    class GameManager : public pallas::IGame, public pallas::CoroutineOwner
+    class GameManager
     {
     public:
 
-        pallas::Event<GameMode, Purpose> OnGameLoadingComplete;
-        pallas::Event<GameMode, Purpose> OnGameLoadingStart;
+        static GameManager& Instance() {
+            static GameManager inst;
+            return inst;
+        }
+        
+        ~GameManager() = default;
 
-        GameManager();
-        ~GameManager();
-
-        static GameManager& Instance();
-
-        void onStart() override;
-        void onUpdate() override;
-        void onShutdown() override;
+        void Start();
+        void Update();
+        void Shutdown();
 
         GameState GetCurrentState() const { return m_CurrentState; }
 		GameMode GetCurrentMode() const { return m_CurrentMode; }
 
     private:
+        GameManager();
         static GameManager* instance;
 
         sf::Texture* testTexture = nullptr;

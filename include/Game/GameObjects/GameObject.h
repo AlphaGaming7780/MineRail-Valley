@@ -7,7 +7,7 @@ namespace Game
 	class GameObject
 	{
 	public:
-		GameObject() = default;
+		
 		~GameObject() = default;
 
 		sf::Vector2f m_Position = { 0.f, 0.f };
@@ -15,6 +15,8 @@ namespace Game
 		sf::Vector2f m_Size = { 1.f, 1.f };
 		sf::Vector2f m_Scale = { 1.f, 1.f };
 		sf::Angle    m_Rotation = sf::Angle::Zero;
+
+		bool m_Enabled = false;
 
 		GameObject(const GameObject&) = delete;
 		GameObject& operator=(const GameObject&) = delete;
@@ -26,6 +28,7 @@ namespace Game
 
 
 	private:
-		
+		friend class World;
+		GameObject() = default;
 	};
 }

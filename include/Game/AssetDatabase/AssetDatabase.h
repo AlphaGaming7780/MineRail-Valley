@@ -25,13 +25,12 @@ namespace Game
 		AssetDatabase(const AssetDatabase&) = delete;
 		AssetDatabase& operator=(const AssetDatabase&) = delete;
 
-		// --- Singleton ---
-		static AssetDatabase<T>& Instance();
-
 		void UnloadAssets();
 		void Unload(const std::string& path, bool force = false);
 
 		bool IsLoaded(const std::string& path) const;
+
+		std::vector<T*> GetAssets();
 
 		T* GetAsset(const std::string& path);
 		bool TryGetAsset(const std::string& path, T*& asset);
@@ -41,6 +40,8 @@ namespace Game
 		T* GetDefault();
 
 	protected:
+
+		AssetDatabase() = default;
 
 		std::unordered_map<std::string, T*> m_Assets;
 		std::unordered_map<std::string, int> m_RefCount;
@@ -53,8 +54,7 @@ namespace Game
 		bool DecrementRefCount(const std::string& path, bool force = false);
 
 	private:
-		AssetDatabase() = default;
-
+		
 		static std::string GetDatabasePath()
 		{
 			namespace fs = std::filesystem;
@@ -177,6 +177,18 @@ namespace Game
 	inline bool AssetDatabase<T>::IsLoaded(const std::string& path) const
 	{
 		return m_Assets.contains(path);
+	}
+
+	template<typename T>
+	inline std::vector<T*> AssetDatabase<T>::GetAssets()
+	{
+		std::vector<T*> result;
+		result.reserve(m_Assets.size());
+
+		for (auto& [path, asset] : m_Assets)
+			result.push_back(asset);
+
+		return result;
 	}
 
 	template<typename T>

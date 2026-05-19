@@ -8,6 +8,13 @@ namespace Game
 	class SoundDatabase : public AssetDatabase<sf::SoundBuffer>
 	{
 	public:
+
+		static SoundDatabase& Instance()
+		{
+			static SoundDatabase inst;
+			return inst;
+		}
+
 		sf::SoundBuffer* Load_Impl(const std::string& path) override
 		{
 			sf::SoundBuffer* soundBuffer = new sf::SoundBuffer();

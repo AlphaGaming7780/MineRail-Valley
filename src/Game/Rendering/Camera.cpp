@@ -17,7 +17,6 @@ namespace Game
         onResize((sf::Event::Resized)GameWindow::Instance().GetSize());
 
         EventManager::Instance();
-        ev.on<sf::Event::Resized>([this](sf::Event::Resized ev) {this->onResize(ev); });
     }
 
     Camera::~Camera()
@@ -35,6 +34,11 @@ namespace Game
     Camera& Camera::Instance()
     {
         return *s_instance;
+    }
+
+    void Camera::OnEvent(const sf::Event::Resized& event)
+    {
+        onResize(event);
     }
 
     void Camera::onResize(sf::Event::Resized ev)

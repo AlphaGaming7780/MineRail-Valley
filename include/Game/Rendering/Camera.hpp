@@ -1,11 +1,11 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include <PallasEngine/Events/EventManager.hpp>
+#include <Game/Events.h>
 #include <PallasEngine/Logging/Logger.hpp>
 
 namespace Game
 {
-    class Camera // : IEventHandler<sf::Event::Resized>
+    class Camera : IEventObserver<sf::Event::Resized>
     {
     public:
         Camera();
@@ -66,6 +66,9 @@ namespace Game
 
         static Camera& Instance();
 
+        void OnEvent(const sf::Event::Resized& event) override;
+
+
     private:
         sf::View m_view;
 
@@ -75,8 +78,6 @@ namespace Game
         sf::Vector2f m_BaseSize = { 1920.f, 1080.f };
 
         static Camera* s_instance;
-
-        EventManager::ListenerId onResizeEventId = 0;
 
         void onResize(sf::Event::Resized ev);
 

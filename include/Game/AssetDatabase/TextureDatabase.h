@@ -8,6 +8,13 @@ namespace Game
 	class TextureDatabase : public AssetDatabase<sf::Texture>
 	{
 	public:
+
+		static TextureDatabase& Instance()
+		{
+			static TextureDatabase inst;
+			return inst;
+		}
+
 		sf::Texture* Load_Impl(const std::string& path) override
 		{
 			sf::Texture* texture = new sf::Texture();

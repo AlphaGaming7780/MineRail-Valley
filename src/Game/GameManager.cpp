@@ -4,33 +4,9 @@
 
 namespace Game
 {
-    GameManager* GameManager::instance = nullptr;
-
-    GameManager::GameManager()
+    void GameManager::Start()
     {
-        if (instance != nullptr)
-        {
-            m_Logger.Error("GameManager instance already exists!");
-            throw std::runtime_error("GameManager instance already exists!");
-        }
-
-        instance = this;
-    }
-
-    GameManager::~GameManager()
-    {
-        if (instance == this)
-            instance = nullptr;
-    }
-
-    GameManager& GameManager::Instance()
-    {
-        return *instance;
-    }
-
-    void GameManager::onStart()
-    {
-        m_Logger.Info("onStart");
+        m_Logger.Info("Start");
 
         pallas::GameWindow::Instance().SetTitle("MyGame");
 
