@@ -53,11 +53,11 @@ namespace Game
     {
         Purpose purpose = ev.m_Purpose;
         GameMode gameMode = ev.m_GameMode;
-        MapAsset* mapAsset = ev.m_MapAsset;
+        MapData* mapData = ev.m_MapAsset;
 
         if (purpose == Purpose::NewGame)
         {
-            CreateMap(mapAsset);
+            CreateMap(mapData);
         }
         else if (purpose == Purpose::Cleanup)
         {
@@ -66,14 +66,14 @@ namespace Game
 
     }
 
-    void World::CreateMap(MapAsset* mapAsset)
+    void World::CreateMap(MapData* mapData)
     {
         const float tileSize = 50.f;
-        int mapEdgeSize = mapAsset->MapSize;
+        int mapEdgeSize = mapData->MapSize;
 
-        for (int i = 0; i < mapAsset->tiles.size(); ++i)
+        for (int i = 0; i < mapData->tiles.size(); ++i)
         {
-            TileAsset* t = mapAsset->tiles[i];
+            TileData* t = mapData->tiles[i];
 
             int xIndex = i % mapEdgeSize;
             int yIndex = i / mapEdgeSize;
