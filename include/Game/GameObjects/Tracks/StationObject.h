@@ -5,8 +5,9 @@
 
 namespace Game
 {
-	class StationObject : TrackObject
+	class StationObject : public TrackObject
 	{
+	public:
 		sf::Color m_Color;
 	};
 }

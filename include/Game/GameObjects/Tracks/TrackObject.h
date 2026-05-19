@@ -4,8 +4,9 @@
 
 namespace Game
 {
-	class TrackObject : GameObject
+	class TrackObject : public GameObject
 	{
+	public:
 		// Représente la connection avce les autres tracks
 		TrackObject* m_First;
 		TrackObject* m_Second;

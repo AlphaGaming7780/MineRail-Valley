@@ -25,8 +25,8 @@ namespace Game
 		AssetDatabase& operator=(const AssetDatabase&) = delete;
 
 		void UnloadAssets();
-		void Unload(const std::string& path, bool force = false);
-		void Unload(const T*, bool force = false);
+		virtual void Unload(const std::string& path, bool force = false);
+		void Unload( T*, bool force = false);
 
 		bool IsLoaded(const std::string& path) const;
 

@@ -1,13 +1,8 @@
 #pragma once
+#include <Game/GameObjects/Tracks/TrackObject.h>
 
 namespace Game
 {
-	class LineTrack
-	{
-	public:
-
-
-	private:
-
-	};
+	class LineTrack : public TrackObject
+	{ };
 }
