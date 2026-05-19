@@ -1,11 +1,12 @@
 #pragma once
 
-#include <PallasEngine/PallasEngine.hpp>
 #include <string>
+
+#include <Game/UI.hpp>
 
 namespace Game
 {
-	class UILoadingScreen : public pallas::UIGroup
+	class UILoadingScreen : public UIGroup
 	{
 	public:
 		UILoadingScreen();
@@ -18,6 +19,6 @@ namespace Game
 
 	private:
 
-		pallas::UIProgressBar* pb = nullptr;
+		UIProgressBar* pb = nullptr;
 	};
 }
