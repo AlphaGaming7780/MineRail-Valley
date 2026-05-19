@@ -275,6 +275,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
     <ClInclude Include="include\Game\UI.hpp" />
+    <ClInclude Include="include\Game\UI\Menus\InGameUI.h" />
     <ClInclude Include="include\Game\UI\Menus\LoadingScreen.hpp" />
     <ClInclude Include="include\Game\UI\UIAnchor.hpp" />
     <ClInclude Include="include\Game\UI\UIElement.hpp" />
