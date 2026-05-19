@@ -223,11 +223,11 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Game\AssetDatabase\SoundDatabase.h" />
-    <ClCompile Include="include\Game\GameObjects\GameObject.cpp" />
     <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Events\InputManager.cpp" />
+    <ClCompile Include="src\Game\GameObjects\GameObject.cpp" />
     <ClCompile Include="src\Game\Rendering\Camera.cpp" />
     <ClCompile Include="src\Game\Rendering\GameWindow.cpp" />
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
@@ -284,6 +284,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Rendering\GameWindow.hpp" />
     <ClInclude Include="include\Game\Rendering\RenderCommand.hpp" />
     <ClInclude Include="include\Game\Rendering\RenderingManager.hpp" />
+    <ClInclude Include="include\Game\Rendering\RenderLayer.h" />
     <ClInclude Include="include\Game\Systems.hpp" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />

@@ -73,14 +73,14 @@ namespace Game
 
     void GameManager::MainLoop()
 	{
-
-		World& world = World::Instance();
-		EventManager& eventManager = EventManager::Instance();
 		GameWindow& gameWindow = GameWindow::Instance();
+		EventManager& eventManager = EventManager::Instance();
 		InputManager& inputManager = InputManager::Instance();
-		UIManager& uiManager = UIManager::Instance();
 		AudioManager& audioManager = AudioManager::Instance();
-		
+		RenderingManager& renderManager = RenderingManager::Instance();
+		UIManager& uiManager = UIManager::Instance();
+		World& world = World::Instance();
+
 		OnStart();
 
 		while (gameWindow.IsOpen())
@@ -97,7 +97,7 @@ namespace Game
 			uiManager.Update(gameWindow.Get());
 
 			// Rendering part
-			//renderManager.Render(gameWindow.Get());
+			renderManager.Render(gameWindow.Get());
 			uiManager.Draw(gameWindow.Get());
 			gameWindow.Display();
 
@@ -112,7 +112,7 @@ namespace Game
 
 	}
 
-    void GameManager::Load(GameMode gameMode, Purpose purpose, MapAsset* mapAsset)
+    void GameManager::Load(GameMode gameMode, Purpose purpose, MapData* mapData)
     {
         m_Logger.InfoO("GameLoading started, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));
 
@@ -125,7 +125,7 @@ namespace Game
 		UIManager& uiManager = UIManager::Instance();
         UILoadingScreen& loadingScreen = uiManager.SetRoot<UILoadingScreen>();
 
-		eventManager.Notify(LoadingStart(purpose, gameMode, mapAsset));
+		eventManager.Notify(LoadingStart(purpose, gameMode, mapData));
 
         // Maybe do more stuff here ?
         // Like serialization (loading save game or other stuff);

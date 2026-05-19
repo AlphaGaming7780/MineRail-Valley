@@ -43,6 +43,6 @@ namespace Game
 
         void MainLoop();
 
-        void Load(GameMode gameMode, Purpose purpose, MapAsset* mapAsset = nullptr);
+        void Load(GameMode gameMode, Purpose purpose, MapData* mapData = nullptr);
     };
 }
