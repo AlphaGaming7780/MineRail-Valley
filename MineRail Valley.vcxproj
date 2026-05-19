@@ -222,7 +222,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\Game\AssetDatabase\SoundDatabase.h" />
     <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\MapGenerator.cpp" />
     <ClCompile Include="src\Game\Rendering\Camera.cpp" />
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
@@ -263,8 +265,14 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\PallasEngine\Utils\Coroutine\CoroutineScheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Game\AssetDatabase\MusicDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\TextureDatabase.h" />
+    <ClInclude Include="include\Game\Events.h" />
+    <ClInclude Include="include\Game\Events\EventManager.hpp" />
+    <ClInclude Include="include\Game\Events\Events\AudioEvent.h" />
+    <ClInclude Include="include\Game\Events\IEventObserver.hpp" />
     <ClInclude Include="include\Game\GameManager.hpp" />
+    <ClInclude Include="include\Game\GameObjects\GameObject.h" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
     <ClInclude Include="include\Game\Rendering\Camera.hpp" />
     <ClInclude Include="include\Game\Rendering\GameWindow.hpp" />
@@ -342,7 +350,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <Image Include="assets\PallasEngine\Bootstrap.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-    <Image Include="assets\PallasEngine\DEFAULT.png">
+    <Image Include="assets\Textures\DEFAULT.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
   </ItemGroup>

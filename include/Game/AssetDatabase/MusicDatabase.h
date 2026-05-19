@@ -14,7 +14,7 @@ namespace Game
 			std::string fullPath = (std::filesystem::path(DatabasePath) / path).string();
 			if (!music->openFromFile(fullPath))
 			{
-				m_Logger.ErrorO("[MusicDatabase] Failed to load texture: ", fullPath);
+				m_Logger.ErrorO("[MusicDatabase] Failed to load music: ", fullPath);
 				delete music;
 				music = nullptr;
 			}
