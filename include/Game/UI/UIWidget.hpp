@@ -1,8 +1,8 @@
 #pragma once
 
-#include <PallasEngine/UI/UIElement.hpp>
+#include <Game/UI/UIElement.hpp>
 
-namespace pallas
+namespace Game
 {
     class UIWidget : public UIElement
     {

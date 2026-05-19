@@ -2,9 +2,9 @@
 
 #include <SFML/Graphics.hpp>
 #include <Game/UI/UIWidget.hpp>
-#include <Game/AssetDatabase/F>
+#include <Game/AssetDatabase/FontDatabase.h>
 
-namespace pallas
+namespace Game
 {
     class UILabel : public UIWidget
     {
@@ -13,8 +13,9 @@ namespace pallas
             const std::string& text,
             sf::Vector2f position = { 0,0 },
             UIAnchor anchor = UIAnchor::TopLeft,
-            FontAsset* fontAsset = nullptr,
-            unsigned int characterSize = 20
+            sf::Font* fontAsset = nullptr,
+            unsigned int characterSize = 20,
+            sf::Color textColor = { 207, 182, 151 }
         );
 
         virtual ~UILabel();
@@ -30,7 +31,7 @@ namespace pallas
 
     private:
         // Asset ref
-        FontAsset* m_FontAsset = nullptr;
+        sf::Font* m_FontAsset = nullptr;
 
         // Loaded font
         sf::Font* m_Font = nullptr;
@@ -39,6 +40,6 @@ namespace pallas
         sf::Text* m_Text = nullptr;
 
         // Internal helper
-        sf::Font* LoadFont(FontAsset** asset, const char* fallbackPath);
+        sf::Font* LoadFont(sf::Font** asset, const char* fallbackPath);
     };
 }

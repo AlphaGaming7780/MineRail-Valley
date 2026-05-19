@@ -1,5 +1,5 @@
 #include <Game/UI/Widgets/UILabel.hpp>
-#include <Game/AssetDatabase/AssetDatabase.hpp>
+#include <Game/AssetDatabase/FontDatabase.h>
 
 namespace Game
 {
@@ -7,7 +7,7 @@ namespace Game
         const std::string& text,
         sf::Vector2f position,
         UIAnchor anchor,
-        FontAsset* fontAsset,
+        sf::Font* fontAsset,
         unsigned int characterSize
     )
         : UIWidget(position, {0,0}, anchor)
