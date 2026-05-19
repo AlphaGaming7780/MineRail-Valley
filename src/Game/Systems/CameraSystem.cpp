@@ -57,6 +57,7 @@ namespace Game
 		{
 			zoom -= m_zoomBinding->wheelDelta * 0.1f;
 			zoom = std::clamp(zoom, CamZoomMin, CamZoomMax);
+			cam.SetZoom(zoom);
 		}
 
 		sf::Vector2f dir{ 0.f, 0.f };
@@ -67,8 +68,6 @@ namespace Game
 		if (m_moveRightBinding->pressed)    dir.x += 1.f;
 
 		if(dir == sf::Vector2f{ 0.f, 0.f }) return;
-
-		m_Logger.InfoO(dir);
 
 		cam.SetCenter( cam.GetCenter() + dir.normalized() * (CamMoveSpeed * dt * zoom));
 	}

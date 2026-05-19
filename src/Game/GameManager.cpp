@@ -58,7 +58,7 @@ namespace Game
 		World::Instance().GetOrCreateSystem<CameraSystem>();
      
 		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().GetDefault());
-
+		UIManager::Instance().ResetRoot();
     }
 
     void GameManager::OnUpdate()

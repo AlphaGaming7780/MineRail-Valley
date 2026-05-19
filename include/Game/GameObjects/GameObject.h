@@ -11,12 +11,13 @@ namespace Game
 {
 	class GameObject
 	{
+		friend class World;
 	public:
-		
+
 		~GameObject() = default;
 
 		std::string m_Texture = "Textures\\DEFAULT.png";
-		sf::Vector2f m_Size = { 1.f, 1.f };
+		sf::Vector2f m_Size = { 100.f, 100.f };
 
 		bool m_Animated = false;
 		int m_AnimFramesX = 1;
@@ -50,7 +51,6 @@ namespace Game
 
 
 	protected:
-		friend class World;
 		GameObject();
 		GameObject(const ObjectData& data);
 

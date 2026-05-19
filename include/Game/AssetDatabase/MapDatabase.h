@@ -4,6 +4,7 @@
 #include<Game/AssetDatabase/AssetType/MapData.h>
 #include<Game/AssetDatabase/TileDatabase.h>
 #include<glaze/glaze.hpp>
+#include<magic_enum/magic_enum.hpp>
 
 namespace Game
 {
@@ -26,7 +27,7 @@ namespace Game
 
 			if (read_error)
 			{
-				m_Logger.ErrorO("Failed to load the JSON: ", read_error.custom_error_message);
+				m_Logger.ErrorO("Failed to load the JSON: ", magic_enum::enum_name(read_error.ec), " : ", read_error.custom_error_message);
 				delete data;
 				return nullptr;
 			}

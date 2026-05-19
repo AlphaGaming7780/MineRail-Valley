@@ -10,7 +10,7 @@
 #include <Game/Rendering/GameWindow.hpp>
 #include <Game/UI/UIManager.hpp>
 #include <Game/AudioManager.hpp>
-#include <Game/AssetDatabase/AssetType/MapAsset.h>
+#include <Game/AssetDatabase/AssetType/MapData.h>
 
 namespace Game
 {

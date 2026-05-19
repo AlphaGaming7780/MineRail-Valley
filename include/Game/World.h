@@ -50,7 +50,10 @@ namespace Game {
 
     private:
 
-        World() = default;
+        World()
+        {
+            EventManager::Instance().Register<LoadingStart>(this);
+        }
 
         pallas::Logger m_Logger = pallas::Logger("World");
 

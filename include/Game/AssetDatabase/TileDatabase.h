@@ -1,6 +1,7 @@
 #pragma once
 
 #include<glaze/glaze.hpp>
+#include<magic_enum/magic_enum.hpp>
 
 #include<Game/AssetDatabase/AssetDatabase.h>
 #include<Game/AssetDatabase/AssetType/TileData.h>
@@ -27,7 +28,7 @@ namespace Game
 
 			if (read_error)
 			{
-				m_Logger.ErrorO("Failed to load the JSON: ", read_error.custom_error_message);
+				m_Logger.ErrorO("Failed to load the JSON: ", magic_enum::enum_name(read_error.ec), " : ", read_error.custom_error_message);
 				delete data;
 				return nullptr;
 			}

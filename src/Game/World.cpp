@@ -95,10 +95,11 @@ namespace Game
             int xIndex = i % mapEdgeSize;
             int yIndex = i / mapEdgeSize;
 
-            float x = xIndex * t.m_Size.x;
-            float y = yIndex * t.m_Size.y;
+            float x = xIndex;// * t.m_Size.x;
+            float y = yIndex;// *t.m_Size.y;
 
-            CreateGameObject<TileObject>(t, sf::Vector2i(xIndex, yIndex));
+            TileObject* to = CreateGameObject<TileObject>(t, sf::Vector2i(xIndex, yIndex));
+            to->m_RenderLayer = RenderLayer::Terrain;
         }
     }
 

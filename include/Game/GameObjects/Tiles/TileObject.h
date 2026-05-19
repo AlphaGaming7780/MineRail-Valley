@@ -1,18 +1,19 @@
 #pragma once
 #include <Game/GameObjects/GameObject.h>
-#include <Game/AssetDatabase/AssetType/TileAsset.h>
+#include <Game/AssetDatabase/AssetType/TileData.h>
 
 namespace Game
 {
 	class TileObject : public GameObject
 	{
+		friend class World;
 	public:
 		sf::Vector2i m_Index = sf::Vector2i(-1, -1);
 		bool m_CanBuild = false;
 
 	protected:
 		TileObject() : GameObject() {}
-		TileObject(const TileData& tileData, sf::Vector2i& index) : GameObject(tileData) 
+		TileObject(const TileData& tileData, const sf::Vector2i& index) : GameObject(tileData) 
 		{
 			m_Index = index;
 			m_CanBuild = tileData.m_CanBuild;

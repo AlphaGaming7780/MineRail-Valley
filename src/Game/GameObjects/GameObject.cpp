@@ -54,7 +54,7 @@ namespace Game
     GameObject::GameObject(const ObjectData& data)
 	{
         m_Texture = data.m_Texture;
-        m_Size = data.m_Size;
+        //m_Size = data.m_Size;
         m_Animated = data.m_Animated;
         m_AnimDuration = data.m_AnimDuration;
         m_AnimFramesX = data.m_AnimFramesX;
@@ -63,7 +63,7 @@ namespace Game
         m_Sprite = new sf::Sprite(*TextureDatabase::Instance().Load(m_Texture));
         m_Sprite->setOrigin(m_Sprite->getLocalBounds().size / 2.f);
         m_Sprite->scale(GetActualScale());
-        m_Sprite->setColor(data.m_Color);
+        //m_Sprite->setColor(data.m_Color);
 	}
 
 	sf::Vector2f GameObject::GetActualScale()
