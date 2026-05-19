@@ -2,6 +2,7 @@
 #include <magic_enum/magic_enum.hpp>
 #include <Game/Systems.hpp>
 #include <Game/Rendering/RenderingManager.hpp>
+#include <Game/AssetDatabase/MapDatabase.h>
 
 extern "C" {
 	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001; // NVIDIA
@@ -31,13 +32,19 @@ namespace Game
 
 		RenderingManager& renderManager = RenderingManager::Instance();
 
-		World& world = World::Instance();
-
 		Time::Reset();
 		{
 			MainLoop();
-			world.Shutdown(); // Shutdown du monde avant TGame pour que les systèmes soient encore là pour faire leur cleanup si besoin.
 		}
+
+		UIManager::Instance().ResetRoot();
+
+		TextureDatabase::Instance().UnloadAssets();
+		SoundDatabase::Instance().UnloadAssets();
+		MusicDatabase::Instance().UnloadAssets();
+		FontDatabase::Instance().UnloadAssets();
+		TileDatabase::Instance().UnloadAssets();
+		MapDatabase::Instance().UnloadAssets();
 
 		return 0;
 	}
@@ -50,7 +57,7 @@ namespace Game
 
 		World::Instance().GetOrCreateSystem<CameraSystem>();
      
-		Load(GameMode::InGame, Purpose::NewGame);
+		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().GetDefault());
 
     }
 
@@ -105,7 +112,7 @@ namespace Game
 
 	}
 
-    void GameManager::Load(GameMode gameMode, Purpose purpose)
+    void GameManager::Load(GameMode gameMode, Purpose purpose, MapAsset* mapAsset)
     {
         m_Logger.InfoO("GameLoading started, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));
 
@@ -118,7 +125,7 @@ namespace Game
 		UIManager& uiManager = UIManager::Instance();
         UILoadingScreen& loadingScreen = uiManager.SetRoot<UILoadingScreen>();
 
-		eventManager.Notify(LoadingStart(purpose, gameMode));
+		eventManager.Notify(LoadingStart(purpose, gameMode, mapAsset));
 
         // Maybe do more stuff here ?
         // Like serialization (loading save game or other stuff);

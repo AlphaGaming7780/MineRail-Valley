@@ -25,8 +25,8 @@ namespace Game
 		AssetDatabase& operator=(const AssetDatabase&) = delete;
 
 		void UnloadAssets();
-		virtual void Unload(const std::string& path, bool force = false);
-		void Unload( T*, bool force = false);
+		void Unload(const std::string& path, bool force = false) { Unload_Impl(path, force); }
+		void Unload(const T*, bool force = false);
 
 		bool IsLoaded(const std::string& path) const;
 
@@ -49,6 +49,7 @@ namespace Game
 
 		virtual std::string GetDefaultPath() = 0;
 		virtual T* Load_Impl(const std::string& path) = 0;
+		virtual void Unload_Impl(const std::string& path, bool force = false);
 
 		bool IncrementRefCount(const std::string& path);
 		bool DecrementRefCount(const std::string& path, bool force = false);
@@ -148,7 +149,7 @@ namespace Game
 	{
 		for (auto it = m_Assets.begin(); it != m_Assets.end(); )
 		{
-			const std::string& path = it->first;
+			const std::string path = it->first;
 			T* asset = it->second;
 
 			int& ref = m_RefCount[path];
@@ -166,7 +167,7 @@ namespace Game
 	}
 
 	template<typename T>
-	void AssetDatabase<T>::Unload(const std::string& path, bool force)
+	void AssetDatabase<T>::Unload_Impl(const std::string& path, bool force)
 	{
 		if (!m_Assets.contains(path))
 			return;

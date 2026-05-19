@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Game/GameStates.h>
+#include <Game/AssetDatabase/AssetType/MapAsset.h>
 
 namespace Game
 {
@@ -8,6 +9,7 @@ namespace Game
 	{
 		Purpose m_Purpose;
 		GameMode m_GameMode;
+		MapAsset* m_MapAsset;
 
 		LoadingStart() = default;
 
@@ -15,6 +17,14 @@ namespace Game
 		{
 			m_Purpose = purpose;
 			m_GameMode = gameMode;
+			m_MapAsset = nullptr;
+		}
+
+		LoadingStart(Purpose purpose, GameMode gameMode, MapAsset* mapAsset)
+		{
+			m_Purpose = purpose;
+			m_GameMode = gameMode;
+			m_MapAsset = mapAsset;
 		}
 	};
 }

@@ -8,14 +8,14 @@
 #include <PallasEngine/Logging/Logger.hpp>
 
 #include <Game/Systems/SystemBase.hpp>
-#include <Game/Events/IEventObserver.hpp>
+#include <Game/Events.h>
 #include <Game/GameObjects/GameObject.h>
 
 namespace Game {
 
     class SystemBase;
 
-    class World
+    class World : IEventObserver<LoadingStart>
     {
     public:
 
@@ -42,6 +42,8 @@ namespace Game {
 
         void Shutdown();
 
+        void OnEvent(const LoadingStart& ev);
+
     private:
 
         World() = default;
@@ -52,6 +54,11 @@ namespace Game {
 
         std::unordered_map<std::type_index, SystemBase*> m_Systems;
         std::vector<GameObject*> m_GameObjects;
+
+        void CreateMap(MapAsset* mapAsset);
+
+        void ClearWorld();
+
     };
 
     template<typename TSystemBase>

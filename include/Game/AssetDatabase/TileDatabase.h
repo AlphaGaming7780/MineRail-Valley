@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Game/AssetDatabase/AssetDatabase.h>
+#include<glaze/glaze.hpp>
+
+#include<Game/AssetDatabase/AssetDatabase.h>
 #include<Game/AssetDatabase/AssetType/TileAsset.h>
 #include<Game/AssetDatabase/TextureDatabase.h>
 
@@ -18,17 +20,23 @@ namespace Game
 
 		TileAsset* Load_Impl(const std::string& path) override
 		{
-			std::string fullPath = (std::filesystem::path(DatabasePath) / path).string();
+			const std::string fullPath = (std::filesystem::path(DatabasePath) / path).string();
 
-			TileData* data = new TileData();
-			auto read_error = glz::read_file_json(data, fullPath, std::string{});
+			TileData data;
+			glz::error_ctx read_error = glz::read_file_json(data, fullPath, std::string{});
 
-			return _BuildFromData(*data);
+			if (read_error)
+			{
+				m_Logger.ErrorO("Failed to load the JSON: ", read_error.custom_error_message);
+				return nullptr;
+			}
+
+			return _BuildFromData(data);
 		}
 
 		std::string GetDefaultPath() override
 		{
-			return (std::filesystem::path("Tile") / "DEFAULT.json").string();
+			return (std::filesystem::path("Tiles") / "DEFAULT.json").string();
 		}
 
 		TileAsset* _BuildFromData(const TileData& data)
@@ -39,7 +47,7 @@ namespace Game
 			return asset;
 		}
 
-		void Unload(const std::string& path, bool force = false) 
+		void Unload_Impl(const std::string& path, bool force = false) override
 		{
 
 			if (!m_Assets.contains(path))
@@ -49,7 +57,6 @@ namespace Game
 				return;
 
 			TextureDatabase::Instance().Unload(m_Assets[path]->TextureAsset);
-
 
 			delete m_Assets[path];
 			m_Assets.erase(path);

@@ -10,6 +10,7 @@
 #include <Game/Rendering/GameWindow.hpp>
 #include <Game/UI/UIManager.hpp>
 #include <Game/AudioManager.hpp>
+#include <Game/AssetDatabase/AssetType/MapAsset.h>
 
 namespace Game
 {
@@ -42,6 +43,6 @@ namespace Game
 
         void MainLoop();
 
-        void Load(GameMode gameMode, Purpose purpose);
+        void Load(GameMode gameMode, Purpose purpose, MapAsset* mapAsset = nullptr);
     };
 }

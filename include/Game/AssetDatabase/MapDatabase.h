@@ -21,10 +21,16 @@ namespace Game
 		{
             std::string fullPath = (std::filesystem::path(DatabasePath) / path).string();
 
-            MapData* data = new MapData();
-            auto read_error = glz::read_file_json(data, fullPath, std::string{});
+			MapData data;
+			glz::error_ctx read_error = glz::read_file_json(data, fullPath, std::string{});
 
-            return _BuildFromData(*data);
+			if (read_error)
+			{
+				m_Logger.ErrorO("Failed to load the JSON: ", read_error.custom_error_message);
+				return nullptr;
+			}
+
+			return _BuildFromData(data);
 		}
 
 		std::string GetDefaultPath() override
@@ -48,7 +54,7 @@ namespace Game
             return asset;
         }
 
-		void Unload(const std::string& path, bool force = false)
+		void Unload_Impl(const std::string& path, bool force = false) override
 		{
 
 			if (!m_Assets.contains(path))
@@ -63,7 +69,6 @@ namespace Game
 			{
 				TileDatabase::Instance().Unload(map->tiles[i]);
 			}
-
 
 			delete m_Assets[path];
 			m_Assets.erase(path);

@@ -16,6 +16,8 @@ namespace Game
 		sf::Vector2f m_Scale = { 1.f, 1.f };
 		sf::Angle    m_Rotation = sf::Angle::Zero;
 
+		sf::Texture* m_Texture = nullptr;
+
 		bool m_Enabled = false;
 
 		GameObject(const GameObject&) = delete;
@@ -26,8 +28,7 @@ namespace Game
 		virtual void OnDestroy() {};
 		virtual void Draw() {};
 
-
-	private:
+	protected:
 		friend class World;
 		GameObject() = default;
 	};

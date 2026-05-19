@@ -1,18 +1,17 @@
 #pragma once
-#include<Game/AssetDatabase.h>
-#include<string>
+#include <Game/AssetDatabase.h>
+#include <Game/AssetDatabase/AssetType/ObjectData.h>
+#include <string>
 
 namespace Game
 {
-	struct TileData
+	struct TileData : public ObjectData
 	{
-		std::string TexturePath;
-		bool canBuild = false;
+		bool m_CanBuild = false;
 	};
 
-	struct TileAsset
+	struct TileAsset : ObjectAsset
 	{
-		sf::Texture* TextureAsset = nullptr;
-		bool CanBuild = false;
+		bool m_CanBuild = false;
 	};
 }

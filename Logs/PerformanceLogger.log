@@ -1,4 +1,4 @@
-EventManager::process : avg=0.394394 ms, min=0.0053 ms, max=311.958 ms, samples=9784
-UIManager.Draw() : avg=0.0850678 ms, min=0.0331 ms, max=4.4852 ms, samples=9784
-class Game::CameraSystem : avg=0.0582068 ms, min=0.0005 ms, max=0.703 ms, samples=9784
-GameWindow.Display() : avg=0.494375 ms, min=0.1366 ms, max=10.1311 ms, samples=9784
+EventManager::process : avg=1.31022 ms, min=0.0052 ms, max=291.696 ms, samples=469
+UIManager.Draw() : avg=0.0896638 ms, min=0.0166 ms, max=0.9632 ms, samples=469
+class Game::CameraSystem : avg=0.00233667 ms, min=0.0006 ms, max=0.0074 ms, samples=469
+GameWindow.Display() : avg=0.374113 ms, min=0.0004 ms, max=10.4674 ms, samples=469

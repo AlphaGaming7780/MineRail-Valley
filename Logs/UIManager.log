@@ -1,3 +1,2 @@
-[2026-05-19 17:07:23] [INFO]	Init UIManager.
-[2026-05-19 17:07:32] [INFO]	OnFocusGain: class Game::UIProgressBar
-[2026-05-19 17:07:55] [INFO]	OnFocusLost: class Game::UIProgressBar
+[2026-05-19 19:12:20] [INFO]	Init UIManager.
+[2026-05-19 19:12:24] [INFO]	UIManager destroyed.

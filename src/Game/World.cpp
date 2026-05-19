@@ -1,7 +1,10 @@
 
 #include <PallasEngine/Logging.hpp>
+#include <Game/AssetDatabase/AssetType/MapAsset.h>
 
 #include <Game/World.h>
+
+#include <Game/GameObjects/Tiles/TileObject.h>
 
 namespace Game
 {
@@ -45,5 +48,50 @@ namespace Game
 
         m_Systems.clear();
         m_GameObjects.clear();
+    }
+    void World::OnEvent(const LoadingStart& ev)
+    {
+        Purpose purpose = ev.m_Purpose;
+        GameMode gameMode = ev.m_GameMode;
+        MapAsset* mapAsset = ev.m_MapAsset;
+
+        if (purpose == Purpose::NewGame)
+        {
+            CreateMap(mapAsset);
+        }
+        else if (purpose == Purpose::Cleanup)
+        {
+            ClearWorld();
+        }
+
+    }
+
+    void World::CreateMap(MapAsset* mapAsset)
+    {
+        const float tileSize = 50.f;
+        int mapEdgeSize = mapAsset->MapSize;
+
+        for (int i = 0; i < mapAsset->tiles.size(); ++i)
+        {
+            TileAsset* t = mapAsset->tiles[i];
+
+            int xIndex = i % mapEdgeSize;
+            int yIndex = i / mapEdgeSize;
+
+            float X = xIndex * tileSize;
+            float Y = yIndex * tileSize;
+
+            TileObject* to = CreateGameObject<TileObject>();
+
+            to->m_Index = sf::Vector2i(xIndex, yIndex);
+            to->m_Position = sf::Vector2f(X, Y);
+            to->m_Size = sf::Vector2f(tileSize, tileSize);
+            to->CanBuild = t->CanBuild;
+            to->m_Texture = t->TextureAsset;
+        }
+    }
+
+    void World::ClearWorld()
+    {
     }
 }
