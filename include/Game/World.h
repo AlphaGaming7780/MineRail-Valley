@@ -55,7 +55,7 @@ namespace Game {
         std::unordered_map<std::type_index, SystemBase*> m_Systems;
         std::vector<GameObject*> m_GameObjects;
 
-        void CreateMap(MapAsset* mapAsset);
+        void CreateMap(MapData* mapData);
 
         void ClearWorld();
 
