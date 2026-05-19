@@ -5,7 +5,7 @@
 
 namespace Game
 {
-	class MusicDatabase : public AssetDatabase<sf::SoundBuffer>
+	class SoundDatabase : public AssetDatabase<sf::SoundBuffer>
 	{
 	public:
 		sf::SoundBuffer* Load_Impl(const std::string& path) override
@@ -14,7 +14,7 @@ namespace Game
 			std::string fullPath = (std::filesystem::path(DatabasePath) / path).string();
 			if (!soundBuffer->loadFromFile(fullPath))
 			{
-				m_Logger.ErrorO("[MusicDatabase] Failed to load texture: ", fullPath);
+				m_Logger.ErrorO("[SoundDatabase] Failed to load sound effect: ", fullPath);
 				delete soundBuffer;
 				soundBuffer = nullptr;
 			}

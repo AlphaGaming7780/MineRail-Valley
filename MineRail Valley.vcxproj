@@ -223,6 +223,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\MapGenerator.cpp" />
     <ClCompile Include="src\Game\Rendering\Camera.cpp" />
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
@@ -264,6 +265,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game\AssetDatabase\TextureDatabase.h" />
+    <ClInclude Include="include\Game\AudioManager.hpp" />
+    <ClInclude Include="include\Game\Events\Events\AudioEvent.h" />
     <ClInclude Include="include\Game\GameManager.hpp" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
     <ClInclude Include="include\Game\Rendering\Camera.hpp" />
