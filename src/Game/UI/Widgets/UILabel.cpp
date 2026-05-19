@@ -1,7 +1,7 @@
-#include <PallasEngine/UI/Widgets/UILabel.hpp>
-#include <PallasEngine/AssetDatabase/AssetDatabase.hpp>
+#include <Game/UI/Widgets/UILabel.hpp>
+#include <Game/AssetDatabase/AssetDatabase.hpp>
 
-namespace pallas
+namespace Game
 {
     UILabel::UILabel(
         const std::string& text,

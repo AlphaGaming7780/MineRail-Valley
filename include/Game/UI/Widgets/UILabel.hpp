@@ -1,8 +1,8 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include <PallasEngine/UI/UIWidget.hpp>
-#include <PallasEngine/AssetDatabase/AssetTypes/FontAsset.hpp>
+#include <Game/UI/UIWidget.hpp>
+#include <Game/AssetDatabase/F>
 
 namespace pallas
 {

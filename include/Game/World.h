@@ -64,7 +64,7 @@ namespace Game {
             return static_cast<TSystemBase*>(it->second);
         }
 
-        TSystemBase* instance = new TSystemBase(this, &m_Registry, m_Logger);
+        TSystemBase* instance = new TSystemBase(this, m_Logger);
 
         m_Systems.emplace(type, instance);
 

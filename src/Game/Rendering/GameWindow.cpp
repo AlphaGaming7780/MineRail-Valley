@@ -16,9 +16,9 @@ namespace Game {
     // --- Création ---
     bool GameWindow::Create(
         const std::string& title,
-        sf::State state = sf::State::Windowed,
-        uint32_t styleFlagsWindowed = sf::Style::Default,
-        const sf::ContextSettings& settings = sf::ContextSettings()
+        sf::State state,
+        uint32_t styleFlagsWindowed,
+        const sf::ContextSettings& settings
     )
     {
         m_title = title;
@@ -121,7 +121,7 @@ namespace Game {
     }
 
     // Active le mode windwed (windowed, style None, taille desktop, pos 0,0)
-    void GameWindow::SetWindowed(bool borderless = false) {
+    void GameWindow::SetWindowed(bool borderless) {
         m_state = sf::State::Windowed;
         m_styleWindowed = borderless ? sf::Style::None : sf::Style::Default;
         m_windowedMode = sf::VideoMode::getDesktopMode();
@@ -129,20 +129,20 @@ namespace Game {
     }
 
     // --- Utilitaires rendu / boucle ---
-    void GameWindow::Clear(const sf::Color& c = sf::Color::Black) { m_window.clear(c); }
+    void GameWindow::Clear(const sf::Color& c) { m_window.clear(c); }
     void GameWindow::Display()
     {
 #ifdef  DEBUG
         pallas::PerformanceLogger::Scoped perf("GameWindow.Display()");
 #endif //  DEBUG
-        m_window.display(); 
+        m_window.display();
     }
 
     std::optional<sf::Event> GameWindow::PollEvent() { return m_window.pollEvent(); }
 
     template <typename TDrawable, typename... TArgs>
     void Draw(const TDrawable& d, TArgs&&... args) {
-        m_window.draw(d, std::forward<TArgs>(args)...);
+        m_Window.draw(d, std::forward<TArgs>(args)...);
     }
 
     // --- Taille / position (fenêtré) ---
@@ -163,6 +163,11 @@ namespace Game {
             m_window.setPosition({ x, y });
             m_windowedPos = { x, y };
         }
+    }
+
+    void GameWindow::OnEvent(const sf::Event::Closed& event)
+    {
+        Close();
     }
 
     // Choix d’un bon mode fullscreen (souvent le 1er = meilleure définition/fréquence)

@@ -12,7 +12,7 @@
 #include <Game/Rendering/GameWindow.hpp>
 #include <Game/Events/EventManager.hpp>
 #include <PallasEngine/Logging/Logger.hpp>
-#include <PallasEngine/UI/UIManager.hpp>
+#include <Game/UI/UIManager.hpp>
 
 // A Séparé en un fichier HPP et CPP
 
