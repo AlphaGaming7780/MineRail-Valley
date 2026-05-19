@@ -9,6 +9,7 @@
 #include <Game/Events.h>
 #include <Game/Rendering/GameWindow.hpp>
 #include <Game/UI/UIManager.hpp>
+#include <Game/AudioManager.hpp>
 
 namespace Game
 {

@@ -1,8 +1,8 @@
 #pragma once
-#include <PallasEngine/UI/UIWidget.hpp>
-#include <PallasEngine/AssetDatabase/AssetTypes/TextureAsset.hpp>
+#include <Game/UI/UIWidget.hpp>
+#include <Game/AssetDatabase.h>
 
-namespace pallas
+namespace Game
 {
     class UIProgressBar : public UIWidget
     {
@@ -11,9 +11,9 @@ namespace pallas
             sf::Vector2f position = { 0,0 },
             sf::Vector2f size = { 100,20 },
             UIAnchor anchor = UIAnchor::TopLeft,
-            TextureAsset* frameTex = nullptr,
-            TextureAsset* barTex = nullptr,
-            TextureAsset* endCapTex = nullptr
+            sf::Texture* frameTex = nullptr,
+            sf::Texture* barTex = nullptr,
+            sf::Texture* endCapTex = nullptr
         );
 
         ~UIProgressBar();
@@ -33,10 +33,6 @@ namespace pallas
     private:
         float m_Value = 0.f;
 
-        TextureAsset* m_FrameTexAsset = nullptr;
-        TextureAsset* m_BarTexAsset = nullptr;
-        TextureAsset* m_EndCapTexAsset = nullptr;
-
         sf::Texture* m_FrameTex = nullptr;
         sf::Texture* m_BarTex = nullptr;
         sf::Texture* m_EndCapTex = nullptr;
@@ -44,8 +40,6 @@ namespace pallas
         sf::Sprite* m_FrameSprite;
         sf::Sprite* m_BarSprite;
         sf::Sprite* m_EndCapSprite;
-
-        sf::Texture* LoadTexture(TextureAsset** asset, const char* fallbackPath);
 
     };
 }

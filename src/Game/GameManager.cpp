@@ -65,6 +65,7 @@ namespace Game
 		GameWindow& gameWindow = GameWindow::Instance();
 		InputManager& inputManager = InputManager::Instance();
 		UIManager& uiManager = UIManager::Instance();
+		AudioManager& audioManager = AudioManager::Instance();
 
 		OnStart();
 

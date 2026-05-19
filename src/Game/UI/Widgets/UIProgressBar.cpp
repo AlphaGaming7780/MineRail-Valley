@@ -1,30 +1,21 @@
-#include <PallasEngine/UI/Widgets/UIProgressBar.hpp>
-#include <PallasEngine/AssetDatabase/AssetDatabase.hpp>
+#include <Game/UI/Widgets/UIProgressBar.hpp>
+#include <Game/AssetDatabase.h>
 #include <SFML/Graphics.hpp>
-#include <PallasEngine/Utils/Vector2.hpp>
+#include <Game/Utils/Vector2.hpp>
 
-#include <PallasEngine/UI/UIManager.hpp>
+#include <Game/UI/UIManager.hpp>
 
-namespace pallas
+namespace Game
 {
-	UIProgressBar::UIProgressBar(
+    UIProgressBar::UIProgressBar(
         sf::Vector2f position, 
         sf::Vector2f size, 
         UIAnchor anchor, 
-        TextureAsset* frameTex, 
-        TextureAsset* barTex, 
-        TextureAsset* endCapTex
-    )
-        : UIWidget(position, size, anchor),
-        m_FrameTexAsset(frameTex),
-        m_BarTexAsset(barTex),
-        m_EndCapTexAsset(endCapTex)
+        sf::Texture* frameTex, 
+        sf::Texture* barTex, 
+        sf::Texture* endCapTex
+    ) : UIWidget(position, size, anchor)
     {
-    
-        m_FrameTex = LoadTexture(&m_FrameTexAsset, "UI\\Loading_bar_frame.png");
-        m_BarTex = LoadTexture(&m_BarTexAsset, "UI\\Loading_bar_inner.png");
-        m_EndCapTex = LoadTexture(&m_EndCapTexAsset, "UI\\Progress_pivot.png");
-    
         m_FrameSprite = new sf::Sprite(*m_FrameTex);
         m_BarSprite = new sf::Sprite(*m_BarTex);
         m_EndCapSprite = new sf::Sprite(*m_EndCapTex);
@@ -33,9 +24,6 @@ namespace pallas
     UIProgressBar::~UIProgressBar()
     {
         delete m_FrameSprite, m_BarSprite, m_EndCapSprite;
-        m_FrameTexAsset->Unload();
-        m_BarTexAsset->Unload();
-        m_EndCapTexAsset->Unload();
     }
 
     void UIProgressBar::UpdateLayout(const sf::View& view)
@@ -71,19 +59,5 @@ namespace pallas
             canvas.draw(*m_EndCapSprite);
 
         UIWidget::Draw(canvas);
-    }
-
-
-    sf::Texture* UIProgressBar::LoadTexture(TextureAsset** asset, const char* fallbackPath)
-    {
-        if (*asset == nullptr)
-        {
-            if (!AssetDatabase::Instance().TryGetAsset(fallbackPath, *asset))
-            {
-                (*asset) = TextureAsset::GetDefault();
-            }
-        }
-
-        return (*asset)->LoadObject();
     }
 }
