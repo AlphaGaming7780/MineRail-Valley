@@ -12,7 +12,8 @@ namespace Game
 		{
 			sf::Texture* texture = new sf::Texture();
 			std::string fullPath = (std::filesystem::path(DatabasePath) / path).string();
-			if (!texture->loadFromFile(fullPath)) {
+			if (!texture->loadFromFile(fullPath)) 
+			{
 				m_Logger.ErrorO("[TextureDatabase] Failed to load texture: ", fullPath);
 				delete texture;
 				texture = nullptr;
