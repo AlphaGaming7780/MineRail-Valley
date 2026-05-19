@@ -33,7 +33,7 @@ namespace Game
 		GameMode GetCurrentMode() const { return m_CurrentMode; }
 
     private:
-        GameManager();
+        GameManager() = default;
 
         pallas::Logger m_Logger = pallas::Logger("GameManager");
 

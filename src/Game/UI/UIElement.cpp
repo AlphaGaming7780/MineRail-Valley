@@ -1,7 +1,7 @@
-#include <PallasEngine/UI/UIElement.hpp>
-#include <PallasEngine/UI/UIManager.hpp>
+#include <Game/UI/UIElement.hpp>
+#include <Game/UI/UIManager.hpp>
 
-namespace pallas
+namespace Game
 {
     void UIElement::AddChild(UIElement* child)
     {

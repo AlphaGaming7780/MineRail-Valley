@@ -72,7 +72,7 @@ namespace Game
     private:
         sf::View m_view;
 
-        pallas::Logger m_Logger = Logger("Camera");
+        pallas::Logger m_Logger = pallas::Logger("Camera");
 
         // Taille de référence (sans zoom)
         sf::Vector2f m_BaseSize = { 1920.f, 1080.f };

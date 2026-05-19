@@ -227,10 +227,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Events\InputManager.cpp" />
-    <ClCompile Include="src\Game\MapGenerator.cpp" />
     <ClCompile Include="src\Game\Rendering\Camera.cpp" />
     <ClCompile Include="src\Game\Rendering\GameWindow.cpp" />
-    <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Game\Systems\SystemBase.cpp" />
     <ClCompile Include="src\Game\UI\Menu\LoadingScreen.cpp" />
@@ -242,11 +240,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\Utils\Time.cpp" />
     <ClCompile Include="src\Game\World.cpp" />
     <ClCompile Include="src\Game\GameManager.cpp" />
-    <ClCompile Include="src\PallasEngine\AssetDatabaseOLD\AssetDatabase.cpp" />
-    <ClCompile Include="src\PallasEngine\AssetDatabaseOLD\AssetTypes\FontAsset.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\PerformanceLogger.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\Logger.cpp" />
-    <ClCompile Include="src\PallasEngine\AssetDatabaseOLD\AssetTypes\TextureAsset.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\LogManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -296,7 +291,6 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\PallasEngine\Logging\Logger.hpp" />
     <ClInclude Include="include\PallasEngine\Logging\LogManager.hpp" />
     <ClInclude Include="include\Game\GameStates.h" />
-    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="assets\PallasEngine\Bootstrap.png">
@@ -305,9 +299,6 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <Image Include="assets\Textures\DEFAULT.png">
       <DeploymentContent>true</DeploymentContent>
     </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Resource.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

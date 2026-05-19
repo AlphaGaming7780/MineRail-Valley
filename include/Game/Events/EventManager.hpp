@@ -68,7 +68,7 @@ namespace Game
             if (m_IsNotifying)
             {
                 m_Logger.ErrorO("Can't unregister EventObserver durint notifying.");
-                return;
+                return false;
             }
 
             const auto key = typeKey<TEvent>();

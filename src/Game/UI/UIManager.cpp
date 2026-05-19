@@ -15,7 +15,7 @@ namespace Game
     {
         m_Logger.InfoO("Init UIManager.");
 
-        EventManager::Instance().on<sf::Event::Resized>([this](const sf::Event::Resized& ev) {ResizeView(ev); UpdateLayout(); });
+        EventManager::Instance().Register(this);
 
         m_UIView.setSize({1920, 1080}); //(sf::Vector2f)sf::VideoMode::getDesktopMode().size
         m_UIView.setCenter(m_UIView.getSize() / 2.f);
@@ -35,6 +35,12 @@ namespace Game
         delete m_Root;
         m_Root = nullptr;
         m_Logger.Info("UIManager destroyed.");
+    }
+
+    void UIManager::OnEvent(const sf::Event::Resized& ev)
+    {
+        ResizeView(ev); 
+        UpdateLayout();
     }
 
     bool UIManager::HasInvalidatedParent(UIElement* element)
@@ -182,7 +188,7 @@ namespace Game
     void UIManager::Draw(sf::RenderWindow& window)
     {
 #ifdef DEBUG
-        auto perf = PerformanceLogger::Scoped("UIManager.Draw()");
+        auto perf = pallas::PerformanceLogger::Scoped("UIManager.Draw()");
 #endif // DEBUG
         FlushRedraw();
         sf::Sprite s = sf::Sprite(m_UICanvas.getTexture());

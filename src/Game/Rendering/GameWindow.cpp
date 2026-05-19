@@ -140,11 +140,6 @@ namespace Game {
 
     std::optional<sf::Event> GameWindow::PollEvent() { return m_window.pollEvent(); }
 
-    template <typename TDrawable, typename... TArgs>
-    void Draw(const TDrawable& d, TArgs&&... args) {
-        m_Window.draw(d, std::forward<TArgs>(args)...);
-    }
-
     // --- Taille / position (fenêtré) ---
     sf::Vector2u GameWindow::GetSize() const { return m_window.getSize(); }
 

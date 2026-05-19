@@ -7,11 +7,8 @@
 //}
 
 #include <Game/GameManager.hpp>
-#include <Game/Rendering/GameWindow.hpp>
-
-using namespace Game;
 
 int main()
 {
-	return GameManager::Instance().Start();
+	return Game::GameManager::Instance().Start();
 }

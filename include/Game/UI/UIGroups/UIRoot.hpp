@@ -1,9 +1,9 @@
 #pragma once
 
-#include <PallasEngine/UI/UIGroup.hpp>
-#include <PallasEngine/UI/Widgets/UIButton.hpp>
+#include <Game/UI/UIGroup.hpp>
+#include <Game/UI/Widgets/UIButton.hpp>
 
-namespace pallas
+namespace Game
 {
 	class UIRoot : public UIGroup
 	{

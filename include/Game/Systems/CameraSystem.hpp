@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Game/Events/InputManager.hpp>
 #include <Game/Systems.hpp>
 #include <Game/GameStates.h>
 

@@ -8,7 +8,7 @@
 
 namespace Game
 {
-    class UIManager
+    class UIManager : IEventObserver<sf::Event::Resized>
     {
     public:
         static UIManager& Instance();
@@ -30,7 +30,7 @@ namespace Game
         bool IsMouseOverUI(sf::Vector2i screenPos) const;
         bool IsMouseOverUI(sf::Vector2f uiMousePos) const;
 
-        
+        void OnEvent(const sf::Event::Resized& ev);
 
         pallas::Logger m_Logger = pallas::Logger("UIManager");
 
