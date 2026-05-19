@@ -22,7 +22,7 @@ namespace Game
 
 		std::string GetDefaultPath() override
 		{
-			return (std::filesystem::path("PallasEngine") / "DEFAULT.png").string();
+			return (std::filesystem::path("Music") / "DEFAULT.png").string();
 		}
 	};
 }
