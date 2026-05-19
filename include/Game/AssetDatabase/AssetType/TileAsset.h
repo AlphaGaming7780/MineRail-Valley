@@ -9,9 +9,4 @@ namespace Game
 	{
 		bool m_CanBuild = false;
 	};
-
-	struct TileAsset : ObjectAsset
-	{
-		bool m_CanBuild = false;
-	};
 }

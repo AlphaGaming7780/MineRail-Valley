@@ -11,11 +11,4 @@ namespace Game
 		int Difficulty = 0;
 		std::vector<std::string> tiles;
 	};
-
-	struct MapAsset
-	{
-		int MapSize = 0;
-		int Difficulty = 0;
-		std::vector<TileAsset*> tiles;
-	};
 }
