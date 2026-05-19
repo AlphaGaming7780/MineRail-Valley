@@ -1,28 +1,23 @@
-#include <PallasEngine/UI/Widgets/UIButton.hpp>
+#include <Game/UI/Widgets/UIButton.hpp>
 
-#include <PallasEngine/AssetDatabase/AssetDatabase.hpp>
-#include <PallasEngine/UI/UIManager.hpp>
+#include <Game/AssetDatabase.h>
+#include <Game/UI/UIManager.hpp>
 
-namespace pallas
+namespace Game
 {
     UIButton::UIButton(
         sf::Vector2f position,
         sf::Vector2f size,
         UIAnchor anchor,
-        TextureAsset* normalTexture,
-        TextureAsset* hoveredTexture,
-        TextureAsset* clickedTexture
+        sf::Texture* normalTexture,
+        sf::Texture* hoveredTexture,
+        sf::Texture* clickedTexture
     )
-        : UIWidget(position, size, anchor),
-        m_TextureAssetNormal(normalTexture),
-        m_TextureAssetHover(hoveredTexture),
-        m_TextureAssetClicked(clickedTexture)
+        : UIWidget(position, size, anchor)
+        , m_TextureNormal(normalTexture)
+        , m_TextureHover(hoveredTexture)
+        , m_TextureClicked(clickedTexture)
     {
-        // Charge les textures (ou fallback)
-        m_TextureNormal = LoadTexture(&m_TextureAssetNormal, "UI\\Button.png");
-        m_TextureHover = LoadTexture(&m_TextureAssetHover, "UI\\Button_hover.png");
-        m_TextureClicked = LoadTexture(&m_TextureAssetClicked, "UI\\Button_clicked.png");
-
         // Texture par défaut
         m_Sprite = new sf::Sprite(*m_TextureNormal);
     }
@@ -30,24 +25,7 @@ namespace pallas
     UIButton::~UIButton()
     {
         delete m_Sprite;
-        if (m_TextureAssetNormal)  m_TextureAssetNormal->Unload();
-        if (m_TextureAssetHover)   m_TextureAssetHover->Unload();
-        if (m_TextureAssetClicked) m_TextureAssetClicked->Unload();
     }
-
-    sf::Texture* UIButton::LoadTexture(TextureAsset** asset, const char* fallbackPath)
-    {
-        if (*asset == nullptr)
-        {
-            if (!AssetDatabase::Instance().TryGetAsset(fallbackPath, *asset))
-            {
-                (*asset) = TextureAsset::GetDefault();
-            }
-        }
-
-        return (*asset)->LoadObject();
-    }
-
 
     void UIButton::UpdateLayout(const sf::View& view)
     {

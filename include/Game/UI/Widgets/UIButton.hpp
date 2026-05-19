@@ -1,11 +1,12 @@
 #pragma once
+#include<SFML/System.hpp>
+#include<SFML/Graphics.hpp>
+#include <Game/AssetDatabase.h>
 
-#include <PallasEngine/AssetDatabase/AssetTypes/TextureAsset.hpp>
-
-#include <PallasEngine/UI/UIWidget.hpp>
+#include <Game/UI/UIWidget.hpp>
 #include <functional> //pour le std::function.
 
-namespace pallas
+namespace Game
 {
     class UIButton : public UIWidget
     {
@@ -14,9 +15,9 @@ namespace pallas
             sf::Vector2f position = {0,0},
             sf::Vector2f size = {0,0},
             UIAnchor anchor = UIAnchor::TopLeft,
-            TextureAsset* normalTexture = nullptr,
-            TextureAsset* hoveredTexture = nullptr,
-            TextureAsset* clickedTexture = nullptr
+            sf::Texture* normalTexture = nullptr,
+            sf::Texture* hoveredTexture = nullptr,
+            sf::Texture* clickedTexture = nullptr
         );
 
         virtual ~UIButton();
@@ -36,11 +37,6 @@ namespace pallas
         void SetCallback(std::function<void()> callback);
 
     private:
-        // Asset refs
-        TextureAsset* m_TextureAssetNormal = nullptr;
-        TextureAsset* m_TextureAssetHover = nullptr;
-        TextureAsset* m_TextureAssetClicked = nullptr;
-
         // Loaded textures
         sf::Texture* m_TextureNormal = nullptr;
         sf::Texture* m_TextureHover = nullptr;
@@ -54,9 +50,6 @@ namespace pallas
 
         // Callback
         std::function<void()> m_Callback;
-
-        // Internal helper
-        sf::Texture* LoadTexture(TextureAsset** asset, const char* fallbackPath);
     };
 }
 
