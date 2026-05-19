@@ -14,8 +14,13 @@ namespace Game
 		, public IEventObserver<PauseEvent>
 	{
 	public:
-		AudioManager();
 		~AudioManager();
+
+		// Singleton
+		static AudioManager& Instance() {
+			static AudioManager inst;
+			return inst;
+		}
 
 		void OnEvent(const PlaySoundEvent& event) override;
 		void OnEvent(const PlayMusicEvent& event) override;
@@ -41,6 +46,8 @@ namespace Game
 		void Update();
 
 	private:
+		AudioManager();
+
 		void _PurgedFinishedSounds();
 		void _UpdateVolume();
 
