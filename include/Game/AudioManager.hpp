@@ -8,20 +8,28 @@
 
 namespace Game
 {
-	class AudioManager : public IEventObserver<AudioEvent>
+	class AudioManager 
+		: public IEventObserver<PlaySoundEvent>
+		, public IEventObserver<PlayMusicEvent>
+		, public IEventObserver<PauseEvent>
 	{
 	public:
 		AudioManager();
 		~AudioManager();
 
-		void OnEvent(const AudioEvent& event) override;
+		void OnEvent(const PlaySoundEvent& event) override;
+		void OnEvent(const PlayMusicEvent& event) override;
+		void OnEvent(const PauseEvent& event) override;
 
-		void PlaySound(std::string& path, float volume = 1.0f);
-		void PlayMusic(std::string& path, bool loop = false, float volume = 1.0f);
+		void PlaySound(const std::string& path, float volume = 1.0f);
+		void PlayMusic(const std::string& path, bool loop = false, float volume = 1.0f);
 
-		void PauseMusic(std::string& path);
-		void ResumeMusic(std::string& path);
-		void StopMusic(std::string& path);
+		void PauseMusic(const std::string& path);
+		void ResumeMusic(const std::string& path);
+		void StopMusic(const std::string& path);
+
+		void PauseAllSounds();
+		void ResumeAllSounds();
 
 		void SetMasterVolume(float volume);
 		void SetSoundVolume(float volume);

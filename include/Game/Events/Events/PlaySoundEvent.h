@@ -4,8 +4,9 @@
 
 namespace Game
 {
-	struct AudioEvent
+	struct PlaySoundEvent
 	{
 		std::string audioPath;
+		float volume = 100.0f;
 	};
 }

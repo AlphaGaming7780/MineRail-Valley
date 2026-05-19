@@ -14,10 +14,24 @@ namespace Game
 	{
 		UnloadAll();
 	}
-	void AudioManager::OnEvent(const AudioEvent & event)
+	void AudioManager::OnEvent(const PlaySoundEvent& event)
 	{
+		PlaySound(event.audioPath, event.volume);
 	}
-	void AudioManager::PlaySound(std::string& path, float volume)
+	void AudioManager::OnEvent(const PlayMusicEvent& event)
+	{
+		PlayMusic(event.path, event.loop, event.volume);
+	}
+	void AudioManager::OnEvent(const PauseEvent& event)
+	{
+		if (event.pause) {
+			PauseAllSounds();
+		}
+		else {
+			ResumeAllSounds();
+		}
+	}
+	void AudioManager::PlaySound(const std::string& path, float volume)
 	{
 		sf::SoundBuffer* buffer = m_SoundDatabase.Load(path);
 		if (buffer == nullptr)
@@ -32,7 +46,7 @@ namespace Game
 		m_PlayingSounds.push_back(sound);
 		sound->play();
 	}
-	void AudioManager::PlayMusic(std::string& path, bool loop, float volume)
+	void AudioManager::PlayMusic(const std::string& path, bool loop, float volume)
 	{
 		sf::Music* music = m_MusicDatabase.GetAsset(path);
 		float finalVolume = volume * m_MusicVolume * m_MasterVolume;
@@ -49,23 +63,43 @@ namespace Game
 		music->setVolume(finalVolume);
 		music->play();
 	}
-	void AudioManager::PauseMusic(std::string& path)
+	void AudioManager::PauseMusic(const std::string& path)
 	{
 		sf::Music* music = m_MusicDatabase.GetAsset(path);
 		if (music == nullptr || music->getStatus() == sf::Music::Status::Stopped || music->getStatus() == sf::Music::Status::Paused) return;
 		music->pause();
 	}
-	void AudioManager::ResumeMusic(std::string& path)
+	void AudioManager::ResumeMusic(const std::string& path)
 	{
 		sf::Music* music = m_MusicDatabase.GetAsset(path);
 		if (music == nullptr || music->getStatus() == sf::Music::Status::Playing) return;
 		music->play();
 	}
-	void AudioManager::StopMusic(std::string& path)
+	void AudioManager::StopMusic(const std::string& path)
 	{
 		sf::Music* music = m_MusicDatabase.GetAsset(path);
 		if (music == nullptr || music->getStatus() == sf::Music::Status::Stopped) return;
 		music->stop();
+	}
+	void AudioManager::PauseAllSounds()
+	{
+		for (auto& s : m_PlayingSounds) 
+		{
+			if (s != nullptr && s->getStatus() == sf::Sound::Status::Playing)
+			{
+				s->pause();
+			}
+		}
+	}
+	void AudioManager::ResumeAllSounds()
+	{
+		for (auto& s : m_PlayingSounds)
+		{
+			if (s != nullptr && s->getStatus() == sf::Sound::Status::Paused)
+			{
+				s->play();
+			}
+		}
 	}
 	void AudioManager::SetMasterVolume(float volume)
 	{
