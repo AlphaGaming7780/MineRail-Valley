@@ -10,7 +10,7 @@ namespace Game
 	};
 
 	template<typename T>
-	class IEventObserver : IEventObserverBase
+	class IEventObserver : public IEventObserverBase
 	{
 	public:
 		virtual ~IEventObserver() = default;

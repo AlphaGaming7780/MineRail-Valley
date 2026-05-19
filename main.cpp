@@ -6,27 +6,12 @@
 //    __declspec(dllexport) int AmdPowerXpressRequestHighPerformance = 1;   // AMD
 //}
 
-#include <PallasEngine/PallasEngine.hpp>
 #include <Game/GameManager.hpp>
+#include <Game/Rendering/GameWindow.hpp>
 
 using namespace Game;
-using namespace pallas;
 
 int main()
 {
-    // On crée le LogManager en premier pour que ce soit le dernier supprimer.
-    //LogManager::Instance();
-
-    PallasEngine::Start<GameManager>();
-
-    // Need to remove that old GameManager and implemente the new one.
-    //GameManager& gm = GameManager::getInstance();
-
-    //int x = gm.Setup();
-
-    //if (x != 0) return x;
-
-    //x = gm.Run();
-
-    return 0;
+	return GameManager::Instance().Start();
 }

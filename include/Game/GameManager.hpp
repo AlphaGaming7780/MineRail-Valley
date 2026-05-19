@@ -1,11 +1,14 @@
 #pragma once
 
-#include <PallasEngine/PallasEngine.hpp>
-
 // Rework import stuff for the "game"
-#include <Game/UI/LoadingScreen.hpp>
+#include <Game/UI/Menus/LoadingScreen.hpp>
 #include <Game/InputsActionSets.hpp>
 #include <Game/GameStates.h>
+#include <Game/World.h>
+#include <Game/Utils.hpp>
+#include <Game/Events.h>
+#include <Game/Rendering/GameWindow.hpp>
+#include <Game/UI/UIManager.hpp>
 
 namespace Game
 {
@@ -20,27 +23,24 @@ namespace Game
         
         ~GameManager() = default;
 
-        void Start();
-        void Update();
-        void Shutdown();
+        int Start();
+        void OnStart();
+        void OnUpdate();
+        void OnShutdown();
 
         GameState GetCurrentState() const { return m_CurrentState; }
 		GameMode GetCurrentMode() const { return m_CurrentMode; }
 
     private:
         GameManager();
-        static GameManager* instance;
-
-        sf::Texture* testTexture = nullptr;
 
         pallas::Logger m_Logger = pallas::Logger("GameManager");
 
         GameState m_CurrentState = GameState::Booting;
 		GameMode m_CurrentMode = GameMode::None;
 
-        pallas::Coroutine onStartCoroutine();
-        pallas::Coroutine MainMenu();
+        void MainLoop();
 
-        pallas::Coroutine Load(GameMode gameMode, Purpose purpose);
+        void Load(GameMode gameMode, Purpose purpose);
     };
 }

@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include <PallasEngine/Logging/LogManager.hpp>
-#include <PallasEngine/Utils/Vector2.hpp>
+#include <Game/Utils/Vector2.hpp>
 
 namespace pallas {
 

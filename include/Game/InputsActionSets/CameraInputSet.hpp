@@ -1,6 +1,7 @@
 #pragma once
 
-#include <PallasEngine/PallasEngine.hpp>
+#include <SFML/Window.hpp>
+#include <Game/Events/InputActionSet.hpp>
 
 enum class CameraAction : uint8_t {
 	MoveUp,

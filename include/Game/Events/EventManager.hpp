@@ -43,7 +43,7 @@ namespace Game
         void process(sf::Window& window); // stateless
 
         template<class TEvent>
-        void Register(IEventObserver<TEvent>& eventHandler)
+        void Register(IEventObserver<TEvent>* eventHandler)
         {
             if (m_IsNotifying)
             {
@@ -52,11 +52,17 @@ namespace Game
             }
 
             const auto key = typeKey<TEvent>();
-            m_Observers[key].push_back(&eventHandler);
+            m_Observers[key].push_back(eventHandler);
         }
 
         template<class TEvent>
-        bool UnRegister(IEventObserver<TEvent>& eventHandler)
+        void Register(IEventObserver<TEvent>& eventHandler)
+        {
+            Register<TEvent>(&eventHandler);
+        }
+
+        template<class TEvent>
+        bool UnRegister(IEventObserver<TEvent>* eventHandler)
         {
 
             if (m_IsNotifying)
@@ -74,11 +80,17 @@ namespace Game
             auto oldSize = vec.size();
 
             vec.erase(
-                std::remove(vec.begin(), vec.end(), &eventHandler),
+                std::remove(vec.begin(), vec.end(), eventHandler),
                 vec.end()
             );
 
             return vec.size() != oldSize;
+        }
+
+        template<class TEvent>
+        bool UnRegister(IEventObserver<TEvent>& eventHandler)
+        {
+            return UnRegister<TEvent>(&eventHandler)
         }
 
         // Tout nettoyer
