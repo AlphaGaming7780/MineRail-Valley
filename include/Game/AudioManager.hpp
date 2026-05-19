@@ -33,12 +33,12 @@ namespace Game
 
 	private:
 		void _PurgedFinishedSounds();
+		void _UpdateVolume();
 
 		SoundDatabase& m_SoundDatabase;
 		MusicDatabase& m_MusicDatabase;
 
 		std::vector<sf::Sound*> m_PlayingSounds;
-		std::map<std::string, sf::Music*> m_PlayingMusics;
 
 		float m_MasterVolume;
 		float m_SoundVolume;
