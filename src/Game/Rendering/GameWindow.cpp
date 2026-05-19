@@ -10,7 +10,6 @@ namespace Game {
 
     GameWindow::GameWindow()
     {
-        EventManager::Instance().Register(this);
     }
 
     // --- Création ---
@@ -38,6 +37,9 @@ namespace Game {
             Recreate(m_windowedMode, m_styleWindowed);
             CenterOnPrimary();
         }
+
+        EventManager::Instance().Register(this);
+
         return m_window.setActive(true);
     }
 

@@ -18,7 +18,6 @@ namespace Game
 	public:
 
 		const std::string DatabasePath = GetDatabasePath();
-		const std::string DefaultPath = GetDefaultPath();
 
 		~AssetDatabase();
 

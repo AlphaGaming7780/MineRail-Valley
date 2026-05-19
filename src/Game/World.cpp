@@ -5,6 +5,10 @@
 
 namespace Game
 {
+    World::~World()
+    {
+        Shutdown();
+    }
 
     void World::Update()
     {

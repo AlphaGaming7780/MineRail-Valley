@@ -1,0 +1,4 @@
+EventManager::process : avg=0.304061 ms, min=0.0043 ms, max=293.338 ms, samples=11092
+UIManager.Draw() : avg=0.0177898 ms, min=0.0072 ms, max=16.5243 ms, samples=11092
+class Game::CameraSystem : avg=0.000171448 ms, min=0 ms, max=0.0036 ms, samples=11092
+GameWindow.Display() : avg=0.192316 ms, min=0.0688 ms, max=147.148 ms, samples=11092

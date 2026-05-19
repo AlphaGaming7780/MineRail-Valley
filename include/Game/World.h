@@ -19,7 +19,10 @@ namespace Game {
     {
     public:
 
-        static World& Instance();
+        static World& Instance() {
+            static World inst;
+            return inst;
+        }
 
         ~World();
 
