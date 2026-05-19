@@ -26,7 +26,7 @@ namespace Game
 
 		sf::Sprite* m_Sprite = nullptr;
 		int zIndex = 0;
-		RenderLayer m_RenderLayer = RenderLayer::None;
+		RenderLayer m_RenderLayer = RenderLayer::NONE;
 
 		bool m_Enabled = false;
 

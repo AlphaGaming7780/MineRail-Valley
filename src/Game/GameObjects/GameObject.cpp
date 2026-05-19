@@ -61,6 +61,7 @@ namespace Game
         m_AnimFramesY = data.m_AnimFramesY;
 
         m_Sprite = new sf::Sprite(*TextureDatabase::Instance().Load(m_Texture));
+        m_Sprite->setOrigin(m_Sprite->getLocalBounds().size / 2.f);
         m_Sprite->scale(GetActualScale());
         m_Sprite->setColor(data.m_Color);
 	}
