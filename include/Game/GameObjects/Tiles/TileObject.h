@@ -16,6 +16,8 @@ namespace Game
 		TileObject* m_Right = nullptr;
 		TileObject* m_Down = nullptr;
 
+		GameObject* m_PlacedObject = nullptr;
+
 	protected:
 		TileObject() : GameObject() {}
 		TileObject(const TileData& tileData, const sf::Vector2i& index) : GameObject(tileData.object) 

@@ -12,6 +12,7 @@
       "y": 100.0
     },
     "animated": true,
+    "animSync": false,
     "framesX": 1,
     "framesY": 32,
     "duration": 2.0

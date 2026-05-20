@@ -2,7 +2,7 @@
 #include<Game/InputsActionSets/TrackToolInputSet.h>
 #include <Game/Utils/RaycastUtils.h>
 #include <Game/Utils/TerrainUtils.h>
-
+#include <Game/AssetDatabase/TrackDatabase.h>
 
 namespace Game
 {
@@ -89,7 +89,9 @@ namespace Game
 
 			for (TileObject* to : m_TilePath)
 			{
-				to->SetColor(sf::Color::Cyan);
+				TrackObject* track = m_World->CreateGameObject<TrackObject>(TrackDatabase::Instance().GetDefault());
+				track->SetTile(to);
+				track->SetColor(sf::Color::Cyan);
 			}
 		}
 	}

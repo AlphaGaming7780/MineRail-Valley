@@ -8,7 +8,9 @@ namespace Game
 {
 	struct TrackData : public ObjectData
 	{
-        std::string m_Type;
+        ObjectData object;
+        std::string m_StraightTrackTexture;
+        std::string m_BendTrackTexture;
 	};
 }
 
@@ -19,9 +21,10 @@ namespace glz
     {
         using T = Game::TrackData;
 
-        static constexpr auto value = glz::merge(
-            glz::meta<Game::ObjectData>::value,
-            glz::object(&T::m_Type) // Auto-reflects the name
+        static constexpr auto value = glz::object(
+            "ObjectData", &T::object,
+            "StraightTrackTexture", &T::m_StraightTrackTexture,
+            "BendTrackTexture", &T::m_BendTrackTexture
         );
     };
 }

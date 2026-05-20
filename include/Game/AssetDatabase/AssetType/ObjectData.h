@@ -13,6 +13,7 @@ namespace Game
 
 
 		bool m_Animated = false;
+        bool m_AnimSync = true;
 		int m_AnimFramesX = 1;       // nombre de frames en X
 		int m_AnimFramesY = 1;       // nombre de frames en 
 		float m_AnimDuration = 0.f;
@@ -52,6 +53,7 @@ namespace glz
             "color", &T::m_Color,
             "size", &T::m_Size,
             "animated", &T::m_Animated,
+            "animSync", &T::m_AnimSync, 
             "framesX", &T::m_AnimFramesX,
             "framesY", &T::m_AnimFramesY,
             "duration", &T::m_AnimDuration

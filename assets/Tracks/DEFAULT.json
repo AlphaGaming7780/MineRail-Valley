@@ -1,6 +1,6 @@
 {
   "ObjectData": {
-    "texture": "Textures\\rail.png",
+    "texture": "Textures\\DEFAULT.png",
     "color": {
       "r": 255,
       "g": 255,
@@ -16,5 +16,6 @@
     "framesY": 0,
     "duration": 0.0
   },
-  "m_CanBuild": false
+  "StraightTrackTexture": "Textures\\DEFAULT.png",
+  "BendTrackTexture": "Textures\\DEFAULT.png"
 }
