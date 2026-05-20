@@ -9,7 +9,12 @@ namespace Game
 		, m_MasterVolume(1.0f)
 		, m_SoundVolume(1.0f)
 		, m_MusicVolume(1.0f)
-	{ }
+	{
+		auto& n = EventManager::Instance();
+		n.Register<PlayMusicEvent>(this);
+		n.Register<PlaySoundEvent>(this);
+		n.Register<PauseEvent>(this);
+	}
 	AudioManager::~AudioManager()
 	{
 		UnloadAll();

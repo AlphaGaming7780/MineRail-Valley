@@ -30,7 +30,7 @@ namespace Game
 
 		std::string GetDefaultPath() override
 		{
-			return (std::filesystem::path("Fonts") / "DEFAULT.png").string();
+			return (std::filesystem::path("Fonts") / "DEFAULT.ttf").string();
 		}
 
 	private:

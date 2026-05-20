@@ -233,6 +233,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Game\Systems\SystemBase.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\InGameUI.cpp" />
     <ClCompile Include="src\Game\UI\Menu\LoadingScreen.cpp" />
     <ClCompile Include="src\Game\UI\UIElement.cpp" />
     <ClCompile Include="src\Game\UI\UIManager.cpp" />
@@ -251,7 +252,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\AssetDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetType\MapData.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetType\ObjectData.h" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetType\StationData.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetType\TileData.h" />
+    <ClInclude Include="include\Game\AssetDatabase\AssetType\TrackData.h" />
     <ClInclude Include="include\Game\AssetDatabase\FontDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MapDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MusicDatabase.h" />
@@ -302,6 +305,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\UI\Widgets\UILabel.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIProgressBar.hpp" />
     <ClInclude Include="include\Game\Utils.hpp" />
+    <ClInclude Include="include\Game\Utils\AnimatedTextureUtils.h" />
     <ClInclude Include="include\Game\Utils\Time.hpp" />
     <ClInclude Include="include\Game\Utils\Vector2.hpp" />
     <ClInclude Include="include\Game\World.h" />
