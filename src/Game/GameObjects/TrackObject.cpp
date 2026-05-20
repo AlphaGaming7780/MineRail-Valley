@@ -48,7 +48,7 @@ namespace Game
         {
             SetTexture(*m_StraightTexture, true);
 
-            if (d1.x != 0) // horizontal
+            if (d1.x != 0 || d2.x != 0) // horizontal
                 m_Sprite->setRotation(sf::degrees(90));
             else           // vertical
                 m_Sprite->setRotation(sf::Angle::Zero);
@@ -148,9 +148,16 @@ namespace Game
         // --- 3) Si m_First est invalide → en choisir un nouveau ---
         if (!m_First && !neighbors.empty())
         {
-            m_First = neighbors[0];
-            //m_First->Update(); // mise à jour du voisin
-            m_First->m_Enabled = true;
+            for (TrackObject* n : neighbors)
+            {
+                if (n != m_Second)
+                {
+                    m_First = n;
+                    //m_First->Update(); // mise à jour du voisin
+                    m_First->m_Enabled = true;
+                    break;
+                }
+            }
         }
 
         // --- 4) Si m_Second est invalide → en choisir un autre ---
