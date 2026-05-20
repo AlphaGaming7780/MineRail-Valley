@@ -1,5 +1,0 @@
-[2026-05-21 01:00:53] [INFO]	GameManager starting
-[2026-05-21 01:00:54] [INFO]	SFML window created.
-[2026-05-21 01:00:54] [INFO]	OnStart
-[2026-05-21 01:00:54] [INFO]	GameLoading started, GameMode: InGame | Purpose: NewGame
-[2026-05-21 01:00:55] [INFO]	GameLoading done, GameMode: InGame | Purpose: NewGame
