@@ -54,6 +54,9 @@ namespace Game
 		void SetColor(const sf::Color& color);
 		void ResetColor();
 
+		void SetScale(sf::Vector2f scale);
+		sf::Vector2f GetScale() const;
+
 
 	protected:
 		GameObject();

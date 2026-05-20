@@ -33,8 +33,6 @@ namespace Game
 		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
 		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
 
-		void SetState(State state);
-
 	private:
 		InputManager& m_InputManager = InputManager::Instance();
 		InputBindingState* m_ApplyBinding = nullptr;
@@ -53,6 +51,8 @@ namespace Game
 		void Update();
 		void Apply();
 		void Cancel();
+
+		void SetState(State state);
 
 	};
 }

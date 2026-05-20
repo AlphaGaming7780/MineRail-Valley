@@ -87,8 +87,6 @@ namespace Game
 
 			m_TilePath = TerrainUtils::GetPath(*m_World, m_StartTileObject, m_EndTileObject);
 
-			m_Logger.InfoO("m_TilePath lenght: ", m_TilePath.size());
-
 			for (TileObject* to : m_TilePath)
 			{
 				to->SetColor(sf::Color::Cyan);
@@ -102,7 +100,7 @@ namespace Game
 		{
 			TileObject* result = RaycastUtils::PerformRaycast<TileObject>(*m_World, GameWindow::Instance().Get());
 			
-			if (!result)
+			if (!result || !result->m_CanBuild)
 			{
 				return;
 			}
@@ -133,6 +131,10 @@ namespace Game
 		}
 		else if (m_State == State::Creating)
 		{
+			for (TileObject* to : m_TilePath)
+			{
+				to->ResetColor();
+			}
 			m_TilePath.clear();
 			SetState(State::Default);
 		}

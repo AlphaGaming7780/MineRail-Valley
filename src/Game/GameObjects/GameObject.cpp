@@ -56,6 +56,17 @@ namespace Game
         m_Sprite->setColor(m_Color);
     }
 
+    void GameObject::SetScale(sf::Vector2f scale)
+    {
+        m_Scale = scale;
+        m_Sprite->setScale(GetActualScale());
+    }
+
+    sf::Vector2f GameObject::GetScale() const
+    {
+        return m_Scale;
+    }
+
     GameObject::GameObject()
     {
         m_Sprite = new sf::Sprite(*TextureDatabase::Instance().Load(m_Texture));
@@ -102,6 +113,6 @@ namespace Game
         };
 
         // Scale final = scale absolu * scale SFML
-        return absoluteScale * m_Sprite->getScale();
+        return absoluteScale * m_Scale;
     }
 }

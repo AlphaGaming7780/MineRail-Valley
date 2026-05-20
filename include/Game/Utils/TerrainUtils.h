@@ -4,7 +4,10 @@
 #include <Game/Rendering/Camera.hpp>
 #include <Game/Rendering/GameWindow.hpp>
 #include <Game/World.h>
+
 #include <queue>
+#include <unordered_map>
+#include <algorithm> // std::reverse
 
 namespace Game
 {
@@ -23,10 +26,13 @@ namespace Game
             const sf::Vector2i& endIndex,
             bool canBuild = true)
         {
+            //pallas::Logger logger("SceneFlow");
+
             std::vector<TileObject*> result;
 
-            // Récupération de toutes les tiles
             const auto tiles = world.GetAllGameObject<TileObject>();
+            //logger.InfoO("GetPath: tiles count = ", tiles.size());
+            //logger.InfoO("GetPath: startIndex = ", startIndex, " , endIndex = ", endIndex);
 
             TileObject* start = nullptr;
             TileObject* goal = nullptr;
@@ -38,9 +44,13 @@ namespace Game
             }
 
             if (!start || !goal)
-                return result; 
+            {
+                //logger.InfoO("GetPath: start or goal not found (start=", start, ", goal= ", goal,")");
+                return result;
+            }
 
-            // BFS
+            //logger.InfoO("GetPath: startTile canBuild=", start->m_CanBuild,", goalTile canBuild=", goal->m_CanBuild);
+
             std::queue<TileObject*> q;
             std::unordered_map<TileObject*, TileObject*> parent;
 
@@ -52,20 +62,33 @@ namespace Game
                     if (!to) return;
                     if (parent.contains(to)) return;
 
-                    if (canBuild && !to->m_CanBuild)
+                    // On autorise toujours start/goal, même si non buildable
+                    if (canBuild && !to->m_CanBuild && to != start && to != goal)
+                    {
+                        //logger.InfoO("GetPath: skip tile (", to->m_Index,") - not buildable");
                         return;
+                    }
+
+                    //logger.InfoO("GetPath: visit neighbor (", to->m_Index,") from (", from->m_Index,")");
 
                     parent[to] = from;
                     q.push(to);
                 };
+
+            int step = 0;
 
             while (!q.empty())
             {
                 TileObject* cur = q.front();
                 q.pop();
 
+                //logger.InfoO("GetPath: BFS step ", step++, ", current=(", cur->m_Index,")");
+
                 if (cur == goal)
+                {
+                    //logger.InfoO("GetPath: goal reached at (", cur->m_Index,")");
                     break;
+                }
 
                 tryPush(cur, cur->m_Up);
                 tryPush(cur, cur->m_Down);
@@ -74,7 +97,10 @@ namespace Game
             }
 
             if (!parent.contains(goal))
+            {
+                //logger.InfoO("GetPath: no path found to goal.");
                 return result;
+            }
 
             TileObject* cur = goal;
             while (cur)
@@ -84,8 +110,14 @@ namespace Game
             }
 
             std::reverse(result.begin(), result.end());
+
+            //logger.InfoO("GetPath: path length = ", result.size());
+            //for (auto* t : result)
+            //{
+            //    logger.InfoO("  -> (", t->m_Index,")");
+            //}
+
             return result;
         }
-
     };
 }
