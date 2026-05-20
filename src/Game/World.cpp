@@ -104,6 +104,7 @@ namespace Game
 
             TileObject* to = CreateGameObject<TileObject>(t, sf::Vector2i(xIndex, yIndex));
             to->m_RenderLayer = RenderLayer::Terrain;
+            to->m_AnimCurrentTime = static_cast<float>(rand()) / RAND_MAX * to->m_AnimDuration;
 
             tiles[i] = to;
 
