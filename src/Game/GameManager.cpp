@@ -63,7 +63,7 @@ namespace Game
 		World::Instance().GetOrCreateSystem<CameraSystem>();
 		World::Instance().GetOrCreateSystem<TrackToolSystem>();
      
-		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\VolcanicWastes.json"));
+		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\FrozenHighlands.json"));
 		UIManager::Instance().SetRoot<InGameUI>();
     }
 

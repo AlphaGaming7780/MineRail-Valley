@@ -1,6 +1,0 @@
-EventManager::process : avg=0.191803 ms, min=0.0066 ms, max=24.1571 ms, samples=5511
-UIManager.Draw() : avg=0.00821023 ms, min=0.0049 ms, max=1.0518 ms, samples=5511
-class Game::TrackToolSystem : avg=0.0134428 ms, min=0.0001 ms, max=1.2703 ms, samples=5511
-class Game::CameraSystem : avg=0.00233595 ms, min=0.0009 ms, max=0.0256 ms, samples=5511
-class Game::DefaultToolSystem : avg=0.000173616 ms, min=0 ms, max=0.0009 ms, samples=5511
-GameWindow.Display() : avg=0.899644 ms, min=0.239 ms, max=9.288 ms, samples=5511
