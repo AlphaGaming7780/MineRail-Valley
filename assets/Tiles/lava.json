@@ -3,8 +3,8 @@
     "texture": "Textures\\lava_still.png",
     "color": {
       "r": 255,
-      "g": 120,
-      "b": 35,
+      "g": 255,
+      "b": 255,
       "a": 255
     },
     "size": {
@@ -13,8 +13,8 @@
     },
     "animated": true,
     "framesX": 1,
-    "framesY": 32,
-    "duration": 15.0
+    "framesY": 20,
+    "duration": 2.0
   },
   "m_CanBuild": false
 }
