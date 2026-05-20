@@ -92,6 +92,7 @@ namespace Game
 			inputManager.ResetEdges();
 			eventManager.process();
 			inputManager.Update();
+			audioManager.Update();
 
 			OnUpdate();
 
