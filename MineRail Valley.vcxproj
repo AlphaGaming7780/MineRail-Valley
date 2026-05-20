@@ -222,8 +222,6 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\Game\AssetDatabase\SoundDatabase.h" />
-    <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Events\InputManager.cpp" />
@@ -233,6 +231,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Game\Systems\SystemBase.cpp" />
+    <ClCompile Include="src\Game\Systems\TrackToolSystem.cpp" />
     <ClCompile Include="src\Game\UI\Menu\InGameUI.cpp" />
     <ClCompile Include="src\Game\UI\Menu\LoadingScreen.cpp" />
     <ClCompile Include="src\Game\UI\UIElement.cpp" />
@@ -258,12 +257,12 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\AssetDatabase\FontDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MapDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MusicDatabase.h" />
+    <ClInclude Include="include\Game\AssetDatabase\SoundDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\TextureDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\TileDatabase.h" />
     <ClInclude Include="include\Game\AudioManager.hpp" />
     <ClInclude Include="include\Game\Events.h" />
     <ClInclude Include="include\Game\Events\EventManager.hpp" />
-    <ClInclude Include="include\Game\Events\Events\AudioEvent.h" />
     <ClInclude Include="include\Game\Events\Events\LoadingComplete.h" />
     <ClInclude Include="include\Game\Events\Events\LoadingStart.h" />
     <ClInclude Include="include\Game\Events\Events\PauseEvent.h" />
@@ -282,6 +281,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\GameObjects\Trains\TrainObject.h" />
     <ClInclude Include="include\Game\GameObjects\Wagons\WagonObject.h" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
+    <ClInclude Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClInclude Include="include\Game\InputsActionSets\TrackToolInputSet.h" />
     <ClInclude Include="include\Game\Rendering.hpp" />
     <ClInclude Include="include\Game\Rendering\Camera.hpp" />
     <ClInclude Include="include\Game\Rendering\GameWindow.hpp" />
@@ -289,7 +290,10 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Rendering\RenderLayer.h" />
     <ClInclude Include="include\Game\Systems.hpp" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
+    <ClInclude Include="include\Game\Systems\DefaultToolSystem.h" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
+    <ClInclude Include="include\Game\Systems\TrackToolSystem.h" />
+    <ClInclude Include="include\Game\Systems\TrainSystem.h" />
     <ClInclude Include="include\Game\UI.hpp" />
     <ClInclude Include="include\Game\UI\Menus\InGameUI.h" />
     <ClInclude Include="include\Game\UI\Menus\LoadingScreen.hpp" />

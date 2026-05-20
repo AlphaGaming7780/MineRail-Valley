@@ -1,12 +1,13 @@
 #pragma once
 #include<Game/GameObjects/GameObject.h>
-#include<Game/GameObjects/Trains/TrainObject.h>
 
 namespace Game
 {
+	class TrainObject;
+
 	class WagonObject : public GameObject
 	{
 	public:
-		TrainObject* Train;
+		TrainObject* Train = nullptr;
 	};
 }

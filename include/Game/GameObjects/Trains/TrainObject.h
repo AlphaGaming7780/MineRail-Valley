@@ -10,14 +10,14 @@ namespace Game
 	class TrainObject : public GameObject
 	{
 	public:
-		TrackObject* Next;
-		TrackObject* Current;
-		TrackObject* Previous;
+		TrackObject* Next = nullptr;
+		TrackObject* Current = nullptr;
+		TrackObject* Previous = nullptr;
 
-		float speed;
+		float speed = 0.f;
 
-		StationObject* StationSrc;
-		StationObject* StationDest;
+		StationObject* StationSrc = nullptr;
+		StationObject* StationDest = nullptr;
 
 		std::vector<WagonObject*> Wagons;
 	};

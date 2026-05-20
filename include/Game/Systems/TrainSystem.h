@@ -4,11 +4,14 @@
 
 namespace Game
 {
-	class TrainSystem : SystemBase
+	class TrainSystem : public SystemBase
 	{
-		void Update()
+	public:
+		TrainSystem(World* world, pallas::Logger& logger)
+			: SystemBase(world, logger)
 		{
-
 		}
+
+		void Update() override {}
 	};
 }

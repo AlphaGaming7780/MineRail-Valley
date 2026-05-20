@@ -30,7 +30,7 @@ namespace Game
 
 		std::string GetDefaultPath() override
 		{
-			return (std::filesystem::path("Sounds") / "DEFAULT.mp3").string();
+			return (std::filesystem::path("Sounds") / "DEFAULT.wav").string();
 		}
 
 	private:

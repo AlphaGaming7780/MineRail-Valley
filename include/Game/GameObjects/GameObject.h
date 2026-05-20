@@ -14,7 +14,7 @@ namespace Game
 		friend class World;
 	public:
 
-		~GameObject() = default;
+		virtual ~GameObject() = default;
 
 		std::string m_Texture = "Textures\\DEFAULT.png";
 		sf::Vector2f m_Size = { 100.f, 100.f };

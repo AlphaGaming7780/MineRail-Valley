@@ -26,7 +26,9 @@ namespace Game
 
     UIProgressBar::~UIProgressBar()
     {
-        delete m_FrameSprite, m_BarSprite, m_EndCapSprite;
+        delete m_FrameSprite;
+        delete m_BarSprite;
+        delete m_EndCapSprite;
     }
 
     void UIProgressBar::UpdateLayout(const sf::View& view)

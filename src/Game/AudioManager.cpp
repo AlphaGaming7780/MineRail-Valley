@@ -21,11 +21,11 @@ namespace Game
 	}
 	void AudioManager::OnEvent(const PlaySoundEvent& event)
 	{
-		PlaySound(event.audioPath, event.volume);
+		PlaySound(event.Path, event.volume);
 	}
 	void AudioManager::OnEvent(const PlayMusicEvent& event)
 	{
-		PlayMusic(event.path, event.loop, event.volume);
+		PlayMusic(event.Path, event.loop, event.volume);
 	}
 	void AudioManager::OnEvent(const PauseEvent& event)
 	{

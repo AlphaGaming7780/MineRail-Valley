@@ -5,10 +5,10 @@
 
 namespace Game
 {
-	static class AnimatedTextureUtils
+	class AnimatedTextureUtils
 	{
 	public:
-        static void UpateFrame(GameObject& obj, float deltaTime)
+        static void UpdateFrame(GameObject& obj, float deltaTime)
         {
 
             if (obj.m_Sprite == nullptr || obj.m_AnimFramesX * obj.m_AnimFramesY <= 1)

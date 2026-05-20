@@ -6,7 +6,7 @@ namespace Game
 {
     void GameObject::Update()
     {
-        if (m_Animated) AnimatedTextureUtils::UpateFrame(*this, Time::GetDeltaTime().asSeconds());
+        if (m_Animated) AnimatedTextureUtils::UpdateFrame(*this, Time::GetDeltaTime().asSeconds());
     }
 
     void GameObject::OnDestroy()
@@ -61,7 +61,7 @@ namespace Game
         m_AnimFramesY = data.m_AnimFramesY;
 
         m_Sprite = new sf::Sprite(*TextureDatabase::Instance().Load(m_Texture));
-        if (m_Animated) AnimatedTextureUtils::UpateFrame(*this, Time::GetDeltaTime().asSeconds());
+        if (m_Animated) AnimatedTextureUtils::UpdateFrame(*this, Time::GetDeltaTime().asSeconds());
         m_Sprite->setOrigin(m_Sprite->getLocalBounds().size / 2.f);
         m_Sprite->scale(GetActualScale());
         m_Sprite->setColor(data.m_Color);
