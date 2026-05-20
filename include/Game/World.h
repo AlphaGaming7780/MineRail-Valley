@@ -38,6 +38,9 @@ namespace Game {
         void DestroyObject(GameObject* gameObject);
 
         const std::vector<GameObject*>& GetAllGameObject() const { return m_GameObjects; }
+        
+        template<typename TGameObject>
+        std::vector<TGameObject*> GetAllGameObject() const;
 
         void Pause(bool paused = true) { m_Paused = paused; }
         void UnPause() { Pause(false); }
@@ -103,6 +106,24 @@ namespace Game {
         instance->OnCreate();
 
         return instance;
+    }
+
+    template<typename TGameObject>
+    std::vector<TGameObject*> World::GetAllGameObject() const
+    {
+        static_assert(std::is_base_of_v<GameObject, TGameObject>,
+            "TGameObject must inherit from GameObject");
+
+        std::vector<TGameObject*> result;
+        result.reserve(m_GameObjects.size());
+
+        for (GameObject* go : m_GameObjects)
+        {
+            if (auto casted = dynamic_cast<TGameObject*>(go))
+                result.push_back(casted);
+        }
+
+        return result;
     }
 
 }

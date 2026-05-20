@@ -222,6 +222,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="include\Game\AssetDatabase\SoundDatabase.h" />
+    <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClCompile Include="src\Game\Systems\TrackToolSystem.cpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Events\InputManager.cpp" />
@@ -310,6 +313,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\UI\Widgets\UIProgressBar.hpp" />
     <ClInclude Include="include\Game\Utils.hpp" />
     <ClInclude Include="include\Game\Utils\AnimatedTextureUtils.h" />
+    <ClInclude Include="include\Game\Utils\RaycastUtils.h" />
     <ClInclude Include="include\Game\Utils\Time.hpp" />
     <ClInclude Include="include\Game\Utils\Vector2.hpp" />
     <ClInclude Include="include\Game\World.h" />

@@ -153,6 +153,7 @@ namespace Game
     void InputManager::onMousePressed(const sf::Event::MouseButtonPressed ev)
     {
         if (UIManager::Instance().IsMouseOverUI(ev.position) || !m_EnableMouseInputs) return;
+        m_Logger.InfoO("onMousePressed: ", magic_enum::enum_name(ev.button));
         for (auto& [type, block] : blocks) {
             if (!block.enabled) continue;
             for (auto& st : block.states) {
