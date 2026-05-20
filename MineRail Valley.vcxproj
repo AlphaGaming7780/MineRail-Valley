@@ -289,6 +289,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Rendering\RenderingManager.hpp" />
     <ClInclude Include="include\Game\Rendering\RenderLayer.h" />
     <ClInclude Include="include\Game\Systems.hpp" />
+    <ClInclude Include="include\Game\Systems\BulldozeToolSystem.h" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
     <ClInclude Include="include\Game\Systems\DefaultToolSystem.h" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
@@ -797,6 +798,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\Maps\DEFAULT.json" />
+    <None Include="assets\Maps\Plain.json" />
     <None Include="assets\Tiles\DEFAULT.json" />
     <None Include="assets\Tiles\water.json" />
     <None Include="include\SFML\Audio\SoundFileFactory.inl" />

@@ -15,9 +15,25 @@ namespace Game
 
 		void Draw(sf::RenderTexture& canvas) override;
 
-		void SetValue(float v);
+		void SetStatus(const std::string& text);
 
 	private:
-		UIProgressBar* pb = nullptr;
+		sf::Texture* m_ButtonTexture = nullptr;
+		sf::Texture* m_ButtonHoverTexture = nullptr;
+		sf::Texture* m_ButtonClickedTexture = nullptr;
+		sf::Font* m_Font = nullptr;
+
+		UIButton* m_DefaultToolButton = nullptr;
+		UIButton* m_TrackToolButton = nullptr;
+		UIButton* m_BulldozeToolButton = nullptr;
+		UILabel* m_TitleLabel = nullptr;
+		UILabel* m_DefaultToolLabel = nullptr;
+		UILabel* m_TrackToolLabel = nullptr;
+		UILabel* m_BulldozeToolLabel = nullptr;
+		UILabel* m_StatusLabel = nullptr;
+
+		void SelectDefaultTool();
+		void SelectTrackTool();
+		void SelectBulldozeTool();
 	};
 }

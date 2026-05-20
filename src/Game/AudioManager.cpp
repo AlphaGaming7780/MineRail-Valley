@@ -14,6 +14,8 @@ namespace Game
 		n.Register<PlayMusicEvent>(this);
 		n.Register<PlaySoundEvent>(this);
 		n.Register<PauseEvent>(this);
+		n.Register<LoadingStart>(this);
+		n.Register<LoadingComplete>(this);
 	}
 	AudioManager::~AudioManager()
 	{
@@ -34,6 +36,16 @@ namespace Game
 		}
 		else {
 			ResumeAllSounds();
+		}
+	}
+	void AudioManager::OnEvent(const LoadingStart& event)
+	{
+	}
+	void AudioManager::OnEvent(const LoadingComplete& event)
+	{
+		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr && !event.m_MapData->BgAudioPath.empty())
+		{
+			PlayMusic(event.m_MapData->BgAudioPath, true, 65.f);
 		}
 	}
 	void AudioManager::PlaySound(const std::string& path, float volume)

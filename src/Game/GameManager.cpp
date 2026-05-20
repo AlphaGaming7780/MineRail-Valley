@@ -3,6 +3,7 @@
 #include <Game/Systems.hpp>
 #include <Game/Rendering/RenderingManager.hpp>
 #include <Game/AssetDatabase/MapDatabase.h>
+#include <Game/UI/Menus/InGameUI.h>
 
 extern "C" {
 	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001; // NVIDIA
@@ -55,13 +56,15 @@ namespace Game
     {
         m_Logger.Info("OnStart");
 
-        GameWindow::Instance().SetTitle("MineRail Valley");
+		GameWindow& win = GameWindow::Instance();
+		win.SetTitle("MineRail Valley");
+		win.ToggleFullscreen();
 
 		World::Instance().GetOrCreateSystem<CameraSystem>();
 		World::Instance().GetOrCreateSystem<TrackToolSystem>();
      
-		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().GetDefault());
-		UIManager::Instance().ResetRoot();
+		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\VolcanicWastes.json"));
+		UIManager::Instance().SetRoot<InGameUI>();
     }
 
     void GameManager::OnUpdate()
@@ -136,7 +139,7 @@ namespace Game
         // Like serialization (loading save game or other stuff);
 
 
-		eventManager.Notify(LoadingComplete(purpose, gameMode));
+		eventManager.Notify(LoadingComplete(purpose, gameMode, mapData));
 
         World::Instance().UnPause();
 		m_CurrentState = GameState::WorldReady;

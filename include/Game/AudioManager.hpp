@@ -12,6 +12,8 @@ namespace Game
 		: public IEventObserver<PlaySoundEvent>
 		, public IEventObserver<PlayMusicEvent>
 		, public IEventObserver<PauseEvent>
+		, public IEventObserver<LoadingStart>
+		, public IEventObserver<LoadingComplete>
 	{
 	public:
 		~AudioManager();
@@ -24,7 +26,9 @@ namespace Game
 
 		void OnEvent(const PlaySoundEvent& event) override;
 		void OnEvent(const PlayMusicEvent& event) override;
-		void OnEvent(const PauseEvent& event) override;
+		void OnEvent(const PauseEvent& event) override; 
+		void OnEvent(const LoadingStart& event) override;
+		void OnEvent(const LoadingComplete& event) override;
 
 		void PlaySound(const std::string& path, float volume = 1.0f);
 		void PlayMusic(const std::string& path, bool loop = false, float volume = 1.0f);

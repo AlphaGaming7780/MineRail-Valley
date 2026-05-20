@@ -1,0 +1,20 @@
+{
+  "ObjectData": {
+    "texture": "Textures\\lava_still.png",
+    "color": {
+      "r": 255,
+      "g": 120,
+      "b": 35,
+      "a": 255
+    },
+    "size": {
+      "x": 100.0,
+      "y": 100.0
+    },
+    "animated": true,
+    "framesX": 1,
+    "framesY": 32,
+    "duration": 15.0
+  },
+  "m_CanBuild": false
+}

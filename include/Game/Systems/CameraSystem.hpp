@@ -10,7 +10,7 @@ namespace Game
 	{
 	public:
 
-		const float CamMoveSpeed = 500.f;
+		const float CamMoveSpeed = 1500.f;
 		const float CamZoomSpeed = 0.1f;
 		const float CamZoomMin = 0.5f;
 		const float CamZoomMax = 3.f;
