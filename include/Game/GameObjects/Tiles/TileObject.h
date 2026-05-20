@@ -1,6 +1,7 @@
 #pragma once
 #include <Game/GameObjects/GameObject.h>
 #include <Game/AssetDatabase/AssetType/TileData.h>
+#include <Game/GameObjects/Tracks/TrackObject.h>
 
 namespace Game
 {
@@ -8,6 +9,12 @@ namespace Game
 	{
 		friend class World;
 	public:
+
+		virtual ~TileObject()
+		{
+			if(m_PlacedTrack) m_PlacedTrack->m_Tile = nullptr;
+		}
+
 		sf::Vector2i m_Index = sf::Vector2i(-1, -1);
 		bool m_CanBuild = false;
 
@@ -16,7 +23,7 @@ namespace Game
 		TileObject* m_Right = nullptr;
 		TileObject* m_Down = nullptr;
 
-		GameObject* m_PlacedObject = nullptr;
+		TrackObject* m_PlacedTrack = nullptr;
 
 	protected:
 		TileObject() : GameObject() {}
@@ -29,7 +36,7 @@ namespace Game
 			float y = m_Index.y * m_Size.y;
 
 			m_Sprite->setPosition(sf::Vector2f(x, y));
-			m_Enabled = true;
+			m_Enabled = m_Animated;
 		}
 	};
 }

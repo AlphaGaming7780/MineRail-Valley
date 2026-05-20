@@ -32,6 +32,7 @@ namespace Game
 		RenderLayer m_RenderLayer = RenderLayer::NONE;
 
 		bool m_Enabled = false;
+		bool m_Temp = false;
 
 		GameObject(const GameObject&) = delete;
 		GameObject& operator=(const GameObject&) = delete;
@@ -57,10 +58,18 @@ namespace Game
 		void SetScale(sf::Vector2f scale);
 		sf::Vector2f GetScale() const;
 
+		void SetTexture(sf::Texture& texture, bool resetRect = false)
+		{
+			m_Sprite->setTexture(texture, resetRect);
+			UpdateSpriteSize();
+		}
+
 
 	protected:
 		GameObject();
 		GameObject(const ObjectData& data);
+
+		void UpdateSpriteSize();
 
 		sf::Vector2f GetActualScale();
 	};

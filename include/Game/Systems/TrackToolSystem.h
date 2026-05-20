@@ -13,6 +13,8 @@ namespace Game
 	{
 	public:
 
+		static const sf::Color kBuildColor;
+
 		TrackToolSystem(World* world, pallas::Logger& logger)
 			: SystemBase(world, logger)
 		{
@@ -55,4 +57,6 @@ namespace Game
 		void SetState(State state);
 
 	};
+
+	inline constexpr sf::Color TrackToolSystem::kBuildColor(0, 255, 255, 128);
 }

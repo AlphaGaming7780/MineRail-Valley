@@ -67,6 +67,7 @@ namespace Game
 
     InGameUI::~InGameUI()
     {
+        UIElement::~UIElement();
         TextureDatabase& textures = TextureDatabase::Instance();
         FontDatabase& fonts = FontDatabase::Instance();
 

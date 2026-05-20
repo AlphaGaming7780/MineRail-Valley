@@ -16,6 +16,8 @@ namespace Game
 
     void World::DestroyObject(GameObject* gameObject)
     {
+        if (gameObject == nullptr) return;
+
         // Trouver l'objet dans le vector
         auto it = std::find(m_GameObjects.begin(), m_GameObjects.end(), gameObject);
 

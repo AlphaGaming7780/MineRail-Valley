@@ -214,8 +214,10 @@ namespace Game
     {
         for (auto& child : m_Children)
         {
-            delete child;
+            if(child)
+                delete child;
         }
+        m_Children.clear();
 
         if (m_Parent)
             m_Parent->RemoveChild(this);

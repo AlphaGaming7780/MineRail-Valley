@@ -59,7 +59,7 @@ namespace Game
     void GameObject::SetScale(sf::Vector2f scale)
     {
         m_Scale = scale;
-        m_Sprite->setScale(GetActualScale());
+        UpdateSpriteSize();
     }
 
     sf::Vector2f GameObject::GetScale() const
@@ -84,10 +84,15 @@ namespace Game
 
         m_Sprite = new sf::Sprite(*TextureDatabase::Instance().Load(m_Texture));
         if (m_Animated) AnimatedTextureUtils::UpdateFrame(*this, Time::GetDeltaTime().asSeconds());
-        m_Sprite->setOrigin(m_Sprite->getLocalBounds().size / 2.f);
-        m_Sprite->scale(GetActualScale());
+        UpdateSpriteSize();
         m_Sprite->setColor(m_Color);
 	}
+
+    void GameObject::UpdateSpriteSize()
+    {
+        m_Sprite->setScale(GetActualScale());
+        m_Sprite->setOrigin(m_Sprite->getLocalBounds().size / 2.f);
+    }
 
 	sf::Vector2f GameObject::GetActualScale()
     {
