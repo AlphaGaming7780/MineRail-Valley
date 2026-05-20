@@ -26,17 +26,23 @@ namespace Game
 		void Update() override;
 		void OnDestroy() override;
 
+		void OnEnabled(bool enabled) override;
+
 		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
 		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
 
 	private:
 		InputManager& m_InputManager = InputManager::Instance();
 		InputBindingState* m_ApplyBinding = nullptr;
-		InputBindingState* m_CancleBinding = nullptr;
+		InputBindingState* m_CancelBinding = nullptr;
 
 		State m_State = State::Default;
 
 		DefaultToolSystem* m_DefaultToolSystem = nullptr;
+
+
+		void Apply();
+		void Cancel();
 
 	};
 }

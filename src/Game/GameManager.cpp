@@ -58,6 +58,7 @@ namespace Game
         GameWindow::Instance().SetTitle("MineRail Valley");
 
 		World::Instance().GetOrCreateSystem<CameraSystem>();
+		World::Instance().GetOrCreateSystem<TrackToolSystem>();
      
 		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().GetDefault());
 		UIManager::Instance().ResetRoot();

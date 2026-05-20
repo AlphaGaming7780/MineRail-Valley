@@ -5,7 +5,7 @@
 
 namespace Game
 {
-	static class AnimatedTextureUtils
+	class AnimatedTextureUtils
 	{
 	public:
         static void UpateFrame(GameObject& obj, float deltaTime)

@@ -224,6 +224,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
   <ItemGroup>
     <ClCompile Include="include\Game\AssetDatabase\SoundDatabase.h" />
     <ClCompile Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClCompile Include="src\Game\Systems\TrackToolSystem.cpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Events\InputManager.cpp" />
@@ -279,6 +280,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\GameObjects\Trains\TrainObject.h" />
     <ClInclude Include="include\Game\GameObjects\Wagons\WagonObject.h" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
+    <ClInclude Include="include\Game\InputsActionSets\TrackToolInputSet.h" />
     <ClInclude Include="include\Game\Rendering.hpp" />
     <ClInclude Include="include\Game\Rendering\Camera.hpp" />
     <ClInclude Include="include\Game\Rendering\GameWindow.hpp" />
@@ -286,7 +288,10 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Rendering\RenderLayer.h" />
     <ClInclude Include="include\Game\Systems.hpp" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
+    <ClInclude Include="include\Game\Systems\DefaultToolSystem.h" />
     <ClInclude Include="include\Game\Systems\SystemBase.hpp" />
+    <ClInclude Include="include\Game\Systems\TrackToolSystem.h" />
+    <ClInclude Include="include\Game\Systems\TrainSystem.h" />
     <ClInclude Include="include\Game\UI.hpp" />
     <ClInclude Include="include\Game\UI\Menus\InGameUI.h" />
     <ClInclude Include="include\Game\UI\Menus\LoadingScreen.hpp" />
@@ -302,6 +307,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\UI\Widgets\UILabel.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIProgressBar.hpp" />
     <ClInclude Include="include\Game\Utils.hpp" />
+    <ClInclude Include="include\Game\Utils\AnimatedTextureUtils.h" />
+    <ClInclude Include="include\Game\Utils\RaycastUtils.h" />
     <ClInclude Include="include\Game\Utils\Time.hpp" />
     <ClInclude Include="include\Game\Utils\Vector2.hpp" />
     <ClInclude Include="include\Game\World.h" />

@@ -1,5 +1,6 @@
 #include<Game/Systems/TrackToolSystem.h>
 #include<Game/InputsActionSets/TrackToolInputSet.h>
+#include <Game/Utils/RaycastUtils.h>
 
 
 namespace Game
@@ -12,26 +13,19 @@ namespace Game
 
 		m_InputManager.Register<TrackInputs>();
 		m_ApplyBinding = &m_InputManager.GetBinding(TrackToolAction::Apply);
-		m_CancleBinding = &m_InputManager.GetBinding(TrackToolAction::Cancle);
+		m_CancelBinding = &m_InputManager.GetBinding(TrackToolAction::Cancle);
+		SetEnable(true);
 	}
 
 	void TrackToolSystem::Update()
 	{
-		if (m_State == State::Default)
+		if (m_ApplyBinding->justPressed)
 		{
-			if (m_ApplyBinding->justPressed)
-			{
-
-			} 
-			else if (m_CancleBinding->justPressed)
-			{
-				SetEnable(false);
-				m_DefaultToolSystem->SetEnable(true);
-			}
+			Apply();
 		}
-		else
+		else if (m_CancelBinding->justPressed)
 		{
-
+			Cancel();
 		}
 	}
 
@@ -40,13 +34,52 @@ namespace Game
 
 	}
 
+	void TrackToolSystem::OnEnabled(bool enabled)
+	{
+		m_Logger.InfoO("TrackToolSystem ", (enabled ? "enabled" : "disabled"));
+		m_InputManager.EnableBlock<TrackToolAction>(enabled);
+	}
+
 	void TrackToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
 	{
+		m_Logger.InfoO("TrackToolSystem received OnGameLoadingStart, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
 		SetEnable(false);
 	}
 
 	void TrackToolSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose)
 	{
+		m_Logger.InfoO("TrackToolSystem received OnGameLoadingStart, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
+		SetEnable(true);
+	}
+
+	void TrackToolSystem::Apply()
+	{
+		if (m_State == State::Default)
+		{
+			GameObject* result = RaycastUtils::PerformRaycast(*m_World, GameWindow::Instance().Get());
+			
+			if (!result)
+			{
+				m_Logger.WarnO("result is null");
+				return;
+			}
+
+			
+
+		} 
+	}
+
+	void TrackToolSystem::Cancel()
+	{
+
+		if (m_State == State::Default)
+		{
+			//SetEnable(false);
+			//m_DefaultToolSystem->SetEnable(true);
+			return;
+		}
+
+
 
 	}
 }
