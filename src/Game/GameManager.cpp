@@ -37,6 +37,8 @@ namespace Game
 			MainLoop();
 		}
 
+		World::Instance().Shutdown();
+
 		UIManager::Instance().ResetRoot();
 
 		TextureDatabase::Instance().UnloadAssets();

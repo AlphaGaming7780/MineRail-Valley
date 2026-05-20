@@ -39,7 +39,6 @@ namespace Game
         for (int layer = 0; layer < (int)RenderLayer::COUNT; ++layer)
         {
             auto& vec = m_RenderList[(RenderLayer)layer];
-            m_Logger.InfoO("Rendering ", magic_enum::enum_name((RenderLayer)layer), " with ", vec.size(), " objects.");
             for (GameObject* obj : vec)
             {
                 window.draw(*obj->m_Sprite);

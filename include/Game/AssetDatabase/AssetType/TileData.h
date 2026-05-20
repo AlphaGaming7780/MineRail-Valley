@@ -6,10 +6,11 @@
 
 namespace Game
 {
-	struct TileData : public ObjectData
-	{
-		bool m_CanBuild = false;
-	};
+    struct TileData
+    {
+        ObjectData object;
+        bool m_CanBuild = false;
+    };
 }
 
 namespace glz
@@ -19,9 +20,9 @@ namespace glz
     {
         using T = Game::TileData;
 
-        static constexpr auto value = glz::merge(
-            glz::meta<Game::ObjectData>::value,
-            glz::object(&T::m_CanBuild) // Auto-reflects the name
+        static constexpr auto value = glz::object(
+            "ObjectData", &T::object,
+            "m_CanBuild", &T::m_CanBuild
         );
     };
 }

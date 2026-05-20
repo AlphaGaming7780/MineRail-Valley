@@ -1,6 +1,6 @@
-[2026-05-20 01:13:16] [INFO]	GameManager starting
-[2026-05-20 01:13:16] [INFO]	SFML window created.
-[2026-05-20 01:13:16] [INFO]	OnStart
-[2026-05-20 01:13:16] [INFO]	GameLoading started, GameMode: InGame | Purpose: NewGame
-[2026-05-20 01:13:16] [INFO]	GameLoading done, GameMode: InGame | Purpose: NewGame
-[2026-05-20 01:13:43] [INFO]	OnShutdown
+[2026-05-20 08:59:17] [INFO]	GameManager starting
+[2026-05-20 08:59:17] [INFO]	SFML window created.
+[2026-05-20 08:59:17] [INFO]	OnStart
+[2026-05-20 08:59:17] [INFO]	GameLoading started, GameMode: InGame | Purpose: NewGame
+[2026-05-20 08:59:18] [INFO]	GameLoading done, GameMode: InGame | Purpose: NewGame
+[2026-05-20 08:59:41] [INFO]	OnShutdown

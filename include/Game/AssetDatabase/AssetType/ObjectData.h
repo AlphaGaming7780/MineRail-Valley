@@ -3,10 +3,6 @@
 #include <glaze/glaze.hpp>
 #include <Game/AssetDatabase.h>
 
-#if GLZ_REFLECTION26
-
-#endif
-
 namespace Game
 {
 	struct ObjectData

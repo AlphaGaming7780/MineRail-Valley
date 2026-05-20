@@ -1,4 +1,20 @@
 {
-  "TexturePath": "Textures/water.png",
-  "canBuild": true
+  "ObjectData": {
+    "texture": "Textures\\water.png",
+    "color": {
+      "r": 63,
+      "g": 118,
+      "b": 228,
+      "a": 255
+    },
+    "size": {
+      "x": 100.0,
+      "y": 100.0
+    },
+    "animated": true,
+    "framesX": 1,
+    "framesY": 32,
+    "duration": 2.0
+  },
+  "m_CanBuild": false
 }

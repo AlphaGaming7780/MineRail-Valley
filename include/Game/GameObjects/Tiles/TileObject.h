@@ -13,7 +13,7 @@ namespace Game
 
 	protected:
 		TileObject() : GameObject() {}
-		TileObject(const TileData& tileData, const sf::Vector2i& index) : GameObject(tileData) 
+		TileObject(const TileData& tileData, const sf::Vector2i& index) : GameObject(tileData.object) 
 		{
 			m_Index = index;
 			m_CanBuild = tileData.m_CanBuild;
@@ -22,6 +22,7 @@ namespace Game
 			float y = m_Index.y * m_Size.y;
 
 			m_Sprite->setPosition(sf::Vector2f(x, y));
+			m_Enabled = true;
 		}
 	};
 }
