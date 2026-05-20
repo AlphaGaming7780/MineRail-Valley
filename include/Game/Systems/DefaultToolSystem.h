@@ -5,7 +5,7 @@
 
 namespace Game
 {
-	class DefaultToolSystem : SystemBase
+	class DefaultToolSystem : public SystemBase
 	{
 		void Update()
 		{

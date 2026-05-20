@@ -176,7 +176,7 @@ namespace Game {
         template<typename TEnum>
         void BindKey(TEnum action, sf::Keyboard::Scan scan) {
             InputBindingState& st = GetBinding(action);
-            st.key = scan;
+            st.scan = scan;
         }
 
         template<typename TEnum>

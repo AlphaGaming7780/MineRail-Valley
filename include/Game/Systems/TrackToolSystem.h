@@ -3,12 +3,18 @@
 #include <Game/Systems/SystemBase.hpp>
 #include <Game/Systems/DefaultToolSystem.h>
 #include <Game/Events/InputManager.hpp>
+#include <Game/World.h>
 
 namespace Game
 {
 	class TrackToolSystem : public SystemBase
 	{
 	public:
+
+		TrackToolSystem(World* world, pallas::Logger& logger)
+			: SystemBase(world, logger)
+		{
+		}
 
 		enum State
 		{
@@ -30,7 +36,7 @@ namespace Game
 
 		State m_State = State::Default;
 
-		DefaultToolSystem* m_DefaultToolSystem;
+		DefaultToolSystem* m_DefaultToolSystem = nullptr;
 
 	};
 }

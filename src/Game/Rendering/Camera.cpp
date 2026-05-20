@@ -15,8 +15,7 @@ namespace Game
         m_view.setCenter(m_BaseSize * 0.5f);
 
         onResize((sf::Event::Resized)GameWindow::Instance().GetSize());
-
-        EventManager::Instance();
+        EventManager::Instance().Register<sf::Event::Resized>(this);
     }
 
     Camera::~Camera()

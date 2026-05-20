@@ -12,7 +12,7 @@ namespace Game
     class SystemBase : public IEventObserver<LoadingStart>, public IEventObserver<LoadingComplete>
     {
     public:
-        SystemBase() = default;
+        //SystemBase() = default;
 
         explicit SystemBase(World* world, pallas::Logger& logger)
             : m_World(world), m_Logger(logger)
