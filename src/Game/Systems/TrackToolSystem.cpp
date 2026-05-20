@@ -39,20 +39,17 @@ namespace Game
 
 	void TrackToolSystem::OnEnabled(bool enabled)
 	{
-		m_Logger.InfoO("TrackToolSystem ", (enabled ? "enabled" : "disabled"));
 		m_InputManager.EnableBlock<TrackToolAction>(enabled);
 	}
 
 	void TrackToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
 	{
-		m_Logger.InfoO("TrackToolSystem received OnGameLoadingStart, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
 		SetEnable(false);
 	}
 
 	void TrackToolSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose)
 	{
-		m_Logger.InfoO("TrackToolSystem received OnGameLoadingStart, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
-		SetEnable(true);
+		SetEnable(false);
 	}
 
 	void TrackToolSystem::SetState(State state)
