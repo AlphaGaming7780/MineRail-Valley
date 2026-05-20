@@ -18,6 +18,8 @@ namespace Game
 
 		std::string m_Texture = "Textures\\DEFAULT.png";
 		sf::Vector2f m_Size = { 100.f, 100.f };
+		sf::Vector2f m_Scale = { 1.f, 1.f };
+		sf::Color m_Color = sf::Color::White;
 
 		bool m_Animated = false;
 		int m_AnimFramesX = 1;
@@ -48,6 +50,9 @@ namespace Game
 
 		sf::FloatRect GetGlobalBounds() const;
 		sf::FloatRect GetLocalBounds() const;
+
+		void SetColor(const sf::Color& color);
+		void ResetColor();
 
 
 	protected:

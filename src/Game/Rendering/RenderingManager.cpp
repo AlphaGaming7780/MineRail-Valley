@@ -1,6 +1,7 @@
 #include <Game/Rendering/RenderingManager.hpp>
 #include <Game/World.h>
 #include <magic_enum/magic_enum.hpp>
+#include <Game/Rendering/GameWindow.hpp>
 
 namespace Game
 {
@@ -47,5 +48,11 @@ namespace Game
 
         for (auto& [layer, vec] : m_RenderList)
             vec.clear();
+    }
+    void RenderingManager::NewFrame()
+    {
+        GameWindow& gw = GameWindow::Instance();
+        gw.Clear();
+        gw.Get().setView(m_Camera.GetView());
     }
 }

@@ -40,7 +40,7 @@ namespace Game
 #ifdef _DEBUG
             pallas::PerformanceLogger::Scoped perf(typeid(*sys).name());
 #endif
-            sys->Update();
+            sys->OnUpdate();
         }
 
         for (GameObject* go : m_GameObjects)
@@ -87,8 +87,12 @@ namespace Game
     void World::CreateMap(MapData* mapData)
     {
         int mapEdgeSize = mapData->MapSize;
+        int totalTiles = mapData->tiles.size();
 
-        for (int i = 0; i < mapData->tiles.size(); ++i)
+        // Tableau dynamique pour stocker les pointeurs vers les tiles
+        std::vector<TileObject*> tiles(totalTiles, nullptr);
+
+        for (int i = 0; i < totalTiles; ++i)
         {
             const TileData& t = *TileDatabase::Instance().Load(mapData->tiles[i]);
 
@@ -100,6 +104,30 @@ namespace Game
 
             TileObject* to = CreateGameObject<TileObject>(t, sf::Vector2i(xIndex, yIndex));
             to->m_RenderLayer = RenderLayer::Terrain;
+
+            tiles[i] = to;
+
+            int upIdx = i - mapEdgeSize;
+            if (upIdx >= 0)
+            {
+                TileObject* upTile = tiles[upIdx];
+                if (upTile)
+                {
+                    upTile->m_Down = to;
+                    to->m_Up = upTile;
+                }
+            }
+
+            int leftIdx = i - 1;
+            if (leftIdx >= 0 && (i % mapEdgeSize != 0))
+            {
+                TileObject* leftTile = tiles[leftIdx];
+                if (leftTile)
+                {
+                    leftTile->m_Right = to;
+                    to->m_Left = leftTile;
+                }
+            }
         }
     }
 

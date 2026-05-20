@@ -49,7 +49,7 @@ namespace Game
         {
             const auto gameObjects = world.GetAllGameObject<T>();
 
-            sf::Vector2f worldPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
+            sf::Vector2f worldPos = InputManager::Instance().GetMouseWorldPos();
 
             T* result = nullptr;
 

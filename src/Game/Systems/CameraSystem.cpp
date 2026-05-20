@@ -44,7 +44,7 @@ namespace Game
 		m_inputManager.EnableBlock<CameraAction>(enabled);
 	}
 
-	void CameraSystem::Update()
+	void CameraSystem::OnUpdate()
 	{
 
 		Camera& cam = Camera::Instance();

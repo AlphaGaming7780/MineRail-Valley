@@ -18,6 +18,8 @@ namespace Game
 
         Camera& GetCamera() { return m_Camera; }
 
+        void NewFrame();
+
     private:
         RenderingManager() = default;
 

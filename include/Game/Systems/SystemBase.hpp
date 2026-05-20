@@ -30,7 +30,7 @@ namespace Game
         }
 
         virtual void OnCreate() {};
-        virtual void Update() = 0;
+        virtual void OnUpdate() = 0;
         virtual void OnDestroy() {};
 
         void SetEnable(bool enable);

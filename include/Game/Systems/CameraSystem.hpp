@@ -27,7 +27,7 @@ namespace Game
 
 		virtual void OnEnabled(bool enabled) override;
 
-		virtual void Update() override;
+		virtual void OnUpdate() override;
 
 	private:
 		InputManager &m_inputManager = InputManager::Instance();

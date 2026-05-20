@@ -3,6 +3,8 @@
 #include <Game/Systems/SystemBase.hpp>
 #include <Game/Systems/DefaultToolSystem.h>
 #include <Game/Events/InputManager.hpp>
+#include <Game/GameObjects/Tiles/TileObject.h>
+#include <Game/GameObjects/Tracks/TrackObject.h>
 #include <Game/World.h>
 
 namespace Game
@@ -23,13 +25,15 @@ namespace Game
 		};
 
 		void OnCreate() override;
-		void Update() override;
+		void OnUpdate() override;
 		void OnDestroy() override;
 
 		void OnEnabled(bool enabled) override;
 
 		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
 		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
+
+		void SetState(State state);
 
 	private:
 		InputManager& m_InputManager = InputManager::Instance();
@@ -40,7 +44,13 @@ namespace Game
 
 		DefaultToolSystem* m_DefaultToolSystem = nullptr;
 
+		TileObject* m_StartTileObject = nullptr;
+		TileObject* m_EndTileObject = nullptr;
 
+		std::vector<TileObject*> m_TilePath;
+		std::vector<TrackObject*> m_TrackPath;
+
+		void Update();
 		void Apply();
 		void Cancel();
 

@@ -12,6 +12,6 @@ namespace Game
 		{
 		}
 		
-		void Update() override {}
+		void OnUpdate() override {}
 	};
 }

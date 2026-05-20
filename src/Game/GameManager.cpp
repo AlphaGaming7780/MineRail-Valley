@@ -88,7 +88,7 @@ namespace Game
 
 		while (gameWindow.IsOpen())
 		{
-			gameWindow.Clear(sf::Color::Black);
+			renderManager.NewFrame();
 			inputManager.ResetEdges();
 			eventManager.process();
 			inputManager.Update();
@@ -104,6 +104,7 @@ namespace Game
 			renderManager.Render(gameWindow.Get());
 			uiManager.Draw(gameWindow.Get());
 			gameWindow.Display();
+			//
 
 #ifdef  DEBUG
 			pallas::PerformanceLogger::Get().SaveToFile();

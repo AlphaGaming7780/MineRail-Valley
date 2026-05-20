@@ -11,6 +11,11 @@ namespace Game
 		sf::Vector2i m_Index = sf::Vector2i(-1, -1);
 		bool m_CanBuild = false;
 
+		TileObject* m_Up = nullptr;
+		TileObject* m_Left = nullptr;
+		TileObject* m_Right = nullptr;
+		TileObject* m_Down = nullptr;
+
 	protected:
 		TileObject() : GameObject() {}
 		TileObject(const TileData& tileData, const sf::Vector2i& index) : GameObject(tileData.object) 

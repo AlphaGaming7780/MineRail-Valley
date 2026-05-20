@@ -311,6 +311,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Utils.hpp" />
     <ClInclude Include="include\Game\Utils\AnimatedTextureUtils.h" />
     <ClInclude Include="include\Game\Utils\RaycastUtils.h" />
+    <ClInclude Include="include\Game\Utils\TerrainUtils.h" />
     <ClInclude Include="include\Game\Utils\Time.hpp" />
     <ClInclude Include="include\Game\Utils\Vector2.hpp" />
     <ClInclude Include="include\Game\World.h" />

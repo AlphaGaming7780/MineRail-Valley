@@ -172,7 +172,7 @@ namespace Game
 
     void UIElement::ComputeAbsolutePosition(const sf::View& view)
     {
-        sf::Vector2f parentPos = { 0,0 }; // view.getCenter() - view.getSize() / 2.f;
+        sf::Vector2f parentPos = { 0,0 };
         sf::Vector2f parentSize = view.getSize();
 
         if (m_Parent)

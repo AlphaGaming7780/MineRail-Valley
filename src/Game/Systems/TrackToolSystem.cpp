@@ -1,6 +1,7 @@
 #include<Game/Systems/TrackToolSystem.h>
 #include<Game/InputsActionSets/TrackToolInputSet.h>
 #include <Game/Utils/RaycastUtils.h>
+#include <Game/Utils/TerrainUtils.h>
 
 
 namespace Game
@@ -17,7 +18,7 @@ namespace Game
 		SetEnable(true);
 	}
 
-	void TrackToolSystem::Update()
+	void TrackToolSystem::OnUpdate()
 	{
 		if (m_ApplyBinding->justPressed)
 		{
@@ -27,6 +28,8 @@ namespace Game
 		{
 			Cancel();
 		}
+
+		Update();
 	}
 
 	void TrackToolSystem::OnDestroy()
@@ -52,21 +55,71 @@ namespace Game
 		SetEnable(true);
 	}
 
+	void TrackToolSystem::SetState(State state)
+	{
+		m_State = state;
+	}
+
+	void TrackToolSystem::Update()
+	{
+		if (m_State == State::Creating)
+		{
+			TileObject* result = RaycastUtils::PerformRaycast<TileObject>(*m_World, GameWindow::Instance().Get());
+
+			if (result == m_EndTileObject)
+			{
+				return;
+			}
+
+			//TODO : PlaySound;
+
+			m_EndTileObject = result;
+
+			if (!m_StartTileObject || !m_EndTileObject)
+				return;
+
+			for (TileObject* to : m_TilePath)
+			{
+				to->ResetColor();
+			}
+
+			m_TilePath.clear();
+
+			m_TilePath = TerrainUtils::GetPath(*m_World, m_StartTileObject, m_EndTileObject);
+
+			m_Logger.InfoO("m_TilePath lenght: ", m_TilePath.size());
+
+			for (TileObject* to : m_TilePath)
+			{
+				to->SetColor(sf::Color::Cyan);
+			}
+		}
+	}
+
 	void TrackToolSystem::Apply()
 	{
 		if (m_State == State::Default)
 		{
-			GameObject* result = RaycastUtils::PerformRaycast(*m_World, GameWindow::Instance().Get());
+			TileObject* result = RaycastUtils::PerformRaycast<TileObject>(*m_World, GameWindow::Instance().Get());
 			
 			if (!result)
 			{
-				m_Logger.WarnO("result is null");
 				return;
 			}
 
-			
+			//Play sound ?
 
-		} 
+			m_StartTileObject = result;
+
+			SetState(State::Creating);
+
+			m_Logger.InfoO("Selected tile: ", m_StartTileObject->m_Index);
+
+		}
+		else if (m_State == State::Creating)
+		{
+		}
+
 	}
 
 	void TrackToolSystem::Cancel()
@@ -78,8 +131,10 @@ namespace Game
 			//m_DefaultToolSystem->SetEnable(true);
 			return;
 		}
-
-
-
+		else if (m_State == State::Creating)
+		{
+			m_TilePath.clear();
+			SetState(State::Default);
+		}
 	}
 }

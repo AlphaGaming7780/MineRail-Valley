@@ -15,7 +15,7 @@ namespace Game
     {
         m_Logger.InfoO("Init UIManager.");
 
-        EventManager::Instance().Register(this);
+        EventManager::Instance().Register<sf::Event::Resized>(this);
 
         m_UIView.setSize({1920, 1080}); //(sf::Vector2f)sf::VideoMode::getDesktopMode().size
         m_UIView.setCenter(m_UIView.getSize() / 2.f);
