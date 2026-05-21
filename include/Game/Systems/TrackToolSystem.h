@@ -59,5 +59,5 @@ namespace Game
 
 	};
 
-	inline constexpr sf::Color TrackToolSystem::kBuildColor(0, 255, 255, 128);
+	inline constexpr sf::Color TrackToolSystem::kBuildColor(128, 255, 255, 255);
 }

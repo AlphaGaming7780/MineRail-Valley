@@ -14,7 +14,7 @@ namespace Game
 	public:
 
 		static const sf::Color kHoverColor;
-		static const sf::Color kSelectColor;
+		//static const sf::Color kSelectColor;
 
 		DefaultToolSystem(World* world, pallas::Logger& logger)
 			: SystemBase(world, logger)
@@ -48,7 +48,7 @@ namespace Game
 		void ToggleTrain();
 	};
 
-	inline constexpr sf::Color DefaultToolSystem::kHoverColor(0, 183, 235, 255);
-	inline constexpr sf::Color DefaultToolSystem::kSelectColor(0, 255, 255, 255);
+	inline constexpr sf::Color DefaultToolSystem::kHoverColor(128, 255, 255, 255); //(128, 183, 235, 255);
+	//inline constexpr sf::Color DefaultToolSystem::kSelectColor(128, 255, 255, 255);
 
 }

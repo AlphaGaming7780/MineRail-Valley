@@ -10,6 +10,7 @@
 #include <Game/Systems/SystemBase.hpp>
 #include <Game/Events.h>
 #include <Game/GameObjects/GameObject.h>
+#include <Game/InputsActionSets/GameInputSet.h>
 
 namespace Game {
 
@@ -54,9 +55,13 @@ namespace Game {
 
     private:
 
+        InputManager& m_InputManager = InputManager::Instance();
+
         World()
         {
             EventManager::Instance().Register<LoadingStart>(this);
+            m_InputManager.Register<GameInputs>();
+            m_PauseBinding = &m_InputManager.GetBinding(GameAction::Pause);
         }
 
         pallas::Logger m_Logger = pallas::Logger("World");
@@ -65,6 +70,8 @@ namespace Game {
 
         std::unordered_map<std::type_index, SystemBase*> m_Systems;
         std::vector<GameObject*> m_GameObjects;
+
+        InputBindingState* m_PauseBinding = nullptr;
 
         void CreateMap(MapData* mapData);
 

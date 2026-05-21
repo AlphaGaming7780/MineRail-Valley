@@ -294,6 +294,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\GameObjects\Wagons\WagonObject.h" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />
     <ClInclude Include="include\Game\InputsActionSets\CameraInputSet.hpp" />
+    <ClInclude Include="include\Game\InputsActionSets\GameInputSet.h" />
     <ClInclude Include="include\Game\InputsActionSets\TrackToolInputSet.h" />
     <ClInclude Include="include\Game\Rendering.hpp" />
     <ClInclude Include="include\Game\Rendering\Camera.hpp" />

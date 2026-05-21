@@ -53,6 +53,6 @@ namespace Game
 		void SetState(State state);
 	};
 
-	inline constexpr sf::Color BulldozeToolSystem::kBulldozeColorHover(255, 165, 0, 128);
-	inline constexpr sf::Color BulldozeToolSystem::kBulldozeColor(255, 0, 0, 128);
+	inline constexpr sf::Color BulldozeToolSystem::kBulldozeColorHover(255, 165, 128, 255);
+	inline constexpr sf::Color BulldozeToolSystem::kBulldozeColor(255, 128, 128, 255);
 }

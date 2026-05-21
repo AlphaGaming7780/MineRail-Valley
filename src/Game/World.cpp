@@ -42,6 +42,11 @@ namespace Game
 
     void World::Update()
     {
+        if (m_PauseBinding->justPressed)
+        {
+            Pause(!m_Paused);
+        }
+
         for (auto& [type, sys] : m_Systems) 
         {
             if (!sys->IsEnabled()) continue;
@@ -81,15 +86,22 @@ namespace Game
         GameMode gameMode = ev.m_GameMode;
         MapData* mapData = ev.m_MapData;
 
-        if (purpose == Purpose::NewGame)
+        if (gameMode == GameMode::InGame)
         {
-            CreateMap(mapData);
+            m_InputManager.EnableBlock<GameAction>();
+            if (purpose == Purpose::NewGame && mapData)
+            {
+                CreateMap(mapData);
+            }
         }
-        else if (purpose == Purpose::Cleanup)
+        else
         {
-            ClearWorld();
+            m_InputManager.EnableBlock<GameAction>(false);
+            if (purpose == Purpose::Cleanup)
+            {
+                ClearWorld();
+            }
         }
-
     }
 
     void World::CreateMap(MapData* mapData)
