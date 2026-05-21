@@ -30,7 +30,7 @@ namespace Game
 		TrainObject() : GameObject() { m_RenderLayer = RenderLayer::Trains; }
 		TrainObject(const TrainData& trainData) : GameObject(trainData.object)
 		{
-
+			m_RenderLayer = RenderLayer::Trains;
 		}
 	};
 }

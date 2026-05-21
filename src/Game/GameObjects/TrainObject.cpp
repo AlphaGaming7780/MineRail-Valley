@@ -7,7 +7,7 @@ namespace Game
 {
     void TrainObject::Update()
     {
-
+        GameObject::Update();
         if (!m_Current || !m_Next)
         {
             m_Enabled = false;

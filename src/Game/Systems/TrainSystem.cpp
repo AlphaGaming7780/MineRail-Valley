@@ -41,24 +41,28 @@ namespace Game
 				if (m_StationSpawnPool.size() <= 0)
 				{
 					// Remplacer par la victoire
-					SetEnable(false);
+					//SetEnable(false);
 				}
 				SpawnStationFromPool();
+				SpawnWaveTrains();
 				return;
 			}
 			CheckForCollision();
 		}
 		else
 		{
-			if (m_StartWaveTimer < 10)
+			if (m_StartWaveTimer < 5)
 			{
-				m_StartWaveTimer += Time::GetDeltaTime().asSeconds();
+				if(!m_World->IsPaused()) m_StartWaveTimer += Time::GetDeltaTime().asSeconds();
 				return;
 			}
 			m_InWave = true;
 			m_StartWaveTimer = 0;
 
-			SpawnWaveTrains();
+			for (TrainObject* t : m_Trains)
+			{
+				t->m_Enabled = true;
+			}
 		}
 	}
 
@@ -95,6 +99,7 @@ namespace Game
 		{
 			SetEnable(true);
 			SpawnInitialStations();
+			SpawnWaveTrains();
 			m_InWave = false;
 		}
 	}
@@ -248,10 +253,13 @@ namespace Game
 		train->ResetColor();
 
 		if (src->m_Tile)
-			train->SetPosition(src->m_Tile->GetPosition());
+		{
+			sf::Vector2 offset = src->m_First->m_Tile->GetPosition() - src->m_Tile->GetPosition();
+			train->SetPosition(src->m_Tile->GetPosition() + offset / 2.f);
+		}
 
-		train->m_RenderLayer = RenderLayer::Trains;
-		train->m_Enabled = true;
+		train->m_Enabled = false;
+		train->RequireUpdate();
 
 		m_Trains.push_back(train);
 		return train;

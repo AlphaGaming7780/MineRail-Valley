@@ -107,6 +107,7 @@ namespace Game
 
     void TrackObjectBase::Update()
     {
+        GameObject::Update();
         m_Enabled = false;
         ResolveConnections();
         UpdateSprite();
