@@ -210,14 +210,20 @@ namespace Game
 
     UIElement::~UIElement()
     {
-        for (UIElement* child : m_Children)
+        if (m_Parent)
         {
-            delete child;
+            m_Parent->RemoveChild(this);
+            m_Parent = nullptr;
         }
+
+        auto childrenCopy = m_Children;
         m_Children.clear();
 
-        if (m_Parent)
-            m_Parent->RemoveChild(this);
+        for (UIElement* child : childrenCopy)
+        {
+            child->m_Parent = nullptr;
+            delete child;
+        }
     }
 
     void UIElement::Draw(sf::RenderTexture& canvas)
