@@ -22,8 +22,9 @@ namespace Game
 
 		std::vector<WagonObject*> m_Wagons;
 
-
 		void Update() override;
+		void UpdateSprite(const sf::Vector2f& dir);
+
 
 	protected:
 		TrainObject() : GameObject() { m_RenderLayer = RenderLayer::Trains; }

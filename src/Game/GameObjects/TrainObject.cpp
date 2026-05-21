@@ -7,11 +7,9 @@ namespace Game
 
     void TrainObject::Update()
     {
-        pallas::Logger logger("TrainObject");
 
         if (!m_Current || !m_Next)
         {
-            logger.InfoO("m_Current ou m_Next est null");
             return;
         }
 
@@ -20,8 +18,6 @@ namespace Game
 
         sf::Vector2f dir = target - pos;
         float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-
-        logger.InfoO("dist = ", dist);
 
         const float epsilon = 1.0f;
 
@@ -38,10 +34,6 @@ namespace Game
             {
                 next = m_Next->m_Second;
             }
-            else
-            {
-                logger.ErrorO("Can't find the next track");
-            }
 
             m_Current = m_Next;
             m_Next = next;
@@ -53,6 +45,19 @@ namespace Game
         sf::Vector2f move = dir * m_Speed * Time::GetDeltaTime().asSeconds();
 
         Move(move);
+        UpdateSprite(dir);
+    }
+
+    void TrainObject::UpdateSprite(const sf::Vector2f& dir)
+    {
+        if (dir.x != 0)
+        {
+            m_Sprite->setRotation(sf::degrees(0));
+        }
+        else if (dir.y != 0)
+        {
+            m_Sprite->setRotation(sf::degrees(90));
+        }
     }
 
 

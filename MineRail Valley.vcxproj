@@ -253,6 +253,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\PallasEngine\Logging\PerformanceLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="assets\Trains\DEFAULT.json" />
     <ClInclude Include="include\Game\AssetDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetType\MapData.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetType\ObjectData.h" />

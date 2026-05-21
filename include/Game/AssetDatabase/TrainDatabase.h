@@ -38,7 +38,7 @@ namespace Game
 
 		std::string GetDefaultPath() override
 		{
-			return (std::filesystem::path("Tracks") / "DEFAULT.json").string();
+			return (std::filesystem::path("Trains") / "DEFAULT.json").string();
 		}
 
 	private:

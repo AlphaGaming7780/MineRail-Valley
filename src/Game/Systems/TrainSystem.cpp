@@ -1,5 +1,6 @@
 #include <Game/Systems/TrainSystem.h>
 #include <Game/AssetDatabase/StationDatabase.h>
+#include <Game/AssetDatabase/TrainDatabase.h>
 #include <Game/AssetDatabase/TrackDatabase.h>
 #include <Game/Utils/Time.hpp>
 #include <random>
@@ -15,7 +16,7 @@ namespace Game
 		m_StationsData.emplace("Stations/red_station.json", StationDatabase::Instance().Load("Stations/red_station.json"));
 		m_StationsData.emplace("Stations/yellow_station.json", StationDatabase::Instance().Load("Stations/yellow_station.json"));
 
-
+		m_TrainsData.emplace("Trains/Minecart.json", TrainDatabase::Instance().Load("Trains/Minecart.json"));
 
 	}
 

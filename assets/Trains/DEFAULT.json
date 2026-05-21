@@ -1,6 +1,6 @@
 {
   "ObjectData": {
-    "texture": "Textures\\minecart.png",
+    "texture": "Textures\\DEFAULT.png",
     "color": {
       "r": 255,
       "g": 255,
@@ -8,14 +8,12 @@
       "a": 255
     },
     "size": {
-      "x": 100.0,
+      "x": 95.0,
       "y": 100.0
     },
     "animated": false,
     "framesX": 0,
     "framesY": 0,
     "duration": 0.0
-  },
-  "StraightTrackTexture": "Textures\\DEFAULT.png",
-  "BendTrackTexture": "Textures\\DEFAULT.png"
+  }
 }
