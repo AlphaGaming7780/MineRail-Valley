@@ -1,7 +1,6 @@
 #pragma once
 
 #include <Game/GameObjects/Tracks/TrackObjectBase.h>
-#include <Game/GameObjects/Tracks/TrackObject.h>
 #include <Game/AssetDatabase/AssetType/TrackData.h>
 
 namespace Game
