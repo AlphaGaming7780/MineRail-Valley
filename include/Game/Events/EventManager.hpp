@@ -121,6 +121,25 @@ namespace Game
                 });
         }
 
+        template<typename T>
+        std::vector<IEventObserver<T>*> GetObservers()
+        {
+            const std::type_index key = typeid(T);
+
+            auto it = m_Observers.find(key);
+            if (it == m_Observers.end())
+                return {};
+
+            std::vector<IEventObserver<T>*> result;
+            result.reserve(it->second.size());
+
+            for (IEventObserverBase* baseObs : it->second)
+            {
+                result.push_back(static_cast<IEventObserver<T>*>(baseObs));
+            }
+
+            return result;
+        }
 
     private:
         EventManager();

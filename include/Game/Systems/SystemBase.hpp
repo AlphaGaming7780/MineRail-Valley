@@ -45,8 +45,8 @@ namespace Game
         pallas::Logger& m_Logger;
 
         // Bind c'est func a des event sur l'event manager ?
-        virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) {};
-        virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) {};
+        virtual void OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData) {};
+        virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData) {};
 
     private:
         bool m_Enabled = true;

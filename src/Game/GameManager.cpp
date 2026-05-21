@@ -132,15 +132,37 @@ namespace Game
 
 		EventManager& eventManager = EventManager::Instance();
 		UIManager& uiManager = UIManager::Instance();
+		GameWindow& gameWindow = GameWindow::Instance();
         UILoadingScreen& loadingScreen = uiManager.SetRoot<UILoadingScreen>();
 
-		eventManager.Notify(LoadingStart(purpose, gameMode, mapData));
+		auto loadingStartObservers = eventManager.GetObservers<LoadingStart>();
+		auto loadingCompleteObservers = eventManager.GetObservers<LoadingComplete>();
 
-        // Maybe do more stuff here ?
-        // Like serialization (loading save game or other stuff);
+		float total = loadingStartObservers.size() + loadingCompleteObservers.size();
+		int current = 0;
 
+		LoadingStart ls(purpose, gameMode, mapData);
+		LoadingComplete lc(purpose, gameMode, mapData);
 
-		eventManager.Notify(LoadingComplete(purpose, gameMode, mapData));
+		for (IEventObserver<LoadingStart>* obs : loadingStartObservers)
+		{
+			obs->OnEvent(ls);
+			loadingScreen.SetValue(++current / total);
+			eventManager.process();
+			uiManager.Update(gameWindow.Get());
+			uiManager.Draw(gameWindow.Get());
+			gameWindow.Display();
+		}
+
+		for (IEventObserver<LoadingComplete>* obs : loadingCompleteObservers)
+		{
+			obs->OnEvent(lc);
+			loadingScreen.SetValue(++current / total);
+			eventManager.process();
+			uiManager.Update(gameWindow.Get());
+			uiManager.Draw(gameWindow.Get());
+			gameWindow.Display();
+		}
 
         World::Instance().UnPause();
 		m_CurrentState = GameState::WorldReady;

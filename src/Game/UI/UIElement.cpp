@@ -5,6 +5,7 @@ namespace Game
 {
     void UIElement::AddChild(UIElement* child)
     {
+        if (child->m_Parent) m_Parent->RemoveChild(child);
         child->m_Parent = this;
         m_Children.push_back(child);
     }
@@ -17,10 +18,7 @@ namespace Game
         auto it = std::find(m_Children.begin(), m_Children.end(), child);
         if (it != m_Children.end())
         {
-            // On enlève le parent
             child->m_Parent = nullptr;
-
-            // On retire du vecteur
             m_Children.erase(it);
         }
     }
@@ -212,9 +210,9 @@ namespace Game
 
     UIElement::~UIElement()
     {
-        for (auto& child : m_Children)
+        for (UIElement* child : m_Children)
         {
-            if(child) delete child;
+            delete child;
         }
         m_Children.clear();
 

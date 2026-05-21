@@ -15,12 +15,12 @@ namespace Game
 	}
 	void SystemBase::OnEvent(const LoadingStart& ev)
 	{
-		OnGameLoadingStart(ev.m_GameMode, ev.m_Purpose);
+		OnGameLoadingStart(ev.m_GameMode, ev.m_Purpose, ev.m_MapData);
 	}
 
 	void SystemBase::OnEvent(const LoadingComplete& ev)
 	{
-		OnGameLoadingComplete(ev.m_GameMode, ev.m_Purpose);
+		OnGameLoadingComplete(ev.m_GameMode, ev.m_Purpose, ev.m_MapData);
 	}
 
 }

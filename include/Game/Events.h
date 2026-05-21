@@ -8,3 +8,4 @@
 #include <Game/Events/Events/LoadingStart.h>
 #include <Game/Events/Events/LoadingComplete.h>
 #include <Game/Events/Events/TrainStopped.h>
+#include <Game/Events/Events/TrainCollision.h>

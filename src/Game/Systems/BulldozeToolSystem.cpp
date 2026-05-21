@@ -47,11 +47,11 @@ namespace Game
 		m_InputManager.EnableBlock<TrackToolAction>(enabled);
 		Cleanup();
 	}
-	void BulldozeToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
+	void BulldozeToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		SetEnable(false);
 	}
-	void BulldozeToolSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose)
+	void BulldozeToolSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		SetEnable(false);
 	}

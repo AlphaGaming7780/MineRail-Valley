@@ -42,8 +42,9 @@ namespace Game
 					SetEnable(false);
 				}
 				SpawnStationFromPool();
+				return;
 			}
-			return;
+			CheckForCollision();
 		}
 		else
 		{
@@ -56,11 +57,10 @@ namespace Game
 			m_StartWaveTimer = 0;
 
 			SpawnWaveTrains();
-
 		}
 	}
 
-	void TrainSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
+	void TrainSystem::OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		SetEnable(false);
 		m_StationSpawnPool.clear();
@@ -82,7 +82,7 @@ namespace Game
 		}
 	}
 
-	void TrainSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose)
+	void TrainSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		if (mode == GameMode::InGame)
 		{
@@ -111,6 +111,11 @@ namespace Game
 		// Perdu la game
 
 		DestroyTrain(train);
+	}
+
+	void TrainSystem::OnEvent(const TrainCollision& event)
+	{
+		OnTrainCollision(event.m_TrainA, event.m_TrainB, event.m_Posittion);
 	}
 
 	TileObject* TrainSystem::GetStationSpawnTile() const
@@ -314,5 +319,45 @@ namespace Game
 	{
 		if (m_Trains.empty()) return true;
 		return false;
+	}
+
+	void TrainSystem::CheckForCollision()
+	{
+		const std::vector<TrainObject*>& trains = m_World->GetAllGameObject<TrainObject>();
+		EventManager& ev = EventManager::Instance();
+
+		// Rien à vérifier si moins de 2 trains
+		if (trains.size() < 2)
+			return;
+
+		// Double boucle pour comparer chaque paire une seule fois
+		for (size_t i = 0; i < trains.size(); ++i)
+		{
+			TrainObject* a = trains[i];
+			sf::FloatRect rectA = a->GetGlobalBounds();
+
+			for (size_t j = i + 1; j < trains.size(); ++j)
+			{
+				TrainObject* b = trains[j];
+				sf::FloatRect rectB = b->GetGlobalBounds();
+
+				std::optional<sf::FloatRect> collision = rectA.findIntersection(rectB);
+
+				if (collision.has_value())
+				{
+					a->m_Enabled = false;
+					b->m_Enabled = false;
+					ev.Notify<TrainCollision>({ a, b, collision.value().getCenter() });
+					return;
+				}
+			}
+		}
+	}
+	void TrainSystem::OnTrainCollision(TrainObject* a, TrainObject* b, sf::Vector2f collisionCenter)
+	{
+		m_Logger.InfoO("Collision de train en ", collisionCenter);
+
+		m_World->DestroyObject(a);
+		m_World->DestroyObject(b);
 	}
 }

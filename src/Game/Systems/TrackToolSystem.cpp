@@ -51,12 +51,12 @@ namespace Game
 		Cleanup();
 	}
 
-	void TrackToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
+	void TrackToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		SetEnable(false);
 	}
 
-	void TrackToolSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose)
+	void TrackToolSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		SetEnable(false);
 	}

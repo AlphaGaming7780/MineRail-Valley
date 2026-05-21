@@ -28,8 +28,8 @@ namespace Game
 
 		void OnEnabled(bool enabled) override;
 
-		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
-		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
+		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData) override;
+		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData) override;
 
 	private:
 		InputManager& m_InputManager = InputManager::Instance();

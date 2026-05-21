@@ -21,9 +21,9 @@ namespace Game
 
 		virtual void OnCreate() override;
 
-		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
+		virtual void OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData) override;
 
-		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
+		virtual void OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData) override;
 
 		virtual void OnEnabled(bool enabled) override;
 

@@ -12,23 +12,25 @@
 
 namespace Game
 {
-	class TrainSystem : public SystemBase, IEventObserver<TrainStopped>
+	class TrainSystem : public SystemBase, IEventObserver<TrainStopped>, IEventObserver<TrainCollision>
 	{
 	public:
 		TrainSystem(World* world, pallas::Logger& logger)
 			: SystemBase(world, logger)
 		{
 			EventManager::Instance().Register<TrainStopped>(this);
+			EventManager::Instance().Register<TrainCollision>(this);
 		}
 
 		void OnCreate() override;
 		void OnDestroy() override;
 		void OnUpdate() override;
 
-		void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
-		void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
+		void OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData) override;
+		void OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData) override;
 
 		void OnEvent(const TrainStopped& event);
+		void OnEvent(const TrainCollision& event);
 
 	private:
 
@@ -50,7 +52,8 @@ namespace Game
 		void SpawnInitialStations();
 		void SpawnWaveTrains();
 		bool AllTrainsArrived() const;
-		//void ClearWaveTrains();
+		void CheckForCollision();
+		void OnTrainCollision(TrainObject* a, TrainObject* b, sf::Vector2f collisionCenter);
 
 		TileObject* GetStationSpawnTile() const;
 		StationObject* SpawnStationFromPool();

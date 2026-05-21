@@ -61,16 +61,16 @@ namespace Game
 
     void World::Shutdown()
     {
-        for (GameObject* go : m_GameObjects) 
-        {
-            go->OnDestroy();
-            delete go;
-        }
-
         for (auto& pair : m_Systems) 
         {
             pair.second->OnDestroy();
             delete pair.second;
+        }
+
+        for (GameObject* go : m_GameObjects)
+        {
+            go->OnDestroy();
+            delete go;
         }
 
         m_Systems.clear();

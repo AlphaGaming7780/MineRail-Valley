@@ -23,14 +23,14 @@ namespace Game
 		m_zoomBinding =			&m_inputManager.GetBinding(CameraAction::Zoom);
 	}
 
-	void CameraSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
+	void CameraSystem::OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		m_Logger.InfoO("CameraSystem received OnGameLoadingStart, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
 
 		SetEnable(false);
 	}
 
-	void CameraSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose)
+	void CameraSystem::OnGameLoadingComplete(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		m_Logger.InfoO("CameraSystem received OnGameLoadingComplete, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
 
