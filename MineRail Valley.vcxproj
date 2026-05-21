@@ -222,20 +222,23 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="src\Game\GameObjects\TrainObject.cpp" />
-    <ClCompile Include="src\Game\Systems\TrainSystem.cpp" />
-    <ClCompile Include="src\Game\GameObjects\TrackObjectBase.cpp" />
-    <ClCompile Include="src\Game\GameObjects\TrackObject.cpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
     <ClCompile Include="src\Game\Events\InputManager.cpp" />
+    <ClCompile Include="src\Game\GameManager.cpp" />
     <ClCompile Include="src\Game\GameObjects\GameObject.cpp" />
+    <ClCompile Include="src\Game\GameObjects\TrackObject.cpp" />
+    <ClCompile Include="src\Game\GameObjects\TrackObjectBase.cpp" />
     <ClCompile Include="src\Game\Rendering\Camera.cpp" />
     <ClCompile Include="src\Game\Rendering\GameWindow.cpp" />
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
+    <ClCompile Include="src\Game\Systems\BulldozeToolSystem.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Game\Systems\SystemBase.cpp" />
     <ClCompile Include="src\Game\Systems\TrackToolSystem.cpp" />
+    <ClCompile Include="src\Game\Systems\TrainSystem.cpp" />
     <ClCompile Include="src\Game\UI\Menu\InGameUI.cpp" />
     <ClCompile Include="src\Game\UI\Menu\LoadingScreen.cpp" />
     <ClCompile Include="src\Game\UI\UIElement.cpp" />
@@ -245,11 +248,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\UI\Widgets\UIProgressBar.cpp" />
     <ClCompile Include="src\Game\Utils\Time.cpp" />
     <ClCompile Include="src\Game\World.cpp" />
-    <ClCompile Include="src\Game\GameManager.cpp" />
-    <ClCompile Include="src\PallasEngine\Logging\PerformanceLogger.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\Logger.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\LogManager.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="src\PallasEngine\Logging\PerformanceLogger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game\AssetDatabase.h" />
@@ -319,6 +320,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Utils\RaycastUtils.h" />
     <ClInclude Include="include\Game\Utils\TerrainUtils.h" />
     <ClInclude Include="include\Game\Utils\Time.hpp" />
+    <ClInclude Include="include\Game\Utils\TrackUtils.h" />
     <ClInclude Include="include\Game\Utils\Vector2.hpp" />
     <ClInclude Include="include\Game\World.h" />
     <ClInclude Include="include\Game\AssetDatabase\AssetDatabase.h" />

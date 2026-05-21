@@ -7,13 +7,13 @@
 
 enum class TrackToolAction : uint8_t {
     Apply,
-    Cancle,
+    Cancel,
     COUNT
 };
 
 struct TrackInputs : Game::InputActionSet<TrackToolAction> {
     static inline std::array<Mapping, (size_t)TrackToolAction::COUNT> DefaultMap = { {
         { Enum::Apply,  sf::Mouse::Button::Left },
-        { Enum::Cancle, sf::Mouse::Button::Right }
+        { Enum::Cancel, sf::Mouse::Button::Right }
     } };
 };

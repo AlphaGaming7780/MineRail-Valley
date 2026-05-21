@@ -50,6 +50,26 @@ namespace Game
 
         return result;
     }
+
+    std::vector<TrackObject*> TrackObjectBase::GetAdjacentTrackObjects() const
+    {
+        std::vector<TrackObject*> result;
+        if (!m_Tile) return result;
+
+        auto check = [&](TileObject* t)
+            {
+                if (!t || !t->m_PlacedTrack) return;
+                if (auto track = dynamic_cast<TrackObject*>(t->m_PlacedTrack))
+                    result.push_back(track);
+            };
+
+        check(m_Tile->m_Up);
+        check(m_Tile->m_Right);
+        check(m_Tile->m_Down);
+        check(m_Tile->m_Left);
+
+        return result;
+    }
 }
 
 

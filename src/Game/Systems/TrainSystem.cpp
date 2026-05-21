@@ -156,6 +156,7 @@ namespace Game
 
 		track->SetTile(tile);
 		track->m_Enabled = true;
+		track->m_CanBeDeleted = false;
 
 		return track;
 	}
