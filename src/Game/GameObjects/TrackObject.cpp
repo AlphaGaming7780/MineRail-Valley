@@ -5,6 +5,7 @@ namespace Game
 {
     void TrackObject::Update()
     {
+        GameObject::Update();
         m_Enabled = false;
         ResolveConnections();
         UpdateSprite();
@@ -12,11 +13,7 @@ namespace Game
 
 	void TrackObject::OnDestroy()
 	{
-		if (m_Tile != nullptr && m_Tile->m_PlacedTrack == this)
-		{
-			m_Tile->m_PlacedTrack = nullptr;
-		}
-
+        TrackObjectBase::OnDestroy();
 		TextureDatabase::Instance().Unload(m_StraightTexturePath);
 		TextureDatabase::Instance().Unload(m_BendTexturePath);
 	}

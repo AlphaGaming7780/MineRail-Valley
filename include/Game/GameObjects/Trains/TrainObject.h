@@ -9,16 +9,23 @@ namespace Game
 {
 	class TrainObject : public GameObject
 	{
+		friend class World;
 	public:
-		TrackObject* Next = nullptr;
-		TrackObject* Current = nullptr;
-		TrackObject* Previous = nullptr;
+		TrackObjectBase* m_Next = nullptr;
+		TrackObjectBase* m_Current = nullptr;
+		TrackObjectBase* m_Previous = nullptr;
 
-		float speed = 0.f;
+		float m_Speed = 0.f;
 
-		StationObject* StationSrc = nullptr;
-		StationObject* StationDest = nullptr;
+		StationObject* m_StationSrc = nullptr;
+		StationObject* m_StationDest = nullptr;
 
-		std::vector<WagonObject*> Wagons;
+		std::vector<WagonObject*> m_Wagons;
+
+
+		void Update() override;
+
+	protected:
+		TrainObject() : GameObject() { m_RenderLayer = RenderLayer::Trains; }
 	};
 }

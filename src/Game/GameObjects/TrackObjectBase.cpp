@@ -17,6 +17,18 @@ namespace Game
 		m_Enabled = true;
 	}
 
+    void TrackObjectBase::OnDestroy()
+    {
+        GameObject::OnDestroy();
+        if (m_Tile != nullptr && m_Tile->m_PlacedTrack == this)
+        {
+            m_Tile->m_PlacedTrack = nullptr;
+        }
+
+        if (m_First) m_First->m_Enabled = true;
+        if (m_Second) m_Second->m_Enabled = true;
+    }
+
     std::vector<TrackObjectBase*> TrackObjectBase::GetAdjacentTracks() const
     {
         std::vector<TrackObjectBase*> result;

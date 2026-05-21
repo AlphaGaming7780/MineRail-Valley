@@ -10,11 +10,6 @@ namespace Game
 		friend class World;
 	public:
 
-		virtual ~TileObject()
-		{
-			if(m_PlacedTrack) m_PlacedTrack->m_Tile = nullptr;
-		}
-
 		sf::Vector2i m_Index = sf::Vector2i(-1, -1);
 		bool m_CanBuild = false;
 
@@ -24,6 +19,25 @@ namespace Game
 		TileObject* m_Down = nullptr;
 
 		TrackObjectBase* m_PlacedTrack = nullptr;
+
+		void OnDestroy() override
+		{
+			GameObject::OnDestroy();
+			if (m_PlacedTrack) m_PlacedTrack->m_Tile = nullptr;
+		}
+
+		std::vector<TileObject*> GetAdjacentTiles() const
+		{
+			std::vector<TileObject*> adj;
+			adj.reserve(4);
+
+			if (m_Up)    adj.push_back(m_Up);
+			if (m_Down)  adj.push_back(m_Down);
+			if (m_Left)  adj.push_back(m_Left);
+			if (m_Right) adj.push_back(m_Right);
+
+			return adj;
+		}
 
 	protected:
 		TileObject() : GameObject() {}

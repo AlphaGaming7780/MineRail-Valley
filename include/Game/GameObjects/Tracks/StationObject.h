@@ -13,6 +13,8 @@ namespace Game
 		std::string m_StationColor;
 		sf::Vector2i m_AllowedTileConnection;
 		
+
+
 	protected:
 		StationObject() : TrackObjectBase() {}
 		StationObject(const StationData& stationData) : TrackObjectBase(stationData.object)

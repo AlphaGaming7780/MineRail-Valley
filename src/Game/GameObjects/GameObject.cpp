@@ -70,6 +70,7 @@ namespace Game
     GameObject::GameObject()
     {
         m_Sprite = new sf::Sprite(*TextureDatabase::Instance().Load(m_Texture));
+        UpdateSpriteSize();
     }
 
     GameObject::GameObject(const ObjectData& data)

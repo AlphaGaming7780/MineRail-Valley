@@ -62,6 +62,7 @@ namespace Game
 
 		World::Instance().GetOrCreateSystem<CameraSystem>();
 		World::Instance().GetOrCreateSystem<TrackToolSystem>();
+		World::Instance().GetOrCreateSystem<TrainSystem>();
      
 		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\FrozenHighlands.json"));
 		UIManager::Instance().SetRoot<InGameUI>();

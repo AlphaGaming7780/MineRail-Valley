@@ -16,15 +16,19 @@ namespace Game
 
 		TileObject* m_Tile = nullptr;
 
-		virtual void SetTile(TileObject* tile);
-		virtual void UpdateSprite() = 0;
-		virtual void ResolveConnections() = 0;
+		void SetTile(TileObject* tile);
+		virtual void UpdateSprite() {};
+		virtual void ResolveConnections() {};
+
+		virtual void OnDestroy() override;
 
 		std::vector<TrackObjectBase*> GetAdjacentTracks() const;
 
 	protected:
-		TrackObjectBase() : GameObject() {}
+		TrackObjectBase() : GameObject() { m_RenderLayer = RenderLayer::Tracks; }
 		TrackObjectBase(const ObjectData& obData) : GameObject(obData)
-		{}
+		{
+			m_RenderLayer = RenderLayer::Tracks;
+		}
 	};
 }

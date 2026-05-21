@@ -222,6 +222,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\GameObjects\TrainObject.cpp" />
     <ClCompile Include="src\Game\Systems\TrainSystem.cpp" />
     <ClCompile Include="src\Game\GameObjects\TrackObjectBase.cpp" />
     <ClCompile Include="src\Game\GameObjects\TrackObject.cpp" />
