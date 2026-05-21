@@ -89,13 +89,13 @@ namespace Game
     void TrackObject::ResolveConnections()
     {
         if (m_Tile == nullptr) return;
-        std::vector<TrackObject*> neighbors = GetAdjacentTracks();
+        std::vector<TrackObjectBase*> neighbors = GetAdjacentTracks();
 
         // --- 1) Vérifier si m_First est encore valide ---
         if (m_First)
         {
             bool stillValid = false;
-            for (TrackObject* n : neighbors)
+            for (TrackObjectBase* n : neighbors)
             {
                 if (n == m_First)
                 {
@@ -116,7 +116,7 @@ namespace Game
         if (m_Second)
         {
             bool stillValid = false;
-            for (TrackObject* n : neighbors)
+            for (TrackObjectBase* n : neighbors)
             {
                 if (n == m_Second)
                 {
@@ -136,7 +136,7 @@ namespace Game
         // --- 3) Si m_First est invalide → en choisir un nouveau ---
         if (!m_First && !neighbors.empty())
         {
-            for (TrackObject* n : neighbors)
+            for (TrackObjectBase* n : neighbors)
             {
                 if (n != m_Second)
                 {
@@ -151,7 +151,7 @@ namespace Game
         // --- 4) Si m_Second est invalide → en choisir un autre ---
         if (!m_Second && neighbors.size() > 1)
         {
-            for (TrackObject* n : neighbors)
+            for (TrackObjectBase* n : neighbors)
             {
                 if (n != m_First)
                 {

@@ -222,6 +222,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\Systems\TrainSystem.cpp" />
     <ClCompile Include="src\Game\GameObjects\TrackObjectBase.cpp" />
     <ClCompile Include="src\Game\GameObjects\TrackObject.cpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
@@ -260,6 +261,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\AssetDatabase\MapDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\MusicDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\SoundDatabase.h" />
+    <ClInclude Include="include\Game\AssetDatabase\StationDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\TextureDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\TileDatabase.h" />
     <ClInclude Include="include\Game\AssetDatabase\TrackDatabase.h" />

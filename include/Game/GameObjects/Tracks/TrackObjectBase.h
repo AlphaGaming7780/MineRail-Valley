@@ -2,7 +2,6 @@
 
 #include <Game/GameObjects/GameObject.h>
 #include <Game/GameObjects/Tracks/TrackObject.h>
-//#include <Game/GameObjects/Tiles/TileObject.h>
 #include <Game/AssetDatabase/AssetType/TrackData.h>
 
 namespace Game
@@ -13,8 +12,8 @@ namespace Game
 		friend class World;
 	public:
 
-		TrackObject* m_First = nullptr;
-		TrackObject* m_Second = nullptr;
+		TrackObjectBase* m_First = nullptr;
+		TrackObjectBase* m_Second = nullptr;
 
 		TileObject* m_Tile = nullptr;
 

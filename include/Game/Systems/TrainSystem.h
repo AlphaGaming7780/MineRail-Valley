@@ -1,6 +1,8 @@
 #pragma once
 
 #include <Game/Systems/SystemBase.hpp>
+#include <Game/AssetDatabase/AssetType/StationData.h>
+//#include <Game/AssetDatabase/AssetType/TrainData.h>
 
 namespace Game
 {
@@ -12,8 +14,13 @@ namespace Game
 		{
 		}
 
-		void OnUpdate() override {}
+		void OnCreate() override;
+		void OnDestroy() override;
+		void OnUpdate() override;
 
+	private:
+		std::unordered_map<std::string, StationData*> m_StationsData;
+		//std::unordered_map<std::string, TrainData*> m_StationsData;
 
 	};
 }

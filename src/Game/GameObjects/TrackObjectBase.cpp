@@ -1,5 +1,6 @@
 #include <Game/GameObjects/Tracks/TrackObjectBase.h>
 #include <Game/GameObjects/Tracks/TrackObject.h>
+#include <Game/GameObjects/Tracks/StationObject.h>
 #include <Game/GameObjects/Tiles/TileObject.h>
 
 namespace Game
@@ -18,7 +19,7 @@ namespace Game
 
     std::vector<TrackObjectBase*> TrackObjectBase::GetAdjacentTracks() const
     {
-        std::vector<TrackObject*> result;
+        std::vector<TrackObjectBase*> result;
         if (!m_Tile) return result;
 
         auto check = [&](TileObject* t)
@@ -26,6 +27,8 @@ namespace Game
                 if (!t || !t->m_PlacedTrack) return;
                 if (auto track = dynamic_cast<TrackObject*>(t->m_PlacedTrack))
                     result.push_back(track);
+                else if (auto station = dynamic_cast<StationObject*>(t->m_PlacedTrack))
+                    if(m_Tile->m_Index == station->m_AllowedTileConnection) result.push_back(station);
             };
 
         check(m_Tile->m_Up);
