@@ -125,7 +125,7 @@ namespace Game
     {
         m_Logger.InfoO("GameLoading started, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));
 
-        World::Instance().Pause();
+        //World::Instance().Pause();
 		GameMode oldMode = m_CurrentMode;
 		m_CurrentMode = gameMode;
 		m_CurrentState = GameState::Loading;
@@ -164,7 +164,7 @@ namespace Game
 			gameWindow.Display();
 		}
 
-        World::Instance().UnPause();
+        //World::Instance().UnPause();
 		m_CurrentState = GameState::WorldReady;
 
 		m_Logger.InfoO("GameLoading done, GameMode: ", magic_enum::enum_name(gameMode), " | Purpose: ", magic_enum::enum_name(purpose));

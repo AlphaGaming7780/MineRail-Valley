@@ -93,6 +93,7 @@ namespace Game
             {
                 CreateMap(mapData);
             }
+            Pause(true);
         }
         else
         {
