@@ -216,14 +216,12 @@ namespace Game
             m_Parent = nullptr;
         }
 
-        auto childrenCopy = m_Children;
-        m_Children.clear();
-
-        for (UIElement* child : childrenCopy)
+        for (UIElement* child : m_Children)
         {
             child->m_Parent = nullptr;
             delete child;
         }
+        m_Children.clear();
     }
 
     void UIElement::Draw(sf::RenderTexture& canvas)
