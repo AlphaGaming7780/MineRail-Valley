@@ -12,7 +12,7 @@ namespace Game
 		m_Tile = tile;
 		SetPosition(tile->GetPosition());
         DisconnectTrack();
-		m_Enabled = true;
+        RequireUpdate();
 	}
 
     void TrackObjectBase::ResolveConnections()
@@ -38,7 +38,7 @@ namespace Game
             {
                 if (m_First->m_First == this) m_First->m_First = nullptr;
                 if (m_First->m_Second == this) m_First->m_Second = nullptr;
-                m_First->m_Enabled = true;
+                m_First->RequireUpdate();
                 m_First = nullptr;
             }
         }
@@ -59,7 +59,7 @@ namespace Game
             {
                 if (m_Second->m_First == this) m_Second->m_First = nullptr;
                 if (m_Second->m_Second == this) m_Second->m_Second = nullptr;
-                m_Second->m_Enabled = true;
+                m_Second->RequireUpdate();
                 m_Second = nullptr;
             }
         }
@@ -78,7 +78,7 @@ namespace Game
                     if (!n->m_First) n->m_First = this;
                     else if (!n->m_Second) n->m_Second = this;
 
-                    m_First->m_Enabled = true;
+                    m_First->RequireUpdate();
                     break;
                 }
             }
@@ -97,7 +97,7 @@ namespace Game
                     if (!n->m_First) n->m_First = this;
                     else if (!n->m_Second) n->m_Second = this;
 
-                    m_Second->m_Enabled = true;
+                    m_Second->RequireUpdate();
                     break;
                 }
             }
@@ -131,18 +131,18 @@ namespace Game
         {
             if (m_First->m_First == this) m_First->m_First = nullptr;
             if (m_First->m_Second == this) m_First->m_Second = nullptr;
-            m_First->m_Enabled = true;
+            m_First->RequireUpdate();
             m_First = nullptr;
         }
         if (m_Second)
         {
             if (m_Second->m_First == this) m_Second->m_First = nullptr;
             if (m_Second->m_Second == this) m_Second->m_Second = nullptr;
-            m_Second->m_Enabled = true;
+            m_Second->RequireUpdate();
             m_Second = nullptr;
         }
 
-        m_Enabled = true;
+        RequireUpdate();
     }
 
     void TrackObjectBase::ConnectTrack(TrackObjectBase* a, TrackObjectBase* b)
@@ -152,7 +152,7 @@ namespace Game
         {
             if (!a->m_First) a->m_First = this;
             else if (!a->m_Second) a->m_Second = this;
-            a->m_Enabled = true;
+            a->RequireUpdate();
             m_First = a;
         }
 
@@ -160,10 +160,10 @@ namespace Game
         {
             if (!b->m_First) b->m_First = this;
             else if (!b->m_Second) b->m_Second = this;
-            b->m_Enabled = true;
+            b->RequireUpdate();
             m_Second = b;
         }
-        m_Enabled = true;
+        RequireUpdate();
     }
 
     std::vector<TrackObjectBase*> TrackObjectBase::GetAdjacentTracks() const

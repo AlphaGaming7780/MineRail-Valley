@@ -16,6 +16,8 @@ namespace Game
 		m_StationsData.emplace("Stations/red_station.json", StationDatabase::Instance().Load("Stations/red_station.json"));
 		m_StationsData.emplace("Stations/yellow_station.json", StationDatabase::Instance().Load("Stations/yellow_station.json"));
 
+		m_TrainsData.emplace("Trains/Furnace_Front_Minecart.json", TrainDatabase::Instance().Load("Trains/Furnace_Front_Minecart.json"));
+		m_TrainsData.emplace("Trains/Furnace_Top_Minecart.json", TrainDatabase::Instance().Load("Trains/Furnace_Top_Minecart.json"));
 		m_TrainsData.emplace("Trains/Minecart.json", TrainDatabase::Instance().Load("Trains/Minecart.json"));
 
 	}
@@ -66,6 +68,11 @@ namespace Game
 		m_StationSpawnPool.clear();
 		if (mode == GameMode::InGame)
 		{
+			if (mapData)
+			{
+				m_Difficulty = mapData->Difficulty;
+			}
+
 			m_StationSpawnPool.clear();
 			m_StationSpawnPool.reserve(m_StationsData.size());
 
@@ -182,7 +189,7 @@ namespace Game
 		TrackObject* track = m_World->CreateGameObject<TrackObject>(*m_TrackData);
 
 		track->SetTile(tile);
-		track->m_Enabled = true;
+		track->RequireUpdate();
 		track->m_CanBeDeleted = false;
 
 		return track;
@@ -195,7 +202,7 @@ namespace Game
 		StationObject* station = m_World->CreateGameObject<StationObject>(*data);
 		station->SetTile(tile);
 		station->SetPosition(tile->GetPosition());
-		station->m_Enabled = true;
+		station->RequireUpdate();
 
 		std::vector<TileObject*> tiles = tile->GetAdjacentTiles();
 		static thread_local std::mt19937 rng(std::random_device{}());
@@ -221,7 +228,7 @@ namespace Game
 	{
 		if (!src || !dst || m_TrainsData.empty()) return nullptr;
 
-		constexpr float kDefaultTrainSpeed = 200.f; // px/s
+		float trainSpeed = 200.f * m_Difficulty * 0.5; ;
 
 		std::vector<TrainData*> list;
 		list.reserve(m_TrainsData.size());
@@ -236,7 +243,7 @@ namespace Game
 		train->m_StationDest = dst;
 		train->m_Current = src;
 		train->m_Next = src->m_First;
-		train->m_Speed = kDefaultTrainSpeed;
+		train->m_Speed = trainSpeed;
 		train->m_Color = dst->m_StationColor;
 		train->ResetColor();
 
@@ -281,16 +288,13 @@ namespace Game
 		if (stationCount < 2)
 			return;
 
-		// Préparer un RNG propre
 		static thread_local std::mt19937 rng(std::random_device{}());
 
-		// Pour chaque station → spawn un train
 		for (int i = 0; i < stationCount; ++i)
 		{
 			StationObject* src = m_Stations[i];
 			StationObject* dst = nullptr;
 
-			// Construire une liste des stations compatibles (couleur différente)
 			std::vector<StationObject*> candidates;
 			candidates.reserve(stationCount);
 
@@ -301,15 +305,12 @@ namespace Game
 					candidates.push_back(m_Stations[j]);
 			}
 
-			// Si aucune station compatible → skip
 			if (candidates.empty())
 				continue;
 
-			// Tirage aléatoire d’une destination
 			std::uniform_int_distribution<size_t> dist(0, candidates.size() - 1);
 			dst = candidates[dist(rng)];
 
-			// Spawn du train
 			SpawnTrain(src, dst);
 		}
 	}
@@ -326,11 +327,9 @@ namespace Game
 		const std::vector<TrainObject*>& trains = m_World->GetAllGameObject<TrainObject>();
 		EventManager& ev = EventManager::Instance();
 
-		// Rien à vérifier si moins de 2 trains
 		if (trains.size() < 2)
 			return;
 
-		// Double boucle pour comparer chaque paire une seule fois
 		for (size_t i = 0; i < trains.size(); ++i)
 		{
 			TrainObject* a = trains[i];

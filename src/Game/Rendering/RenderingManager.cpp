@@ -42,7 +42,7 @@ namespace Game
             auto& vec = m_RenderList[(RenderLayer)layer];
             for (GameObject* obj : vec)
             {
-                window.draw(*obj->m_Sprite);
+                if(obj->m_Sprite) window.draw(*obj->m_Sprite);
             }
         }
 

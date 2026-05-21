@@ -51,10 +51,9 @@ namespace Game
             sys->OnUpdate();
         }
 
-        if (m_Paused) return;
         for (GameObject* go : m_GameObjects)
         {
-            if (!go->m_Enabled) continue;
+            if ((m_Paused || !go->m_Enabled) && !go->m_Dirty) continue;
             go->Update();
         }
     }

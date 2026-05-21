@@ -149,7 +149,7 @@ namespace Game
 
 			if (i + 1 < needed) track->m_Second = m_TrackPath[i + 1];
 
-			track->m_Enabled = true;
+			track->RequireUpdate();
 		}
 	}
 
@@ -190,7 +190,7 @@ namespace Game
 			for (TrackObject* to : m_TrackPath)
 			{
 				to->m_Temp = false;
-				to->m_Enabled = true;
+				to->RequireUpdate();
 				to->ResetColor();
 			}
 

@@ -6,6 +6,7 @@ namespace Game
 {
     void GameObject::Update()
     {
+        m_Dirty = false;
         if (m_Animated) AnimatedTextureUtils::UpdateFrame(*this, Time::GetDeltaTime().asSeconds());
     }
 
@@ -65,6 +66,11 @@ namespace Game
     sf::Vector2f GameObject::GetScale() const
     {
         return m_Scale;
+    }
+
+    void GameObject::RequireUpdate()
+    {
+        m_Dirty = true;
     }
 
     GameObject::GameObject()

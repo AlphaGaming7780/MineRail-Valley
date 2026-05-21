@@ -64,6 +64,8 @@ namespace Game
 			UpdateSpriteSize();
 		}
 
+		void RequireUpdate();
+
 
 	protected:
 		GameObject();
@@ -72,5 +74,9 @@ namespace Game
 		void UpdateSpriteSize();
 
 		sf::Vector2f GetActualScale();
+
+	private:
+		bool m_Dirty = false;
+
 	};
 }

@@ -33,10 +33,11 @@ namespace Game
 		bool m_CanBeDeleted = true;
 
 	protected:
-		TrackObjectBase() : GameObject() { m_RenderLayer = RenderLayer::Tracks; }
+		TrackObjectBase() : GameObject() { m_RenderLayer = RenderLayer::Tracks; m_Enabled = false;}
 		TrackObjectBase(const ObjectData& obData) : GameObject(obData)
 		{
 			m_RenderLayer = RenderLayer::Tracks;
+			m_Enabled = false;
 		}
 			
 	};

@@ -36,6 +36,7 @@ namespace Game
 
 		bool m_InWave = 0;
 		float m_StartWaveTimer = 0;
+		float m_Difficulty = 1;
 
 		TrackData* m_TrackData = nullptr;
 		std::unordered_map<std::string, StationData*> m_StationsData;
