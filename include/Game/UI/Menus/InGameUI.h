@@ -32,8 +32,11 @@ namespace Game
 		UILabel* m_BulldozeToolLabel = nullptr;
 		UILabel* m_StatusLabel = nullptr;
 
+		UIButton* m_PauseButton = nullptr;
+
 		void SelectDefaultTool();
 		void SelectTrackTool();
 		void SelectBulldozeTool();
+		void TogglePause();
 	};
 }

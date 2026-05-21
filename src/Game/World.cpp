@@ -33,9 +33,15 @@ namespace Game
         delete gameObject;
     }
 
+    void World::Pause(bool paused)
+    {
+        if (m_Paused != paused);
+        m_Paused = paused;
+        EventManager::Instance().Notify<PauseEvent>({ m_Paused });
+    }
+
     void World::Update()
     {
-        if (m_Paused) return;
         for (auto& [type, sys] : m_Systems) 
         {
             if (!sys->IsEnabled()) continue;
@@ -45,6 +51,7 @@ namespace Game
             sys->OnUpdate();
         }
 
+        if (m_Paused) return;
         for (GameObject* go : m_GameObjects)
         {
             if (!go->m_Enabled) continue;

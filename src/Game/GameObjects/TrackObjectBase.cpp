@@ -116,7 +116,7 @@ namespace Game
     {
         GameObject::OnDestroy();
 
-        DeconnectTrack();
+        DisconnectTrack();
 
         if (m_Tile && m_Tile->m_PlacedTrack == this)
         {

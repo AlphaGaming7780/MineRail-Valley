@@ -42,8 +42,9 @@ namespace Game {
         template<typename TGameObject>
         std::vector<TGameObject*> GetAllGameObject() const;
 
-        void Pause(bool paused = true) { m_Paused = paused; }
+        void Pause(bool paused = true);
         void UnPause() { Pause(false); }
+        bool IsPaused() const { return m_Paused; }
 
         void Update();
 

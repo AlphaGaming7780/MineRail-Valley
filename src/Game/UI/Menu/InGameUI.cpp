@@ -16,6 +16,18 @@ namespace Game
         m_ButtonClickedTexture = textures.Load("UI\\Button_clicked.png");
         m_Font = fonts.Load("Fonts\\Minecraft.ttf");
 
+        m_PauseButton = new UIButton(
+            { 10, 10 },
+            { 50, 50 },
+            UIAnchor::TopRight,
+            m_ButtonTexture,
+            m_ButtonHoverTexture,
+            m_ButtonClickedTexture
+        );
+        m_PauseButton->SetCallback([this]() { TogglePause(); });
+        AddChild(m_PauseButton);
+
+
         m_TitleLabel = new UILabel("MineRail Valley", { 24.f, 18.f }, UIAnchor::TopLeft, m_Font, 28, { 236, 222, 190 });
         AddChild(m_TitleLabel);
 
@@ -125,5 +137,10 @@ namespace Game
         world.GetOrCreateSystem<BulldozeToolSystem>()->SetEnable(true);
 
         SetStatus("Mode: Bulldoze");
+    }
+    void InGameUI::TogglePause()
+    {
+        World& world = World::Instance();
+        world.Pause(!world.IsPaused());
     }
 }
