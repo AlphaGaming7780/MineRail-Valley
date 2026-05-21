@@ -29,10 +29,12 @@ namespace Game
 		if (m_ApplyBinding->justPressed)
 		{
 			Apply();
+			return;
 		}
 		else if (m_CancelBinding->justPressed)
 		{
 			Cancel();
+			return;
 		}
 
 		Update();
@@ -227,10 +229,13 @@ namespace Game
 			m_World->DestroyObject(td);
 		}
 
+		if (m_StartTileObject) m_StartTileObject->ResetColor();
 		if (m_EndTileObject) m_EndTileObject->ResetColor();
 
 		m_TilePath.clear();
 		m_TrackPath.clear();
+		m_EndTileObject = nullptr;
+		m_StartTileObject = nullptr;
 		SetState(State::Default);
 	}
 }

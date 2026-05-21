@@ -3,7 +3,7 @@
 #include <Game/Systems/SystemBase.hpp>
 #include <Game/World.h>
 #include <Game/AssetDatabase/AssetType/StationData.h>
-//#include <Game/AssetDatabase/AssetType/TrainData.h>
+#include <Game/AssetDatabase/AssetType/TrainData.h>
 #include <Game/GameObjects/Tracks/StationObject.h>
 #include <Game/GameObjects/Trains/TrainObject.h>
 #include <Game/GameObjects/Tiles/TileObject.h>
@@ -32,7 +32,7 @@ namespace Game
 
 		TrackData* m_TrackData = nullptr;
 		std::unordered_map<std::string, StationData*> m_StationsData;
-		//std::unordered_map<std::string, TrainData*> m_StationsData;
+		std::unordered_map<std::string, TrainData*> m_TrainsData;
 
 		std::vector<StationObject*> m_Stations;
 		std::vector<TrainObject*> m_Trains;

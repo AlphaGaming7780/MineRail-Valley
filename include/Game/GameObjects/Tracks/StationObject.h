@@ -2,6 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <Game/AssetDatabase/AssetType/StationData.h>
+#include <Game/GameObjects/Tiles/TileObject.h>
 #include <Game/GameObjects/Tracks/TrackObject.h>
 
 namespace Game
@@ -14,6 +15,12 @@ namespace Game
 		sf::Vector2i m_AllowedTileConnection;
 		
 
+
+		void SetTile(TileObject* tile) override
+		{
+			TrackObjectBase::SetTile(tile);
+			tile->m_CanBuild = false;
+		}
 
 	protected:
 		StationObject() : TrackObjectBase() {}

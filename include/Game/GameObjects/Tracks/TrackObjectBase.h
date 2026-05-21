@@ -16,7 +16,7 @@ namespace Game
 
 		TileObject* m_Tile = nullptr;
 
-		void SetTile(TileObject* tile);
+		virtual void SetTile(TileObject* tile);
 		virtual void UpdateSprite() {};
 		virtual void ResolveConnections() {};
 

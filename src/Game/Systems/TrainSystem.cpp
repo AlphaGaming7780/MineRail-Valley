@@ -46,7 +46,7 @@ namespace Game
 		}
 		else
 		{
-			if (m_StartWaveTimer < 5)
+			if (m_StartWaveTimer < 10)
 			{
 				m_StartWaveTimer += Time::GetDeltaTime().asSeconds();
 				return;
@@ -191,16 +191,23 @@ namespace Game
 
 	TrainObject* TrainSystem::SpawnTrain(StationObject* src, StationObject* dst)
 	{
-		if (!src || !dst) return nullptr;
+		if (!src || !dst || m_TrainsData.empty()) return nullptr;
 
 		constexpr float kDefaultTrainSpeed = 200.f; // px/s
 
-		TrainObject* train = m_World->CreateGameObject<TrainObject>();
+		std::vector<TrainData*> list;
+		list.reserve(m_TrainsData.size());
+		for (auto& [name, data] : m_TrainsData)
+			list.push_back(data);
+
+		static thread_local std::mt19937 rng(std::random_device{}());
+		std::uniform_int_distribution<size_t> dist(0, list.size() - 1);
+
+		TrainObject* train = m_World->CreateGameObject<TrainObject>(*list[dist(rng)]);
 		train->m_StationSrc = src;
 		train->m_StationDest = dst;
 		train->m_Current = src;
 		train->m_Next = src->m_First;
-		train->m_Previous = nullptr;
 		train->m_Speed = kDefaultTrainSpeed;
 
 		if (src->m_Tile)

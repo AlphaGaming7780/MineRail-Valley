@@ -1,6 +1,7 @@
 #pragma once
 #include<Game/GameObjects/GameObject.h>
 #include<Game/GameObjects/Tracks/TrackObject.h>
+#include <Game/AssetDatabase/AssetType/TrainData.h>
 #include<Game/GameObjects/Tracks/StationObject.h>
 #include<Game/GameObjects/Wagons/WagonObject.h>
 #include<vector>
@@ -13,7 +14,6 @@ namespace Game
 	public:
 		TrackObjectBase* m_Next = nullptr;
 		TrackObjectBase* m_Current = nullptr;
-		TrackObjectBase* m_Previous = nullptr;
 
 		float m_Speed = 0.f;
 
@@ -27,5 +27,9 @@ namespace Game
 
 	protected:
 		TrainObject() : GameObject() { m_RenderLayer = RenderLayer::Trains; }
+		TrainObject(const TrainData& trainData) : GameObject(trainData.object)
+		{
+
+		}
 	};
 }

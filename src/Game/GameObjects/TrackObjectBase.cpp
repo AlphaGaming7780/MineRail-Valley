@@ -23,6 +23,7 @@ namespace Game
         if (m_Tile != nullptr && m_Tile->m_PlacedTrack == this)
         {
             m_Tile->m_PlacedTrack = nullptr;
+            m_Tile->m_CanBuild = true;
         }
 
         if (m_First) m_First->m_Enabled = true;
