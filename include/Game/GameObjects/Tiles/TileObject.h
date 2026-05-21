@@ -1,7 +1,7 @@
 #pragma once
 #include <Game/GameObjects/GameObject.h>
 #include <Game/AssetDatabase/AssetType/TileData.h>
-#include <Game/GameObjects/Tracks/TrackObject.h>
+#include <Game/GameObjects/Tracks/TrackObjectBase.h>
 
 namespace Game
 {
@@ -23,7 +23,7 @@ namespace Game
 		TileObject* m_Right = nullptr;
 		TileObject* m_Down = nullptr;
 
-		TrackObject* m_PlacedTrack = nullptr;
+		TrackObjectBase* m_PlacedTrack = nullptr;
 
 	protected:
 		TileObject() : GameObject() {}

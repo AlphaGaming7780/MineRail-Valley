@@ -21,7 +21,7 @@ namespace Game
 		void OnUpdate() override {}
 	};
 
-	inline constexpr sf::Color DefaultToolSystem::kHoverColor(0, 255, 255, 128);
-	inline constexpr sf::Color DefaultToolSystem::kSelectColor(0, 255, 255, 192);
+	inline constexpr sf::Color DefaultToolSystem::kHoverColor(0, 255, 255, 64);
+	inline constexpr sf::Color DefaultToolSystem::kSelectColor(0, 255, 255, 128);
 
 }

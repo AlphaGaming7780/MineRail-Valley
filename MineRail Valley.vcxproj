@@ -222,6 +222,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\GameObjects\TrackObjectBase.cpp" />
     <ClCompile Include="src\Game\GameObjects\TrackObject.cpp" />
     <ClCompile Include="src\Game\AudioManager.cpp" />
     <ClCompile Include="src\Game\Events\EventManager.cpp" />
@@ -276,10 +277,9 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\GameManager.hpp" />
     <ClInclude Include="include\Game\GameObjects\GameObject.h" />
     <ClInclude Include="include\Game\GameObjects\Tiles\TileObject.h" />
-    <ClInclude Include="include\Game\GameObjects\Tracks\LineTrack.h" />
-    <ClInclude Include="include\Game\GameObjects\Tracks\NodeTrack.h" />
     <ClInclude Include="include\Game\GameObjects\Tracks\StationObject.h" />
     <ClInclude Include="include\Game\GameObjects\Tracks\TrackObject.h" />
+    <ClInclude Include="include\Game\GameObjects\Tracks\TrackObjectBase.h" />
     <ClInclude Include="include\Game\GameObjects\Trains\TrainObject.h" />
     <ClInclude Include="include\Game\GameObjects\Wagons\WagonObject.h" />
     <ClInclude Include="include\Game\InputsActionSets.hpp" />

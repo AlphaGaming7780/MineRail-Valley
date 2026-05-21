@@ -1,13 +1,22 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <Game/AssetDatabase/AssetType/StationData.h>
 #include <Game/GameObjects/Tracks/TrackObject.h>
 
 namespace Game
 {
-	class StationObject : public TrackObject
+	class StationObject : public TrackObjectBase
 	{
+		friend class World;
 	public:
-		sf::Color m_Color;
+		std::string m_StationColor;
+
+	protected:
+		StationObject() : TrackObjectBase() {}
+		StationObject(const StationData& stationData) : TrackObjectBase(stationData.object)
+		{
+			m_StationColor = stationData.m_SationColor;
+		}
 	};
 }
