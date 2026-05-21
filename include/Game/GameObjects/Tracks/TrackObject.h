@@ -20,7 +20,6 @@ namespace Game
 		void OnDestroy() override;
 
 		void UpdateSprite() override;
-		void ResolveConnections() override;
 
 	protected:
 		TrackObject() : TrackObjectBase() {}

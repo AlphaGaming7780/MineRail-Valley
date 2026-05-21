@@ -11,23 +11,136 @@ namespace Game
 		tile->m_PlacedTrack = this;
 		m_Tile = tile;
 		SetPosition(tile->GetPosition());
-		//m_First = nullptr;
-		//m_Second = nullptr;
-		//Update();
+        DisconnectTrack();
 		m_Enabled = true;
 	}
+
+    void TrackObjectBase::ResolveConnections()
+    {
+        if (!m_Tile)
+            return;
+
+        std::vector<TrackObjectBase*> neighbors = GetAdjacentTracks();
+
+        if (m_First)
+        {
+            bool stillValid = false;
+            for (TrackObjectBase* n : neighbors)
+            {
+                if (n == m_First)
+                {
+                    stillValid = true;
+                    break;
+                }
+            }
+
+            if (!stillValid)
+            {
+                if (m_First->m_First == this) m_First->m_First = nullptr;
+                if (m_First->m_Second == this) m_First->m_Second = nullptr;
+                m_First->m_Enabled = true;
+                m_First = nullptr;
+            }
+        }
+
+        if (m_Second)
+        {
+            bool stillValid = false;
+            for (TrackObjectBase* n : neighbors)
+            {
+                if (n == m_Second)
+                {
+                    stillValid = true;
+                    break;
+                }
+            }
+
+            if (!stillValid)
+            {
+                if (m_Second->m_First == this) m_Second->m_First = nullptr;
+                if (m_Second->m_Second == this) m_Second->m_Second = nullptr;
+                m_Second->m_Enabled = true;
+                m_Second = nullptr;
+            }
+        }
+
+        if (!m_First && !neighbors.empty())
+        {
+            for (TrackObjectBase* n : neighbors)
+            {
+                if (n == m_Second)
+                    continue;
+
+                if (!n->m_First || !n->m_Second)
+                {
+ 
+                    m_First = n;
+                    if (!n->m_First) n->m_First = this;
+                    else if (!n->m_Second) n->m_Second = this;
+
+                    m_First->m_Enabled = true;
+                    break;
+                }
+            }
+        }
+
+        if (!m_Second && neighbors.size() > 1)
+        {
+            for (TrackObjectBase* n : neighbors)
+            {
+                if (n == m_First)
+                    continue;
+
+                if (!n->m_First || !n->m_Second)
+                {
+                    m_Second = n;
+                    if (!n->m_First) n->m_First = this;
+                    else if (!n->m_Second) n->m_Second = this;
+
+                    m_Second->m_Enabled = true;
+                    break;
+                }
+            }
+        }
+    }
+
+
+    void TrackObjectBase::Update()
+    {
+        m_Enabled = false;
+        ResolveConnections();
+        UpdateSprite();
+    }
 
     void TrackObjectBase::OnDestroy()
     {
         GameObject::OnDestroy();
-        if (m_Tile != nullptr && m_Tile->m_PlacedTrack == this)
+
+        DeconnectTrack();
+
+        if (m_Tile && m_Tile->m_PlacedTrack == this)
         {
             m_Tile->m_PlacedTrack = nullptr;
             m_Tile->m_CanBuild = true;
         }
+    }
 
-        if (m_First) m_First->m_Enabled = true;
-        if (m_Second) m_Second->m_Enabled = true;
+    void TrackObjectBase::DisconnectTrack()
+    {
+        if (m_First)
+        {
+            if (m_First->m_First == this) m_First->m_First = nullptr;
+            if (m_First->m_Second == this) m_First->m_Second = nullptr;
+            m_First->m_Enabled = true;
+            m_First = nullptr;
+        }
+        if (m_Second)
+        {
+            if (m_Second->m_First == this) m_Second->m_First = nullptr;
+            if (m_Second->m_Second == this) m_Second->m_Second = nullptr;
+            m_Second->m_Enabled = true;
+            m_Second = nullptr;
+        }
     }
 
     std::vector<TrackObjectBase*> TrackObjectBase::GetAdjacentTracks() const

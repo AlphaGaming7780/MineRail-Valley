@@ -5,9 +5,7 @@ namespace Game
 {
     void TrackObject::Update()
     {
-        GameObject::Update();
-        m_Enabled = false;
-        ResolveConnections();
+        TrackObjectBase::Update();
         UpdateSprite();
     }
 
@@ -81,84 +79,6 @@ namespace Game
         // fallback
         SetTexture(*m_StraightTexture, true);
         m_Sprite->setRotation(sf::Angle::Zero);
-    }
-
-    void TrackObject::ResolveConnections()
-    {
-        if (m_Tile == nullptr) return;
-        std::vector<TrackObjectBase*> neighbors = GetAdjacentTracks();
-
-        // --- 1) Vérifier si m_First est encore valide ---
-        if (m_First)
-        {
-            bool stillValid = false;
-            for (TrackObjectBase* n : neighbors)
-            {
-                if (n == m_First)
-                {
-                    stillValid = true;
-                    break;
-                }
-            }
-
-            if (!stillValid)
-            {
-                //Update après (évite les boucles infinis)
-                m_First->m_Enabled = true;
-                m_First = nullptr;
-            }
-        }
-
-        // --- 2) Vérifier si m_Second est encore valide ---
-        if (m_Second)
-        {
-            bool stillValid = false;
-            for (TrackObjectBase* n : neighbors)
-            {
-                if (n == m_Second)
-                {
-                    stillValid = true;
-                    break;
-                }
-            }
-
-            if (!stillValid)
-            {
-                //Update après (évite les boucles infinis)
-                m_Second->m_Enabled = true;
-                m_Second = nullptr;
-            }
-        }
-
-        // --- 3) Si m_First est invalide → en choisir un nouveau ---
-        if (!m_First && !neighbors.empty())
-        {
-            for (TrackObjectBase* n : neighbors)
-            {
-                if (n != m_Second)
-                {
-                    m_First = n;
-                    //m_First->Update(); // mise à jour du voisin
-                    m_First->m_Enabled = true;
-                    break;
-                }
-            }
-        }
-
-        // --- 4) Si m_Second est invalide → en choisir un autre ---
-        if (!m_Second && neighbors.size() > 1)
-        {
-            for (TrackObjectBase* n : neighbors)
-            {
-                if (n != m_First)
-                {
-                    m_Second = n;
-                    //m_Second->Update(); // mise à jour du voisin
-                    m_Second->m_Enabled = true;
-                    break;
-                }
-            }
-        }
     }
 }
 

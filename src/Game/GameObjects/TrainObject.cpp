@@ -1,15 +1,17 @@
 #include <Game/GameObjects//Trains/TrainObject.h>
 #include <Game/Utils/Time.hpp>
 #include <PallasEngine/Logging.hpp>
+#include <Game/Events.h>
 
 namespace Game
 {
-
     void TrainObject::Update()
     {
 
         if (!m_Current || !m_Next)
         {
+            m_Enabled = false;
+            EventManager::Instance().Notify<TrainStopped>({ this });
             return;
         }
 
@@ -26,11 +28,11 @@ namespace Game
             SetPosition(target);
 
             TrackObjectBase* next = nullptr;
-            if (m_Next->m_First && m_Next->m_First != m_Current)
+            if (m_Next->m_First && m_Next->m_First != m_Current && !m_Next->m_First->m_Temp)
             {
                 next = m_Next->m_First;
             }
-            else if (m_Next->m_Second && m_Next->m_Second != m_Current)
+            else if (m_Next->m_Second && m_Next->m_Second != m_Current && !m_Next->m_Second->m_Temp)
             {
                 next = m_Next->m_Second;
             }

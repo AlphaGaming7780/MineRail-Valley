@@ -8,7 +8,8 @@ namespace Game
     struct StationData
     {
         ObjectData object;
-        std::string m_SationColor;
+        //std::string m_SationColor;
+        sf::Color m_SationColor;
     };
 }
 

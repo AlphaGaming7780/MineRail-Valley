@@ -1,5 +1,10 @@
 {
-  "SationColor": "black",
+  "SationColor": {
+    "r": 128,
+    "g": 128,
+    "b": 128,
+    "a": 255
+  },
   "ObjectData": {
     "texture": "Textures\\Stations\\black_house.png",
     "color": {

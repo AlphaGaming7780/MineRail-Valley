@@ -19,9 +19,12 @@ namespace Game
 
 		virtual void SetTile(TileObject* tile);
 		virtual void UpdateSprite() {};
-		virtual void ResolveConnections() {};
+		virtual void ResolveConnections();
 
-		virtual void OnDestroy() override;
+		void Update() override;
+		void OnDestroy() override;
+
+		void DisconnectTrack();
 
 		std::vector<TrackObjectBase*> GetAdjacentTracks() const;
 		std::vector<TrackObject*> GetAdjacentTrackObjects() const;

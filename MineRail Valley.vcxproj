@@ -278,6 +278,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Events\Events\PauseEvent.h" />
     <ClInclude Include="include\Game\Events\Events\PlayMusicEvent.h" />
     <ClInclude Include="include\Game\Events\Events\PlaySoundEvent.h" />
+    <ClInclude Include="include\Game\Events\Events\TrainStopped.h" />
     <ClInclude Include="include\Game\Events\IEventObserver.hpp" />
     <ClInclude Include="include\Game\Events\InputActionSet.hpp" />
     <ClInclude Include="include\Game\Events\InputManager.hpp" />

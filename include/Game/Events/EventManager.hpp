@@ -99,39 +99,26 @@ namespace Game
         template<typename T>
         void Notify(const T& event)
         {
-            m_IsNotifying = true;
+            // On capture une copie de l’event dans une lambda
+            m_EventQueue.emplace_back([this, event]() {
+                const std::type_index key = typeid(T);
 
-            const std::type_index key = typeid(T);
+                auto it = m_Observers.find(key);
+                if (it == m_Observers.end())
+                    return;
 
-            auto it = m_Observers.find(key);
-            if (it == m_Observers.end())
-            {
-                m_IsNotifying = false;
-                return;
-            }
-
-            auto& vec = it->second;
-
-            if (vec.empty())
-            {
-                m_Logger.WarnO("Observer list found for type ", key.name(), " but it is EMPTY.");
-                m_IsNotifying = false;
-                return;
-            }
-
-            for (IEventObserverBase* baseObs : vec)
-            {
-                if (!baseObs)
+                for (IEventObserverBase* baseObs : it->second)
                 {
-                    m_Logger.ErrorO("Null observer pointer detected for event type: ", key.name());
-                    continue;
+                    if (!baseObs)
+                    {
+                        m_Logger.ErrorO("Null observer pointer detected for event type: ", key.name());
+                        continue;
+                    }
+
+                    auto* obs = static_cast<IEventObserver<T>*>(baseObs);
+                    obs->OnEvent(event);
                 }
-
-                auto* obs = static_cast<IEventObserver<T>*>(baseObs);
-                obs->OnEvent(event);
-            }
-
-            m_IsNotifying = false;
+                });
         }
 
 
@@ -153,5 +140,6 @@ namespace Game
 
         // Map : type d'événement -> Observers
         std::unordered_map<std::type_index, std::vector<IEventObserverBase*>> m_Observers;
+        std::vector<std::function<void()>> m_EventQueue;
     };
 }

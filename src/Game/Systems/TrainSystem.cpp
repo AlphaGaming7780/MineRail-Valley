@@ -11,7 +11,7 @@ namespace Game
 	{
 		m_TrackData = TrackDatabase::Instance().Load("Tracks\\BaseTrack.json");
 		m_StationsData.emplace("Stations/black_station.json", StationDatabase::Instance().Load("Stations/black_station.json"));
-		m_StationsData.emplace("Stations/blue_station.json", StationDatabase::Instance().Load("Stations/black_station.json"));
+		m_StationsData.emplace("Stations/blue_station.json", StationDatabase::Instance().Load("Stations/blue_station.json"));
 		m_StationsData.emplace("Stations/purple_station.json", StationDatabase::Instance().Load("Stations/purple_station.json"));
 		m_StationsData.emplace("Stations/red_station.json", StationDatabase::Instance().Load("Stations/red_station.json"));
 		m_StationsData.emplace("Stations/yellow_station.json", StationDatabase::Instance().Load("Stations/yellow_station.json"));
@@ -92,6 +92,26 @@ namespace Game
 		}
 	}
 
+	void TrainSystem::OnEvent(const TrainStopped& event)
+	{
+		TrainObject* train = event.m_Train;
+
+		if (!train->m_Current)
+		{
+			DestroyTrain(train);
+			return;
+		}
+
+		if (train->m_Current == train->m_StationDest)
+		{
+			DestroyTrain(train);
+			return;
+		}
+
+		// Perdu la game
+
+		DestroyTrain(train);
+	}
 
 	TileObject* TrainSystem::GetStationSpawnTile() const
 	{
@@ -130,19 +150,20 @@ namespace Game
 
 	StationObject* TrainSystem::SpawnStationFromPool()
 	{
-		if (m_StationSpawnPool.size() <= 0)
+		if (m_StationSpawnPool.empty())
 			return nullptr;
 
-		StationData* data = m_StationSpawnPool[0];
+		StationData* data = m_StationSpawnPool.back();
 
 		TileObject* tile = GetStationSpawnTile();
-
-		if (tile == nullptr)
+		if (!tile)
 			return nullptr;
 
 		StationObject* station = SpawnStation(data, tile);
+		if (!station)
+			return nullptr;
 
-		m_StationSpawnPool.erase(m_StationSpawnPool.begin());
+		m_StationSpawnPool.pop_back();
 
 		return station;
 	}
@@ -211,6 +232,8 @@ namespace Game
 		train->m_Current = src;
 		train->m_Next = src->m_First;
 		train->m_Speed = kDefaultTrainSpeed;
+		train->m_Color = dst->m_StationColor;
+		train->ResetColor();
 
 		if (src->m_Tile)
 			train->SetPosition(src->m_Tile->GetPosition());
@@ -222,6 +245,25 @@ namespace Game
 		return train;
 	}
 
+	void TrainSystem::DestroyTrain(TrainObject* train)
+	{ 
+		if (!train)
+			return;
+
+		for (WagonObject* wagon : train->m_Wagons)
+		{
+			if (wagon)
+				m_World->DestroyObject(wagon);
+		}
+
+		train->m_Wagons.clear();
+		auto it = std::find(m_Trains.begin(), m_Trains.end(), train);
+		if (it != m_Trains.end())
+			m_Trains.erase(it);
+
+		m_World->DestroyObject(train);
+	}
+
 	void TrainSystem::SpawnInitialStations()
 	{
 		SpawnStationFromPool();
@@ -231,51 +273,42 @@ namespace Game
 	void TrainSystem::SpawnWaveTrains()
 	{
 		const int stationCount = static_cast<int>(m_Stations.size());
-
 		if (stationCount < 2)
 			return;
 
-		// Vérifie qu'on a au moins deux couleurs distinctes disponibles
-		bool hasDistinctColors = false;
-		for (int i = 0; i < stationCount && !hasDistinctColors; ++i)
-		{
-			for (int j = i + 1; j < stationCount; ++j)
-			{
-				if (m_Stations[i]->m_StationColor != m_Stations[j]->m_StationColor)
-				{
-					hasDistinctColors = true;
-					break;
-				}
-			}
-		}
-		if (!hasDistinctColors) return;
+		// Préparer un RNG propre
+		static thread_local std::mt19937 rng(std::random_device{}());
 
+		// Pour chaque station → spawn un train
 		for (int i = 0; i < stationCount; ++i)
 		{
-			StationObject* src = nullptr;
+			StationObject* src = m_Stations[i];
 			StationObject* dst = nullptr;
 
-			// On retire le tirage jusqu'à trouver une paire avec couleurs différentes.
-			// La boucle est bornée par la garantie hasDistinctColors ci-dessus.
-			for (int attempt = 0; attempt < 64; ++attempt)
+			// Construire une liste des stations compatibles (couleur différente)
+			std::vector<StationObject*> candidates;
+			candidates.reserve(stationCount);
+
+			for (int j = 0; j < stationCount; ++j)
 			{
-				int a = std::rand() % stationCount;
-				int b = std::rand() % stationCount;
-				if (a == b) continue;
-
-				StationObject* sa = m_Stations[a];
-				StationObject* sb = m_Stations[b];
-				if (sa->m_StationColor == sb->m_StationColor) continue;
-
-				src = sa;
-				dst = sb;
-				break;
+				if (i == j) continue;
+				if (m_Stations[j]->m_StationColor != src->m_StationColor)
+					candidates.push_back(m_Stations[j]);
 			}
 
-			if (!src || !dst) break;
+			// Si aucune station compatible → skip
+			if (candidates.empty())
+				continue;
+
+			// Tirage aléatoire d’une destination
+			std::uniform_int_distribution<size_t> dist(0, candidates.size() - 1);
+			dst = candidates[dist(rng)];
+
+			// Spawn du train
 			SpawnTrain(src, dst);
 		}
 	}
+
 
 	bool TrainSystem::AllTrainsArrived() const
 	{

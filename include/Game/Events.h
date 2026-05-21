@@ -7,3 +7,4 @@
 #include <Game/Events/Events/PauseEvent.h>
 #include <Game/Events/Events/LoadingStart.h>
 #include <Game/Events/Events/LoadingComplete.h>
+#include <Game/Events/Events/TrainStopped.h>

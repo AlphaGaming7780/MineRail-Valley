@@ -11,7 +11,7 @@ namespace Game
 	{
 		friend class World;
 	public:
-		std::string m_StationColor;
+		sf::Color m_StationColor;
 		sf::Vector2i m_AllowedTileConnection;
 		
 

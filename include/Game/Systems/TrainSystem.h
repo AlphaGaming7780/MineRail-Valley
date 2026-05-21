@@ -8,14 +8,17 @@
 #include <Game/GameObjects/Trains/TrainObject.h>
 #include <Game/GameObjects/Tiles/TileObject.h>
 
+#include <Game/Events/Events/TrainStopped.h>
+
 namespace Game
 {
-	class TrainSystem : public SystemBase
+	class TrainSystem : public SystemBase, IEventObserver<TrainStopped>
 	{
 	public:
 		TrainSystem(World* world, pallas::Logger& logger)
 			: SystemBase(world, logger)
 		{
+			EventManager::Instance().Register<TrainStopped>(this);
 		}
 
 		void OnCreate() override;
@@ -24,6 +27,8 @@ namespace Game
 
 		void OnGameLoadingStart(GameMode mode, Purpose purpose) override;
 		void OnGameLoadingComplete(GameMode mode, Purpose purpose) override;
+
+		void OnEvent(const TrainStopped& event);
 
 	private:
 
@@ -40,7 +45,7 @@ namespace Game
 
 		StationObject* SpawnStation(StationData* data, TileObject* tile);
 		TrainObject* SpawnTrain(StationObject* src, StationObject* dst);
-		//void DestroyTrain(TrainObject* train);
+		void DestroyTrain(TrainObject* train);
 
 		void SpawnInitialStations();
 		void SpawnWaveTrains();

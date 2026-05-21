@@ -1,7 +1,12 @@
 {
-  "SationColor": "red",
+  "SationColor": {
+    "r": 255,
+    "g": 255,
+    "b": 0,
+    "a": 255
+  },
   "ObjectData": {
-    "texture": "Textures\\Stations\\red_house.png",
+    "texture": "Textures\\Stations\\yellow_house.png",
     "color": {
       "r": 255,
       "g": 255,

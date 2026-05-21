@@ -54,6 +54,12 @@ namespace Game
         {
             Dispatch(*ev);
         }
+
+        for (auto& fn : m_EventQueue)
+            fn();
+
+        m_EventQueue.clear();
+
     }
 
     void EventManager::clear()

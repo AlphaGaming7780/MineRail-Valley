@@ -144,10 +144,11 @@ namespace Game
 
 			track->SetTile(tile);
 			track->SetColor(kBuildColor);
+
 			if (i > 0) track->m_First = m_TrackPath[i - 1];
-			else track->m_First = nullptr;
+
 			if (i + 1 < needed) track->m_Second = m_TrackPath[i + 1];
-			else track->m_Second = nullptr;
+
 			track->m_Enabled = true;
 		}
 	}

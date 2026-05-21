@@ -37,7 +37,7 @@ namespace Game
 
 				for (TrackObject* neighbour : current->GetAdjacentTrackObjects())
 				{
-					if (parent.find(neighbour) == parent.end())
+					if (parent.find(neighbour) == parent.end() && (current->m_First == neighbour || current->m_Second == neighbour))
 					{
 						parent[neighbour] = current;
 						q.push(neighbour);

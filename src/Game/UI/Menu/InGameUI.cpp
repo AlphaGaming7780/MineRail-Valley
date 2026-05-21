@@ -14,7 +14,7 @@ namespace Game
         m_ButtonTexture = textures.Load("UI\\Button.png");
         m_ButtonHoverTexture = textures.Load("UI\\Button_hover.png");
         m_ButtonClickedTexture = textures.Load("UI\\Button_clicked.png");
-        m_Font = fonts.Load("Fonts\\LiberationSans.ttf");
+        m_Font = fonts.Load("Fonts\\Minecraft.ttf");
 
         m_TitleLabel = new UILabel("MineRail Valley", { 24.f, 18.f }, UIAnchor::TopLeft, m_Font, 28, { 236, 222, 190 });
         AddChild(m_TitleLabel);
