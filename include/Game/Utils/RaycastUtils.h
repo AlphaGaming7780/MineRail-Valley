@@ -12,8 +12,6 @@ namespace Game
 	public:
 		static GameObject* PerformRaycast(const World& world, const sf::RenderWindow& window)
 		{
-            if (UIManager::Instance().IsMouseOverUI()) return nullptr;
-
 			const std::vector<GameObject*>& gameObjects = world.GetAllGameObject();
 
 			sf::Vector2f worldPos = window.mapPixelToCoords(sf::Mouse::getPosition(window));
@@ -49,8 +47,6 @@ namespace Game
         template<typename T>
         static T* PerformRaycast(const World& world, const sf::RenderWindow& window)
         {
-            if (UIManager::Instance().IsMouseOverUI()) return nullptr;
-
             const auto gameObjects = world.GetAllGameObject<T>();
 
             sf::Vector2f worldPos = InputManager::Instance().GetMouseWorldPos();
