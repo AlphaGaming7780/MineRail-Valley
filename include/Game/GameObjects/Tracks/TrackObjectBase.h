@@ -6,6 +6,7 @@
 namespace Game
 {
 	class TileObject;
+	class TrackObject;
 	class TrackObjectBase : public GameObject
 	{
 		friend class World;
@@ -23,6 +24,9 @@ namespace Game
 		virtual void OnDestroy() override;
 
 		std::vector<TrackObjectBase*> GetAdjacentTracks() const;
+		std::vector<TrackObject*> GetAdjacentTrackObjects() const;
+
+		bool m_CanBeDeleted = true;
 
 	protected:
 		TrackObjectBase() : GameObject() { m_RenderLayer = RenderLayer::Tracks; }
@@ -30,5 +34,6 @@ namespace Game
 		{
 			m_RenderLayer = RenderLayer::Tracks;
 		}
+			
 	};
 }

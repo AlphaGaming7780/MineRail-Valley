@@ -14,7 +14,7 @@ namespace Game
 
 		m_InputManager.Register<TrackInputs>();
 		m_ApplyBinding = &m_InputManager.GetBinding(TrackToolAction::Apply);
-		m_CancelBinding = &m_InputManager.GetBinding(TrackToolAction::Cancle);
+		m_CancelBinding = &m_InputManager.GetBinding(TrackToolAction::Cancel);
 		SetEnable(true);
 	}
 
@@ -42,7 +42,7 @@ namespace Game
 
 	void TrackToolSystem::OnDestroy()
 	{
-
+		Cleanup();
 	}
 
 	void TrackToolSystem::OnEnabled(bool enabled)
