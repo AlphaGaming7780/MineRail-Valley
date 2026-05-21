@@ -20,6 +20,12 @@ namespace Game
 
 	void TrackToolSystem::OnUpdate()
 	{
+		if (UIManager::Instance().IsMouseOverUI())
+		{
+			Cleanup();
+			return;
+		}
+
 		if (m_ApplyBinding->justPressed)
 		{
 			Apply();
@@ -40,6 +46,7 @@ namespace Game
 	void TrackToolSystem::OnEnabled(bool enabled)
 	{
 		m_InputManager.EnableBlock<TrackToolAction>(enabled);
+		Cleanup();
 	}
 
 	void TrackToolSystem::OnGameLoadingStart(GameMode mode, Purpose purpose)
@@ -197,8 +204,8 @@ namespace Game
 
 		if (m_State == State::Default)
 		{
-			//SetEnable(false);
-			//m_DefaultToolSystem->SetEnable(true);
+			SetEnable(false);
+			m_DefaultToolSystem->SetEnable(true);
 			return;
 		}
 		else if (m_State == State::Creating)
@@ -212,5 +219,18 @@ namespace Game
 			m_TrackPath.clear();
 			SetState(State::Default);
 		}
+	}
+	void TrackToolSystem::Cleanup()
+	{
+		for (TrackObject* td : m_TrackPath)
+		{
+			m_World->DestroyObject(td);
+		}
+
+		if (m_EndTileObject) m_EndTileObject->ResetColor();
+
+		m_TilePath.clear();
+		m_TrackPath.clear();
+		SetState(State::Default);
 	}
 }

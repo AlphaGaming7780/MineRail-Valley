@@ -53,6 +53,7 @@ namespace Game
 		void Update();
 		void Apply();
 		void Cancel();
+		void Cleanup();
 
 		void SetState(State state);
 

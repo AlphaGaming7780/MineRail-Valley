@@ -5,6 +5,7 @@ namespace Game
 {
 	void SystemBase::SetEnable(bool enable)
 	{
+		if (m_Enabled == enable) return;
 		m_Enabled = enable;
 		OnEnabled(enable);
 	}
