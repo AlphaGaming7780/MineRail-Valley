@@ -357,7 +357,7 @@ namespace Game
 	{
 		m_Logger.InfoO("Collision de train en ", collisionCenter);
 
-		m_World->DestroyObject(a);
-		m_World->DestroyObject(b);
+		DestroyTrain(a);
+		DestroyTrain(b);
 	}
 }

@@ -131,12 +131,12 @@ namespace Game
 
     void UIElement::OnFocusGain()
     {
-        { UIManager::Instance().m_Logger.InfoO("OnFocusGain: ", typeid(*this).name()); }
+
     }
 
     void UIElement::OnFocusLost()
     {
-        { UIManager::Instance().m_Logger.InfoO("OnFocusLost: ", typeid(*this).name()); }
+
     }
 
     void UIElement::OnMouseDown()
@@ -159,7 +159,7 @@ namespace Game
 
     void UIElement::ReDraw()
     {
-        // Se check est utile pour les texture qui on de la transparence, car sinon elle s'additionne au lieu de se remplacer. y a tjs un problème si le parent a aussi une texture transparente
+        // Ce check est utile pour les texture qui on de la transparence, car sinon elle s'additionne au lieu de se remplacer. y a tjs un problème si le parent a aussi une texture transparente
 		// Mais dans le cas d'element simple, genre texture sans transparence, c'est pas utile et cela repprésente une perte de performance, car cela oblige a redessiner le parent et tout les éléments enfant de ce parent.
         // TODO: Il faudrais donc trouver un moyen de différencier les éléments qui ont besoin de ce check et ceux qui n'en ont pas besoin, pour éviter de redessiner des éléments inutilement.
         if(m_Parent)
