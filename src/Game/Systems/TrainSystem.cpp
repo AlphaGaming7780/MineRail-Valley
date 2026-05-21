@@ -225,6 +225,22 @@ namespace Game
 
 		station->m_First = track;
 
+		//sf::Vector2f offset = track->GetPosition() - station->GetPosition();
+
+		//if (offset.x > 0) 
+		//{
+		//	station->m_Sprite->setRotation(sf::degrees(-90));
+		//}
+		//else if (offset.x < 0) 
+		//{
+		//	station->m_Sprite->setRotation(sf::degrees(90));
+		//}
+		//else if (offset.y < 0)
+		//{
+		//	station->m_Sprite->setRotation(sf::degrees(180));
+		//}
+		//else {}
+
 		m_Stations.push_back(station);
 		return station;
 	}
