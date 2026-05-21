@@ -25,6 +25,7 @@ namespace Game
 		void OnDestroy() override;
 
 		void DisconnectTrack();
+		void ConnectTrack(TrackObjectBase* a, TrackObjectBase* b);
 
 		std::vector<TrackObjectBase*> GetAdjacentTracks() const;
 		std::vector<TrackObject*> GetAdjacentTrackObjects() const;

@@ -236,6 +236,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
     <ClCompile Include="src\Game\Systems\BulldozeToolSystem.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
+    <ClCompile Include="src\Game\Systems\DefaultToolSystem.cpp" />
     <ClCompile Include="src\Game\Systems\SystemBase.cpp" />
     <ClCompile Include="src\Game\Systems\TrackToolSystem.cpp" />
     <ClCompile Include="src\Game\Systems\TrainSystem.cpp" />

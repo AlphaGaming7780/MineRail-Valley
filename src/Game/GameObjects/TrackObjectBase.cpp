@@ -141,6 +141,29 @@ namespace Game
             m_Second->m_Enabled = true;
             m_Second = nullptr;
         }
+
+        m_Enabled = true;
+    }
+
+    void TrackObjectBase::ConnectTrack(TrackObjectBase* a, TrackObjectBase* b)
+    {
+        DisconnectTrack();
+        if (!a->m_First || !a->m_Second)
+        {
+            if (!a->m_First) a->m_First = this;
+            else if (!a->m_Second) a->m_Second = this;
+            a->m_Enabled = true;
+            m_First = a;
+        }
+
+        if (!b->m_First || !b->m_Second)
+        {
+            if (!b->m_First) b->m_First = this;
+            else if (!b->m_Second) b->m_Second = this;
+            b->m_Enabled = true;
+            m_Second = b;
+        }
+        m_Enabled = true;
     }
 
     std::vector<TrackObjectBase*> TrackObjectBase::GetAdjacentTracks() const

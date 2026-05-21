@@ -40,6 +40,7 @@ namespace Game
 	}
 	void AudioManager::OnEvent(const LoadingStart& event)
 	{
+		UnloadAll();
 	}
 	void AudioManager::OnEvent(const LoadingComplete& event)
 	{

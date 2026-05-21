@@ -94,7 +94,6 @@ namespace Game
 			track->ResetColor();
 		}
 		m_TrackPath = TrackUtils::GetPath(m_StartTrackObject, m_EndTrackObject);
-		m_Logger.InfoO("TrackPath lenght ", m_TrackPath.size());
 
 		for (auto& track : m_TrackPath)
 		{
@@ -129,10 +128,9 @@ namespace Game
 				return;
 			}
 
-			m_Logger.Info("Hello");
+
 			for (auto& track : m_TrackPath)
 			{
-				m_Logger.Info("Hello2");
 				m_World->DestroyObject(track);
 			}
 			m_StartTrackObject = nullptr;
