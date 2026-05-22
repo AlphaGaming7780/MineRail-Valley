@@ -39,7 +39,7 @@ namespace Game
             { "Maps\\Plain.json",            "Plain",            "Plain",    "Textures\\MapsPreview\\Plain.png",            1, false },
             { "Maps\\ForestValley.json",     "Forest Valley",    "Forest",   "Textures\\MapsPreview\\ForestValley.png",     2, false },
             { "Maps\\FrozenHighlands.json",  "Frozen Highlands", "Frozen",   "Textures\\MapsPreview\\FrozenHighlands.png",  3, false },
-            { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert",   "Textures\\MapsPreview\\Plain.png",            3, false },
+            { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert",   "Textures\\MapsPreview\\DesertCanyon.png",     3, false },
             { "Maps\\VolcanicWastes.json",   "Volcanic Wastes",  "Volcanic", "Textures\\MapsPreview\\VolcanicWastes.png",   4, false },
             { "Maps\\NeonCity.json",         "Neon City",        "Neon",     "Textures\\MapsPreview\\NeonCity.png",         4, false },
             { "Maps\\SandBox.json",          "Sandbox",          "Default",  "Textures\\MapsPreview\\SandBox.png",          1, false },
