@@ -38,9 +38,6 @@ namespace Game
 		UILabel* m_BulldozeToolLabel = nullptr;
 		UILabel* m_StatusLabel = nullptr;
 
-		UIButton* m_PauseButton = nullptr;
-
-		// New: persistent mini music player in the top-right corner.
 		UIMusicPlayer* m_MusicPlayer = nullptr;
 
 		void SelectDefaultTool();
