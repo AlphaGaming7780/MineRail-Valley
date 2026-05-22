@@ -76,6 +76,10 @@ namespace Game
 		void SetSoundVolume(float volume);
 		void SetMusicVolume(float volume);
 
+		float GetMasterVolume() const;
+		float GetSoundVolume() const;
+		float GetMusicVolume() const;
+
 		void StopAll();
 		void UnloadAll();
 

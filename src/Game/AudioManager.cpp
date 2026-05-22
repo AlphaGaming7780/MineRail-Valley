@@ -319,6 +319,18 @@ namespace Game
 		m_MusicVolume = volume / 100.f;
 		_UpdateVolume();
 	}
+	float AudioManager::GetMasterVolume() const
+	{
+		return m_MasterVolume;
+	}
+	float AudioManager::GetSoundVolume() const
+	{
+		return m_SoundVolume;
+	}
+	float AudioManager::GetMusicVolume() const
+	{
+		return m_MusicVolume;
+	}
 	void AudioManager::StopAll()
 	{
 		for (auto& m : m_MusicDatabase.GetAssets())

@@ -42,9 +42,9 @@ namespace Game
 
                 outSld = new UISlider(m_TrackTex, m_HandleTex,
                     { 300, y }, { 320, 24 }, UIAnchor::TopLeft,
-                    0.f, 100.f, init);
+                    0.f, 100.f, init * 100.f);
 
-                outVal = new UILabel("0", { 640, y }, UIAnchor::TopLeft,
+                outVal = new UILabel(std::to_string(static_cast<int>(init) * 100), { 640, y }, UIAnchor::TopLeft,
                     m_Font, 22, { 207, 182, 151 });
 
                 outSld->SetCallback([outVal, onChange](float v)
@@ -61,9 +61,9 @@ namespace Game
             };
 
 
-        addSlider("Master Volume", 110, m_MasterLabel, m_MasterSlider, m_MasterValueLabel, 100, [](float v) { AudioManager::Instance().SetMasterVolume(v); });
-        addSlider("Sound Volume", 160, m_SoundLabel, m_SoundSlider, m_SoundValueLabel, 100, [](float v) { AudioManager::Instance().SetSoundVolume(v); });
-        addSlider("Music Volume", 210, m_MusicLabel, m_MusicSlider, m_MusicValueLabel, 100, [](float v) { AudioManager::Instance().SetMusicVolume(v); });
+        addSlider("Master Volume", 110, m_MasterLabel, m_MasterSlider, m_MasterValueLabel, AudioManager::Instance().GetMasterVolume(), [](float v) { AudioManager::Instance().SetMasterVolume(v); });
+        addSlider("Sound Volume", 160, m_SoundLabel, m_SoundSlider, m_SoundValueLabel, AudioManager::Instance().GetSoundVolume(), [](float v) { AudioManager::Instance().SetSoundVolume(v); });
+        addSlider("Music Volume", 210, m_MusicLabel, m_MusicSlider, m_MusicValueLabel, AudioManager::Instance().GetMusicVolume(), [](float v) { AudioManager::Instance().SetMusicVolume(v); });
 
         // ── Toggles ────────────────────────────────────────────────────────
         m_FullscreenLabel = new UILabel("Fullscreen", { 80, 290 }, UIAnchor::TopLeft,
