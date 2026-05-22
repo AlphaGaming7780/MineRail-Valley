@@ -221,9 +221,32 @@ namespace Game
     {
 		ReDrawUIElement(m_Root);
     }
+
     sf::Vector2f UIManager::MapPixelToCoords(sf::Vector2i screenPos) const
     {
-        return GameWindow::Instance().Get().mapPixelToCoords(screenPos, m_UIView);
+        sf::Vector2f coords = GameWindow::Instance().Get().mapPixelToCoords(screenPos, m_UIView);
+
+        // Correction du letterboxing vertical
+        float viewH = m_UIView.getSize().y;
+        float uiH = 1080.f; // ta résolution logique
+
+        if (viewH > uiH)
+        {
+            float offsetY = (viewH - uiH) * 0.5f;
+            coords.y -= offsetY;
+        }
+
+        // Correction du letterboxing horizontal (si jamais)
+        float viewW = m_UIView.getSize().x;
+        float uiW = 1920.f;
+
+        if (viewW > uiW)
+        {
+            float offsetX = (viewW - uiW) * 0.5f;
+            coords.x -= offsetX;
+        }
+
+        return coords;
     }
 
     //sf::Vector2i UIManager::GetMousePosInUIView(sf::Vector2i screenPos) const
