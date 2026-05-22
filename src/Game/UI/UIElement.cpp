@@ -34,7 +34,6 @@ namespace Game
 
         child->m_Parent = this;
 
-        // Évite les doublons
         if (std::find(m_Children.begin(), m_Children.end(), child) == m_Children.end())
         {
             m_Children.insert(m_Children.begin(), child);
