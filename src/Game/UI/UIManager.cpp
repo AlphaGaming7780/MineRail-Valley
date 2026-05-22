@@ -183,6 +183,9 @@ namespace Game
         bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
         m_Root->HandleMouseEvent(mousePos, mousePressed);
+
+        // Per-frame tick (drives e.g. UISlider drag-following behaviour).
+        m_Root->Update();
     }
 
     void UIManager::Draw(sf::RenderWindow& window)

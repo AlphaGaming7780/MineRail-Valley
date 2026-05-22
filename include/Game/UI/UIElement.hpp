@@ -14,6 +14,10 @@ namespace Game
         virtual void Draw(sf::RenderTexture& canvas);
         virtual void UpdateLayout(const sf::View& view);
 
+        // Per-frame tick. Default implementation just propagates to children.
+        // Override in widgets that need continuous behavior (e.g. UISlider drag).
+        virtual void Update();
+
         // Gestion hiérarchie
         void AddChild(UIElement* child);
         void RemoveChild(UIElement* child);

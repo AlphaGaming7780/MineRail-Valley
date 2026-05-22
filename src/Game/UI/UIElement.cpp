@@ -237,4 +237,10 @@ namespace Game
         for (auto& child : m_Children)
             child->UpdateLayout(view);
     }
+
+    void UIElement::Update()
+    {
+        for (auto& child : m_Children)
+            child->Update();
+    }
 }

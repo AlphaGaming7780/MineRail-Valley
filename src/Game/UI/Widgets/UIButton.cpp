@@ -2,6 +2,7 @@
 
 #include <Game/AssetDatabase.h>
 #include <Game/UI/UIManager.hpp>
+#include <Game/AudioManager.hpp>
 
 namespace Game
 {
@@ -93,6 +94,10 @@ namespace Game
 
     void UIButton::OnClick()
     {
+        // Auto-play the menu click SFX on every button click for consistent
+        // feedback across all screens. Volume 80% so it doesn't drown out music.
+        AudioManager::Instance().PlaySound("Sounds\\Menu Selection Click.wav", 0.8f);
+
         if (m_Callback)
         {
             m_Callback();
