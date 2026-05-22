@@ -1,0 +1,20 @@
+{
+  "ObjectData": {
+    "texture": "Textures\\bricks.png",
+    "color": {
+      "r": 255,
+      "g": 255,
+      "b": 255,
+      "a": 255
+    },
+    "size": {
+      "x": 100.0,
+      "y": 100.0
+    },
+    "animated": false,
+    "framesX": 0,
+    "framesY": 0,
+    "duration": 0.0
+  },
+  "m_CanBuild": true
+}
