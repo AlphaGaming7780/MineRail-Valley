@@ -144,7 +144,7 @@ namespace Game
         float windowRatio = windowWidth / windowHeight;
         float targetRatio = (float)screenSize.x / screenSize.y;
 
-        m_UIView.setCenter((sf::Vector2f)ev.size / 2.f);
+        m_UIView.setCenter((sf::Vector2f)screenSize / 2.f);
 
         // Si la fenêtre est plus large → élargir horizontalement
         if (windowRatio > targetRatio)
