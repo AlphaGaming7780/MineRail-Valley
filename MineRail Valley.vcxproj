@@ -234,6 +234,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\Rendering\Camera.cpp" />
     <ClCompile Include="src\Game\Rendering\GameWindow.cpp" />
     <ClCompile Include="src\Game\Rendering\RenderingManager.cpp" />
+    <ClCompile Include="src\Game\Settings\SettingsManager.cpp" />
     <ClCompile Include="src\Game\Systems\BulldozeToolSystem.cpp" />
     <ClCompile Include="src\Game\Systems\CameraSystem.cpp" />
     <ClCompile Include="src\Game\Systems\DefaultToolSystem.cpp" />
@@ -254,6 +255,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\UI\Widgets\UIButton.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UIImage.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UILabel.cpp" />
+    <ClCompile Include="src\Game\UI\Widgets\UIMusicPlayer.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UIPanel.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UIProgressBar.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UISlider.cpp" />
@@ -312,6 +314,8 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\Rendering\GameWindow.hpp" />
     <ClInclude Include="include\Game\Rendering\RenderingManager.hpp" />
     <ClInclude Include="include\Game\Rendering\RenderLayer.h" />
+    <ClInclude Include="include\Game\Settings\GameSettings.hpp" />
+    <ClInclude Include="include\Game\Settings\SettingsManager.hpp" />
     <ClInclude Include="include\Game\Systems.hpp" />
     <ClInclude Include="include\Game\Systems\BulldozeToolSystem.h" />
     <ClInclude Include="include\Game\Systems\CameraSystem.hpp" />
@@ -340,6 +344,7 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\UI\Widgets\UIButton.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIImage.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UILabel.hpp" />
+    <ClInclude Include="include\Game\UI\Widgets\UIMusicPlayer.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIPanel.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIProgressBar.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UISlider.hpp" />

@@ -3,6 +3,8 @@
 #include <SFML/Graphics.hpp>
 #include <PallasEngine/Logging.hpp>
 
+#include <functional>
+
 #include <Game/UI/UIGroup.hpp>
 #include <Game/Events/EventManager.hpp>
 
@@ -19,8 +21,11 @@ namespace Game
         void Draw(sf::RenderWindow& window);
 
         template<typename TGroup>
-        TGroup& SetRoot();
+        TGroup* SetRoot();
         void ResetRoot();
+
+        template<typename TGroup>
+        void RequestNewRoot();
 
         void ReDraw();
 
@@ -39,10 +44,13 @@ namespace Game
         ~UIManager();
 
         UIGroup* m_Root = nullptr;
+        std::function<void()> m_PendingRootSetter = nullptr;
         sf::View m_UIView;
         sf::RenderTexture m_UICanvas;
 
         std::vector<UIElement*> m_InvalidatedElements;
+
+        bool m_InUpdate = false;
 
         bool HasInvalidatedParent(UIElement* element);
         bool IsAlreadyInvalidated(UIElement* element);
@@ -58,9 +66,15 @@ namespace Game
     };
 
     template<typename TGroup>
-    TGroup& UIManager::SetRoot()
+    TGroup* UIManager::SetRoot()
     {
         static_assert(std::is_base_of_v<UIGroup, TGroup>, "TGroup must derive from UIGroup");
+
+        if (m_InUpdate)
+        {
+            m_Logger.WarnO("Can't change root during update.");
+            return nullptr;
+        }
 
         //TGroup* e = new TGroup();
         //m_Root.AddChild(e);
@@ -75,6 +89,18 @@ namespace Game
         m_Root = new TGroup();
         m_Root->UpdateLayout(m_UIView);
         m_Root->ReDraw();
-        return *static_cast<TGroup*>(m_Root);
+        return static_cast<TGroup*>(m_Root);
+    }
+
+    template<typename TGroup>
+    void UIManager::RequestNewRoot()
+    {
+        static_assert(std::is_base_of_v<UIGroup, TGroup>, "TGroup must derive from UIGroup");
+
+        // On capture "this" et on appelle SetRoot<TGroup>() plus tard
+        m_PendingRootSetter = [this]()
+            {
+                this->SetRoot<TGroup>();
+            };
     }
 }

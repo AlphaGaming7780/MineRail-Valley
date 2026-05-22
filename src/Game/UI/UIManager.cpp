@@ -175,14 +175,25 @@ namespace Game
 
     void UIManager::Update(sf::RenderWindow& window)
     {
+ 
+        if (m_PendingRootSetter)
+        {
+            m_PendingRootSetter();
+            m_PendingRootSetter = nullptr;
+        }
 
         if (!window.hasFocus()) return;
+
+        m_InUpdate = true;
 
         sf::Vector2f mousePos = InputManager::Instance().GetMouseUIPos();
 
         bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
-        m_Root->HandleMouseEvent(mousePos, mousePressed);
+        if(m_Root) 
+            m_Root->HandleMouseEvent(mousePos, mousePressed);
+
+        m_InUpdate = false;
     }
 
     void UIManager::Draw(sf::RenderWindow& window)

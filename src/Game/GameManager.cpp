@@ -67,13 +67,16 @@ namespace Game
      
 		MainMenu();
 
-		//Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\VolcanicWastes.json"));
-		//UIManager::Instance().SetRoot<InGameUI>();
     }
 
     void GameManager::OnUpdate()
     {
-
+		if (m_PendingLoad)
+		{
+			m_PendingLoad();
+			m_PendingLoad = nullptr;
+			UIManager::Instance().RequestNewRoot<InGameUI>();
+		}
     }
 
     void GameManager::OnShutdown()
@@ -85,6 +88,26 @@ namespace Game
 	{
 		Load(GameMode::MainMenu, Purpose::Cleanup);
 		UIManager::Instance().SetRoot<TitleScreen>();
+	}
+
+	void GameManager::RequestLoadGame(const std::string mapDataPath)
+	{
+		m_PendingLoad = [this, mapDataPath]()
+		{
+			// Charger les données
+			MapData* map = MapDatabase::Instance().Load(mapDataPath);
+
+			// Déterminer mode/purpose selon ton jeu
+			GameMode mode = GameMode::InGame;
+			Purpose purpose = Purpose::NewGame;
+
+			this->Load(mode, purpose, map);
+		};
+	}
+
+	void GameManager::Exit()
+	{
+		GameWindow::Instance().Close();
 	}
 
     void GameManager::MainLoop()
@@ -142,7 +165,7 @@ namespace Game
 		EventManager& eventManager = EventManager::Instance();
 		UIManager& uiManager = UIManager::Instance();
 		GameWindow& gameWindow = GameWindow::Instance();
-        UILoadingScreen& loadingScreen = uiManager.SetRoot<UILoadingScreen>();
+        UILoadingScreen& loadingScreen = *uiManager.SetRoot<UILoadingScreen>();
 
 		auto loadingStartObservers = eventManager.GetObservers<LoadingStart>();
 		auto loadingCompleteObservers = eventManager.GetObservers<LoadingComplete>();

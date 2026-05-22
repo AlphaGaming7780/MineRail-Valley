@@ -12,13 +12,10 @@ namespace Game
 
     void UIElement::RemoveChild(UIElement* child)
     {
-        if (!child)
-            return;
-
         auto it = std::find(m_Children.begin(), m_Children.end(), child);
         if (it != m_Children.end())
         {
-            child->m_Parent = nullptr;
+            if (child) child->m_Parent = nullptr;
             m_Children.erase(it);
         }
     }
@@ -33,9 +30,11 @@ namespace Game
     {
         bool contains = HitTest(mousePos);
 
-        // 1. Propagation aux enfants
+        std::erase(m_Children, nullptr);
+
         bool result = false;
-        for (auto& child : m_Children)
+
+        for (UIElement* child : m_Children)
         {
             if (child->HandleMouseEvent(mousePos, mousePressed))
             {
@@ -50,6 +49,7 @@ namespace Game
                     m_HasFocus = false;
                     OnFocusLost();
                 }
+
                 result = true;
             }
         }

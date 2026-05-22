@@ -1,5 +1,6 @@
 #include <Game/UI/Menus/SettingsScreen.hpp>
 #include <Game/Settings/GameSettings.hpp>
+#include <Game/UI/Menus/TitleScreen.hpp>
 #include <Game/AssetDatabase.h>
 
 namespace Game
@@ -77,7 +78,7 @@ namespace Game
 
         m_BackButton = new UIButton({ 280, 60 }, { 180, 48 }, UIAnchor::BottomLeft,
                                     m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
-        m_BackButton->SetCallback([this] { if (m_OnBack) m_OnBack(); });
+        m_BackButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<TitleScreen>(); });
         m_BackButton->AddChild(new UILabel("Back", { 0, 0 }, UIAnchor::Center,
                                            m_Font, 22, { 243, 231, 207 }));
         AddChild(m_BackButton);

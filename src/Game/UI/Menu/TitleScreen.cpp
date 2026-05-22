@@ -1,4 +1,8 @@
 #include <Game/UI/Menus/TitleScreen.hpp>
+#include <Game/UI/Menus/LevelSelectScreen.hpp>
+#include <Game/UI/Menus/SettingsScreen.hpp>
+#include <Game/UI/Menus/CreditsScreen.hpp>
+#include <Game/GameManager.hpp>
 #include <Game/AssetDatabase.h>
 
 namespace Game
@@ -18,25 +22,25 @@ namespace Game
         // Title (anchored top-center via a top-left offset; the screen layout
         // recenters it in UpdateLayout based on view size).
         m_TitleLabel = new UILabel("MINERAIL VALLEY",
-                                   { 0, 80 }, UIAnchor::TopLeft,
+                                   { 0, -160 }, UIAnchor::Center,
                                    m_Font, 64, { 236, 222, 190 });
         AddChild(m_TitleLabel);
 
         // Buttons stack — recentered by UpdateLayout.
-        const sf::Vector2f BTN_SZ{ 260, 56 };
-        m_PlayButton     = new UIButton({ 0, 240 }, BTN_SZ, UIAnchor::TopLeft,
+        const sf::Vector2f BTN_SZ{ 260, 60 };
+        m_PlayButton     = new UIButton({ 0, 0 }, BTN_SZ, UIAnchor::Center,
                                         m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
-        m_SettingsButton = new UIButton({ 0, 310 }, BTN_SZ, UIAnchor::TopLeft,
+        m_SettingsButton = new UIButton({ 0, 80 }, BTN_SZ, UIAnchor::Center,
                                         m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
-        m_CreditsButton  = new UIButton({ 0, 380 }, BTN_SZ, UIAnchor::TopLeft,
+        m_CreditsButton  = new UIButton({ 0, 160 }, BTN_SZ, UIAnchor::Center,
                                         m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
-        m_QuitButton     = new UIButton({ 0, 460 }, BTN_SZ, UIAnchor::TopLeft,
+        m_QuitButton     = new UIButton({ 0, 240 }, BTN_SZ, UIAnchor::Center,
                                         m_WarnTex, m_WarnHoverTex, m_WarnTex);
 
-        m_PlayButton    ->SetCallback([this] { if (m_OnPlay)     m_OnPlay();     });
-        m_SettingsButton->SetCallback([this] { if (m_OnSettings) m_OnSettings(); });
-        m_CreditsButton ->SetCallback([this] { if (m_OnCredits)  m_OnCredits();  });
-        m_QuitButton    ->SetCallback([this] { if (m_OnQuit)     m_OnQuit();     });
+        m_PlayButton->SetCallback([this]     { UIManager::Instance().RequestNewRoot<LevelSelectScreen>(); });
+        m_SettingsButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<SettingsScreen>(); });
+        m_CreditsButton ->SetCallback([this] { UIManager::Instance().RequestNewRoot<CreditsScreen>(); });
+        m_QuitButton    ->SetCallback([this] { GameManager::Instance().Exit(); });
 
         // Labels living inside the buttons
         auto addBtnLabel = [&](UIButton* btn, const std::string& text) {
@@ -76,15 +80,15 @@ namespace Game
         m_Size = view.getSize();
 
         // Re-center buttons horizontally given the current window size.
-        const float cx = m_Size.x * 0.5f;
-        const float btnW = 260.f;
-        const float titleW = 480.f; // approximate; SFML doesn't expose text width without measure.
+        //const float cx = m_Size.x * 0.5f;
+        //const float btnW = 260.f;
+        //const float titleW = 480.f; // approximate; SFML doesn't expose text width without measure.
 
-        if (m_TitleLabel)    m_TitleLabel   ->SetRelativePosition({ cx - titleW * 0.5f, 80 });
-        if (m_PlayButton)    m_PlayButton   ->SetRelativePosition({ cx - btnW * 0.5f, 240 });
-        if (m_SettingsButton)m_SettingsButton->SetRelativePosition({ cx - btnW * 0.5f, 310 });
-        if (m_CreditsButton) m_CreditsButton->SetRelativePosition({ cx - btnW * 0.5f, 380 });
-        if (m_QuitButton)    m_QuitButton   ->SetRelativePosition({ cx - btnW * 0.5f, 460 });
+        //if (m_TitleLabel)    m_TitleLabel   ->SetRelativePosition({ cx - titleW * 0.5f, 80 });
+        //if (m_PlayButton)    m_PlayButton   ->SetRelativePosition({ cx - btnW * 0.5f, 240 });
+        //if (m_SettingsButton)m_SettingsButton->SetRelativePosition({ cx - btnW * 0.5f, 310 });
+        //if (m_CreditsButton) m_CreditsButton->SetRelativePosition({ cx - btnW * 0.5f, 380 });
+        //if (m_QuitButton)    m_QuitButton   ->SetRelativePosition({ cx - btnW * 0.5f, 460 });
 
         UIGroup::UpdateLayout(view);
     }

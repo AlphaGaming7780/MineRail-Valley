@@ -11,6 +11,7 @@
 #include <Game/UI/UIManager.hpp>
 #include <Game/AudioManager.hpp>
 #include <Game/AssetDatabase/AssetType/MapData.h>
+#include <functional>
 
 namespace Game
 {
@@ -35,6 +36,10 @@ namespace Game
         GameState GetCurrentState() const { return m_CurrentState; }
 		GameMode GetCurrentMode() const { return m_CurrentMode; }
 
+        void RequestLoadGame(const std::string mapDataPath);
+
+        void Exit();
+
     private:
         GameManager() = default;
 
@@ -42,6 +47,8 @@ namespace Game
 
         GameState m_CurrentState = GameState::Booting;
 		GameMode m_CurrentMode = GameMode::None;
+
+        std::function<void()> m_PendingLoad = nullptr;
 
         void MainLoop();
 
