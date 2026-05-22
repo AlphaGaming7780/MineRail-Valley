@@ -75,7 +75,7 @@ namespace Game
 		World::Instance().GetOrCreateSystem<TrainSystem>();
 <<<<<<< Updated upstream
      
-		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\VolcanicWastes.json"));
+		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\ForestValley.json"));
 		UIManager::Instance().SetRoot<InGameUI>();
 =======
 

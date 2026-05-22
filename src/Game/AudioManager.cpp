@@ -1,14 +1,34 @@
 #pragma once
 #include <Game/AudioManager.hpp>
 
+#include <algorithm>
+#include <filesystem>
+#include <random>
+
 namespace Game
 {
+	namespace
+	{
+		// File extensions we treat as audio tracks for playlist scans.
+		bool _IsAudioFile(const std::filesystem::path& p)
+		{
+			if (!p.has_extension()) return false;
+			std::string ext = p.extension().string();
+			std::transform(ext.begin(), ext.end(), ext.begin(),
+				[](unsigned char c) { return std::tolower(c); });
+			return ext == ".mp3" || ext == ".wav" || ext == ".ogg" || ext == ".flac";
+		}
+	}
+
 	AudioManager::AudioManager()
 		: m_SoundDatabase(SoundDatabase::Instance())
 		, m_MusicDatabase(MusicDatabase::Instance())
 		, m_MasterVolume(1.0f)
 		, m_SoundVolume(1.0f)
 		, m_MusicVolume(1.0f)
+		, m_PlaylistIndex(0)
+		, m_PlaylistVolume(0.f)
+		, m_PlaylistCurrent(nullptr)
 	{
 		auto& n = EventManager::Instance();
 		n.Register<PlayMusicEvent>(this);
@@ -40,13 +60,31 @@ namespace Game
 	}
 	void AudioManager::OnEvent(const LoadingStart& event)
 	{
+		_ResetPlaylist();
 		UnloadAll();
 	}
 	void AudioManager::OnEvent(const LoadingComplete& event)
 	{
-		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr && !event.m_MapData->BgAudioPath.empty())
+		// Main menu: play the dedicated menu playlist.
+		if (event.m_GameMode == GameMode::MainMenu)
 		{
-			PlayMusic(event.m_MapData->BgAudioPath, true, 65.f);
+			PlayPlaylist((std::filesystem::path("Musics") / "0.Menus").string(), 60.f);
+			return;
+		}
+
+		// In-game: prefer the playlist field on the MapData; fall back to the legacy single
+		// BgAudioPath for backward compatibility with old maps.
+		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr)
+		{
+			const MapData& md = *event.m_MapData;
+			if (!md.BgPlaylist.empty())
+			{
+				PlayPlaylist(md.BgPlaylist, 65.f);
+			}
+			else if (!md.BgAudioPath.empty())
+			{
+				PlayMusic(md.BgAudioPath, true, 65.f);
+			}
 		}
 	}
 	void AudioManager::PlaySound(const std::string& path, float volume)
@@ -156,6 +194,17 @@ namespace Game
 	void AudioManager::Update()
 	{
 		_PurgedFinishedSounds();
+
+		// Playlist auto-advance: when the currently-playing track has stopped on its own (track end),
+		// move to the next one. If the user explicitly stopped it (StopPlaylist) m_PlaylistCurrent
+		// is reset to nullptr first so we don't loop again.
+		if (!m_PlaylistFolder.empty() && m_PlaylistCurrent != nullptr)
+		{
+			if (m_PlaylistCurrent->getStatus() == sf::Music::Status::Stopped)
+			{
+				_AdvancePlaylist();
+			}
+		}
 	}
 	void AudioManager::_PurgedFinishedSounds()
 	{
@@ -191,8 +240,6 @@ namespace Game
 			}
 		}
 	}
-<<<<<<< Updated upstream
-=======
 
 	void AudioManager::PlayPlaylist(const std::string& folder, float volume)
 	{
@@ -292,7 +339,6 @@ namespace Game
 		m_PlaylistVolume = 0.f;
 		m_PlaylistCurrent = nullptr;
 	}
-
 	// ─── Public playlist transport (used by UIMusicPlayer) ────────────────────
 	void AudioManager::TogglePlaylistPause()
 	{
@@ -373,5 +419,4 @@ namespace Game
 		float r = t.asSeconds() / d.asSeconds();
 		return std::clamp(r, 0.f, 1.f);
 	}
->>>>>>> Stashed changes
 }

@@ -246,8 +246,20 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClCompile Include="src\Game\UI\UIElement.cpp" />
     <ClCompile Include="src\Game\UI\UIManager.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UIButton.cpp" />
+    <ClCompile Include="src\Game\UI\Widgets\UIImage.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UILabel.cpp" />
+    <ClCompile Include="src\Game\UI\Widgets\UIMusicPlayer.cpp" />
+    <ClCompile Include="src\Game\UI\Widgets\UIPanel.cpp" />
     <ClCompile Include="src\Game\UI\Widgets\UIProgressBar.cpp" />
+    <ClCompile Include="src\Game\UI\Widgets\UISlider.cpp" />
+    <ClCompile Include="src\Game\UI\Widgets\UIToggle.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\TitleScreen.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\LevelSelectScreen.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\PauseMenu.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\SettingsScreen.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\CreditsScreen.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\VictoryScreen.cpp" />
+    <ClCompile Include="src\Game\UI\Menu\GameOverScreen.cpp" />
     <ClCompile Include="src\Game\Utils\Time.cpp" />
     <ClCompile Include="src\Game\World.cpp" />
     <ClCompile Include="src\PallasEngine\Logging\Logger.cpp" />
@@ -321,10 +333,11 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\UI\UIWidget.hpp" />
     <ClInclude Include="include\Game\UI\Widgets.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIButton.hpp" />
+    <ClInclude Include="include\Game\UI\Widgets\UIImage.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UILabel.hpp" />
+    <ClInclude Include="include\Game\UI\Widgets\UIMusicPlayer.hpp" />
+    <ClInclude Include="include\Game\UI\Widgets\UIPanel.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIProgressBar.hpp" />
-<<<<<<< Updated upstream
-=======
     <ClInclude Include="include\Game\UI\Widgets\UISlider.hpp" />
     <ClInclude Include="include\Game\UI\Widgets\UIToggle.hpp" />
     <ClInclude Include="include\Game\UI\Menus\TitleScreen.hpp" />
@@ -336,7 +349,6 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <ClInclude Include="include\Game\UI\Menus\GameOverScreen.hpp" />
     <ClInclude Include="include\Game\Settings\GameSettings.hpp" />
     <ClInclude Include="include\Game\Settings\SettingsManager.hpp" />
->>>>>>> Stashed changes
     <ClInclude Include="include\Game\Utils.hpp" />
     <ClInclude Include="include\Game\Utils\AnimatedTextureUtils.h" />
     <ClInclude Include="include\Game\Utils\RaycastUtils.h" />
@@ -826,16 +838,60 @@ xcopy /E /I /Y "$(ProjectDir)assets" "$(TargetDir)assets\"
     <Image Include="assets\Textures\water.png" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< Updated upstream
-=======
     <None Include="UI_INTEGRATION.md" />
     <None Include="PROJECT.md" />
     <None Include="assets\Settings\settings.json" />
->>>>>>> Stashed changes
     <None Include="assets\Maps\DEFAULT.json" />
+    <None Include="assets\Maps\DesertCanyon.json" />
+    <None Include="assets\Maps\ForestValley.json" />
+    <None Include="assets\Maps\FrozenHighlands.json" />
+    <None Include="assets\Maps\NeonCity.json" />
     <None Include="assets\Maps\Plain.json" />
+    <None Include="assets\Maps\VolcanicWastes.json" />
     <None Include="assets\Tiles\DEFAULT.json" />
+    <None Include="assets\Tiles\basalt_top.json" />
+    <None Include="assets\Tiles\black_concrete.json" />
+    <None Include="assets\Tiles\blackstone.json" />
+    <None Include="assets\Tiles\blue_ice.json" />
+    <None Include="assets\Tiles\bricks.json" />
+    <None Include="assets\Tiles\coarse_dirt.json" />
+    <None Include="assets\Tiles\cobbled_deepslate.json" />
+    <None Include="assets\Tiles\cobblestone.json" />
+    <None Include="assets\Tiles\crimson_nylium.json" />
+    <None Include="assets\Tiles\cyan_concrete.json" />
+    <None Include="assets\Tiles\dark_prismarine.json" />
+    <None Include="assets\Tiles\dirt.json" />
+    <None Include="assets\Tiles\frosted_ice.json" />
+    <None Include="assets\Tiles\gilded_blackstone.json" />
+    <None Include="assets\Tiles\glowstone.json" />
+    <None Include="assets\Tiles\grass.json" />
+    <None Include="assets\Tiles\gravel.json" />
+    <None Include="assets\Tiles\gray_terracotta.json" />
+    <None Include="assets\Tiles\ice.json" />
+    <None Include="assets\Tiles\lava.json" />
+    <None Include="assets\Tiles\light_gray_concrete.json" />
+    <None Include="assets\Tiles\magma.json" />
+    <None Include="assets\Tiles\moss_block.json" />
+    <None Include="assets\Tiles\mossy_cobblestone.json" />
+    <None Include="assets\Tiles\nether_wart_block.json" />
+    <None Include="assets\Tiles\netherrack.json" />
+    <None Include="assets\Tiles\obsidian.json" />
+    <None Include="assets\Tiles\packed_ice.json" />
+    <None Include="assets\Tiles\podzol.json" />
+    <None Include="assets\Tiles\powder_snow.json" />
+    <None Include="assets\Tiles\prismarine.json" />
+    <None Include="assets\Tiles\red_concrete.json" />
+    <None Include="assets\Tiles\red_sand.json" />
+    <None Include="assets\Tiles\red_sandstone.json" />
+    <None Include="assets\Tiles\sand.json" />
+    <None Include="assets\Tiles\sandstone.json" />
+    <None Include="assets\Tiles\sea_lantern.json" />
+    <None Include="assets\Tiles\snow.json" />
+    <None Include="assets\Tiles\soul_sand.json" />
+    <None Include="assets\Tiles\stone.json" />
+    <None Include="assets\Tiles\terracotta.json" />
     <None Include="assets\Tiles\water.json" />
+    <None Include="assets\Tiles\white_terracotta.json" />
     <None Include="include\SFML\Audio\SoundFileFactory.inl" />
     <None Include="include\SFML\Graphics\Color.inl" />
     <None Include="include\SFML\Graphics\Glsl.inl" />
