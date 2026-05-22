@@ -8,6 +8,7 @@ namespace Game
     void TrainObject::Update()
     {
         GameObject::Update();
+
         if (!m_Current || !m_Next)
         {
             m_Enabled = false;
@@ -15,39 +16,43 @@ namespace Game
             return;
         }
 
-        sf::Vector2f pos = GetPosition();
-        sf::Vector2f target = m_Next->GetPosition(); // déjà centré
+        float remaining = m_Speed * Time::GetDeltaTime().asSeconds();
 
-        sf::Vector2f dir = target - pos;
-        float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
-
-        const float epsilon = 1.0f;
-
-        if (dist <= epsilon)
+        // On boucle tant qu'il reste du mouvement
+        while (remaining > 0.f && m_Next)
         {
-            SetPosition(target);
+            sf::Vector2f pos = GetPosition();
+            sf::Vector2f target = m_Next->GetPosition();
 
-            TrackObjectBase* next = nullptr;
-            if (m_Next->m_First && m_Next->m_First != m_Current && !m_Next->m_First->m_Temp)
+            sf::Vector2f dir = target - pos;
+            float dist = std::sqrt(dir.x * dir.x + dir.y * dir.y);
+
+            if (dist < 0.001f)
             {
-                next = m_Next->m_First;
-            }
-            else if (m_Next->m_Second && m_Next->m_Second != m_Current && !m_Next->m_Second->m_Temp)
-            {
-                next = m_Next->m_Second;
+                // Déjà sur la tuile
+                SetPosition(target);
+                AdvanceToNextTile();
+                continue;
             }
 
-            m_Current = m_Next;
-            m_Next = next;
-            return;
+            dir /= dist;
+
+            if (remaining >= dist)
+            {
+                // On atteint la tuile et il reste du mouvement
+                SetPosition(target);
+                remaining -= dist;
+                AdvanceToNextTile();
+            }
+            else
+            {
+                // On avance partiellement vers la tuile
+                Move(dir * remaining);
+                remaining = 0.f;
+            }
+
+            UpdateSprite(dir);
         }
-
-        dir /= dist;
-
-        sf::Vector2f move = dir * m_Speed * Time::GetDeltaTime().asSeconds();
-
-        Move(move);
-        UpdateSprite(dir);
     }
 
     void TrainObject::UpdateSprite(const sf::Vector2f& dir)
@@ -62,5 +67,16 @@ namespace Game
         }
     }
 
+    void TrainObject::AdvanceToNextTile()
+    {
+        TrackObjectBase* next = nullptr;
 
+        if (m_Next->m_First && m_Next->m_First != m_Current && !m_Next->m_First->m_Temp)
+            next = m_Next->m_First;
+        else if (m_Next->m_Second && m_Next->m_Second != m_Current && !m_Next->m_Second->m_Temp)
+            next = m_Next->m_Second;
+
+        m_Current = m_Next;
+        m_Next = next;
+    }
 }

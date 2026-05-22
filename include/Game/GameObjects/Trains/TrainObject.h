@@ -24,6 +24,7 @@ namespace Game
 
 		void Update() override;
 		void UpdateSprite(const sf::Vector2f& dir);
+		void AdvanceToNextTile();
 
 
 	protected:

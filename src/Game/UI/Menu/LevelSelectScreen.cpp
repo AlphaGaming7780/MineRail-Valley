@@ -42,7 +42,7 @@ namespace Game
             { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert",   3, false },
             { "Maps\\VolcanicWastes.json",   "Volcanic Wastes",  "Volcanic", 4, false },
             { "Maps\\NeonCity.json",         "Neon City",        "Neon",     4, false },
-            { "Maps\\DEFAULT.json",          "Sandbox",          "Default",  1, false },
+            { "Maps\\SandBox.json",          "Sandbox",          "Default",  1, false },
         });
     }
 

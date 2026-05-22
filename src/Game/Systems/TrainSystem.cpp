@@ -249,7 +249,7 @@ namespace Game
 	{
 		if (!src || !dst || m_TrainsData.empty()) return nullptr;
 
-		float trainSpeed = 200.f * m_Difficulty * 0.5; ;
+		float trainSpeed = 200.f * m_Difficulty; ;
 
 		std::vector<TrainData*> list;
 		list.reserve(m_TrainsData.size());
