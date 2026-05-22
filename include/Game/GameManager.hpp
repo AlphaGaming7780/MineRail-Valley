@@ -39,6 +39,8 @@ namespace Game
         void RequestMainMenu();
         void RequestLoadGame(const std::string mapDataPath);
         void RequestLoadGame(MapData* mapData);
+        void RestartLevel();
+        void RequestRestartLevel();
 
         template<typename TUIGroup>
         void RequestLoad(GameMode mode, Purpose purpose, MapData* mapData)

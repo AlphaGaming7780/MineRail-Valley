@@ -13,9 +13,9 @@ namespace Game
         FontDatabase&    fn = FontDatabase::Instance();
 
         m_Font          = fn.Load("Fonts\\Minecraft.ttf");
-        m_BtnTex        = tx.Load("UI\\Button.png");
-        m_BtnHoverTex   = tx.Load("UI\\Button_hover.png");
-        m_BtnClickedTex = tx.Load("UI\\Button_clicked.png");
+        m_BtnTex        = tx.Load("UI\\Button_large.png");
+        m_BtnHoverTex   = tx.Load("UI\\Button_large_hover.png");
+        m_BtnClickedTex = tx.Load("UI\\Button_large_clicked.png");
         m_HeaderTex     = tx.Load("UI\\Statistics\\header.png");
         m_WarnTex       = tx.Load("UI\\Buttons\\warning_normal.png");
         m_WarnHoverTex  = tx.Load("UI\\Buttons\\warning_hover.png");
@@ -36,9 +36,9 @@ namespace Game
         m_RetryButton = new UIButton({ 0, 80 }, BTN_SZ, UIAnchor::BottomLeft,
                                      m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
         m_MenuButton  = new UIButton({ 0, 80 }, BTN_SZ, UIAnchor::BottomLeft,
-                                     m_WarnTex, m_WarnHoverTex, m_WarnTex);
+                                    m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
 
-        m_RetryButton->SetCallback([this] { GameManager::Instance().RequestLoad<InGameUI>(GameMode::InGame, Purpose::NewGame, GameManager::Instance().GetCurrentMapData()); });
+        m_RetryButton->SetCallback([this] { GameManager::Instance().RequestRestartLevel(); });
         m_MenuButton->SetCallback([this] { GameManager::Instance().RequestMainMenu(); });
 
         m_RetryButton->AddChild(new UILabel("Retry",     { 0, 0 }, UIAnchor::Center, m_Font, 22, { 243, 231, 207 }));

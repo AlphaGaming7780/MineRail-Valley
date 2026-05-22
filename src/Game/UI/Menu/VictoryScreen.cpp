@@ -15,9 +15,9 @@ namespace Game
         AudioManager::Instance().PlaySound("Sounds\\Win sound.wav", 0.9f);
 
         m_Font          = fn.Load("Fonts\\Minecraft.ttf");
-        m_BtnTex        = tx.Load("UI\\Button.png");
-        m_BtnHoverTex   = tx.Load("UI\\Button_hover.png");
-        m_BtnClickedTex = tx.Load("UI\\Button_clicked.png");
+        m_BtnTex        = tx.Load("UI\\Button_large.png");
+        m_BtnHoverTex   = tx.Load("UI\\Button_large_hover.png");
+        m_BtnClickedTex = tx.Load("UI\\Button_large_clicked.png");
         m_HeaderTex     = tx.Load("UI\\Statistics\\header.png");
         m_CheckIconTex  = tx.Load("UI\\Icons\\check.png");
 

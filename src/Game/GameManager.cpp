@@ -100,6 +100,22 @@ namespace Game
 		RequestLoad<InGameUI>(GameMode::InGame, Purpose::NewGame, mapData);
 	}
 
+	void GameManager::RestartLevel()
+	{
+		MapData* t = m_CurrentMap;
+		Load(GameMode::MainMenu, Purpose::Cleanup);
+		Load(GameMode::InGame, Purpose::NewGame, t);
+		UIManager::Instance().RequestNewRoot<InGameUI>();
+	}
+
+	void GameManager::RequestRestartLevel()
+	{
+		m_PendingLoad = [this]()
+			{
+				this->RestartLevel();
+			};
+	}
+
 	void GameManager::RequestMainMenu()
 	{
 		m_PendingLoad = [this]()

@@ -11,9 +11,9 @@ namespace Game
         TextureDatabase& textures = TextureDatabase::Instance();
         FontDatabase& fonts = FontDatabase::Instance();
 
-        m_ButtonTexture = textures.Load("UI\\Button.png");
-        m_ButtonHoverTexture = textures.Load("UI\\Button_hover.png");
-        m_ButtonClickedTexture = textures.Load("UI\\Button_clicked.png");
+        m_ButtonTexture = textures.Load("UI\\Button_large.png");
+        m_ButtonHoverTexture = textures.Load("UI\\Button_large_hover.png");
+        m_ButtonClickedTexture = textures.Load("UI\\Button_large_clicked.png");
         m_Font = fonts.Load("Fonts\\Minecraft.ttf");
 
         m_PauseButton = new UIButton(

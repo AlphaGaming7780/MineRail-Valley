@@ -13,9 +13,9 @@ namespace Game
         FontDatabase&    fn = FontDatabase::Instance();
 
         m_Font          = fn.Load("Fonts\\Minecraft.ttf");
-        m_BtnTex        = tx.Load("UI\\Button.png");
-        m_BtnHoverTex   = tx.Load("UI\\Button_hover.png");
-        m_BtnClickedTex = tx.Load("UI\\Button_clicked.png");
+        m_BtnTex        = tx.Load("UI\\Button_large.png");
+        m_BtnHoverTex   = tx.Load("UI\\Button_large_hover.png");
+        m_BtnClickedTex = tx.Load("UI\\Button_large_clicked.png");
         m_TrackTex      = tx.Load("UI\\Sliders\\track_normal.png");
         m_HandleTex     = tx.Load("UI\\Sliders\\handle_normal.png");
         m_CbOffTex      = tx.Load("UI\\Checkboxes\\off_normal.png");

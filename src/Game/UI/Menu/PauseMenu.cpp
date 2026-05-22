@@ -11,9 +11,9 @@ namespace Game
         FontDatabase& fn = FontDatabase::Instance();
 
         m_Font = fn.Load("Fonts\\Minecraft.ttf");
-        m_BtnTex = tx.Load("UI\\Button.png");
-        m_BtnHoverTex = tx.Load("UI\\Button_hover.png");
-        m_BtnClickedTex = tx.Load("UI\\Button_clicked.png");
+        m_BtnTex = tx.Load("UI\\Button_large.png");
+        m_BtnHoverTex = tx.Load("UI\\Button_large_hover.png");
+        m_BtnClickedTex = tx.Load("UI\\Button_large_clicked.png");
         m_WarnTex = tx.Load("UI\\Buttons\\warning_normal.png");
         m_WarnHoverTex = tx.Load("UI\\Buttons\\warning_hover.png");
 
@@ -46,7 +46,7 @@ namespace Game
             m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
 
         m_QuitButton = new UIButton({ 0, 130 }, BTN_SZ, UIAnchor::Center,
-            m_WarnTex, m_WarnHoverTex, m_WarnTex);
+            m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
 
         m_ResumeButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<InGameUI>(); });
         m_SettingsButton->SetCallback([this] { if (m_OnSettings) m_OnSettings(); });

@@ -41,9 +41,9 @@ namespace Game
         FontDatabase&    fn = FontDatabase::Instance();
 
         m_Font          = fn.Load("Fonts\\Minecraft.ttf");
-        m_BtnTex        = tx.Load("UI\\Button.png");
-        m_BtnHoverTex   = tx.Load("UI\\Button_hover.png");
-        m_BtnClickedTex = tx.Load("UI\\Button_clicked.png");
+        m_BtnTex        = tx.Load("UI\\Button_large.png");
+        m_BtnHoverTex   = tx.Load("UI\\Button_large_hover.png");
+        m_BtnClickedTex = tx.Load("UI\\Button_large_clicked.png");
 
         m_TitleLabel = new UILabel("Credits", { 24, 16 }, UIAnchor::TopLeft,
                                    m_Font, 40, { 236, 222, 190 });

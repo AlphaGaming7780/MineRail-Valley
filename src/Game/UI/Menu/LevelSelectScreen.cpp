@@ -50,9 +50,9 @@ namespace Game
     {
         TextureDatabase& tx = TextureDatabase::Instance();
         FontDatabase&    fn = FontDatabase::Instance();
-        tx.Unload("UI\\Button.png");
-        tx.Unload("UI\\Button_hover.png");
-        tx.Unload("UI\\Button_clicked.png");
+        tx.Unload("UI\\Button_large.png");
+        tx.Unload("UI\\Button_large_hover.png");
+        tx.Unload("UI\\Button_large_clicked.png");
         tx.Unload("UI\\LevelSelect\\join_normal.png");
         tx.Unload("UI\\LevelSelect\\join_hover.png");
         tx.Unload("UI\\LevelSelect\\marked_normal.png");
