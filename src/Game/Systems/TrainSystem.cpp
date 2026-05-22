@@ -32,6 +32,17 @@ namespace Game
 			StationDatabase::Instance().Unload(p);
 		}
 		m_StationsData.clear();
+
+		for (auto& [p, ob] : m_TrainsData)
+		{
+			TrainDatabase::Instance().Unload(p);
+		}
+		m_TrainsData.clear();
+
+		m_Stations.clear();
+		m_Trains.clear();
+		m_StationSpawnPool.clear();
+
 	}
 
 	void TrainSystem::OnUpdate()
@@ -75,6 +86,8 @@ namespace Game
 	void TrainSystem::OnGameLoadingStart(GameMode mode, Purpose purpose, MapData* mapData)
 	{
 		SetEnable(false);
+		m_Stations.clear();
+		m_Trains.clear();
 		m_StationSpawnPool.clear();
 		if (mode == GameMode::InGame)
 		{

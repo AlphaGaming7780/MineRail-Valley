@@ -176,6 +176,15 @@ namespace Game
 
     void World::ClearWorld()
     {
+
+        //for (auto& [t , sys ]: m_Systems)
+        //{
+        //    if (!sys) continue;
+        //    sys->OnDestroy();
+        //    delete sys;
+        //}
+        //m_Systems.clear();
+
         for (GameObject* go : m_GameObjects)
         {
             if (!go) continue;

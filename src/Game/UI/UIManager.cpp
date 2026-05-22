@@ -226,24 +226,22 @@ namespace Game
     {
         sf::Vector2f coords = GameWindow::Instance().Get().mapPixelToCoords(screenPos, m_UIView);
 
-        // Correction du letterboxing vertical
         float viewH = m_UIView.getSize().y;
-        float uiH = 1080.f; // ta résolution logique
+        float uiH = 1080.f;
 
         if (viewH > uiH)
         {
             float offsetY = (viewH - uiH) * 0.5f;
-            coords.y -= offsetY;
+            coords.y += offsetY;
         }
 
-        // Correction du letterboxing horizontal (si jamais)
         float viewW = m_UIView.getSize().x;
         float uiW = 1920.f;
 
         if (viewW > uiW)
         {
             float offsetX = (viewW - uiW) * 0.5f;
-            coords.x -= offsetX;
+            coords.x += offsetX;
         }
 
         return coords;

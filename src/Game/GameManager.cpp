@@ -75,7 +75,6 @@ namespace Game
 		{
 			m_PendingLoad();
 			m_PendingLoad = nullptr;
-			UIManager::Instance().RequestNewRoot<InGameUI>();
 		}
     }
 
@@ -102,6 +101,7 @@ namespace Game
 			Purpose purpose = Purpose::NewGame;
 
 			this->Load(mode, purpose, map);
+			UIManager::Instance().RequestNewRoot<InGameUI>();
 		};
 	}
 
