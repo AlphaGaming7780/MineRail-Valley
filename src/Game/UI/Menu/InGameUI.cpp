@@ -75,6 +75,12 @@ namespace Game
 
         m_StatusLabel = new UILabel("Mode: Rail", { 456.f, 0.f }, UIAnchor::BottomLeft, m_Font, 22, { 236, 222, 190 });
         AddChild(m_StatusLabel);
+
+        // Mini music player, anchored top-right just below the pause button.
+        // The host (GameManager / Update loop) is responsible for wiring
+        // its callbacks to AudioManager — see UI_INTEGRATION.md.
+        m_MusicPlayer = new UIMusicPlayer({ 10, 70 }, { 280, 90 }, UIAnchor::TopRight);
+        AddChild(m_MusicPlayer);
     }
 
     InGameUI::~InGameUI()

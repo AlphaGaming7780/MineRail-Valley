@@ -1,14 +1,34 @@
 #pragma once
 #include <Game/AudioManager.hpp>
 
+#include <algorithm>
+#include <filesystem>
+#include <random>
+
 namespace Game
 {
+	namespace
+	{
+		// File extensions we treat as audio tracks for playlist scans.
+		bool _IsAudioFile(const std::filesystem::path& p)
+		{
+			if (!p.has_extension()) return false;
+			std::string ext = p.extension().string();
+			std::transform(ext.begin(), ext.end(), ext.begin(),
+				[](unsigned char c) { return std::tolower(c); });
+			return ext == ".mp3" || ext == ".wav" || ext == ".ogg" || ext == ".flac";
+		}
+	}
+
 	AudioManager::AudioManager()
 		: m_SoundDatabase(SoundDatabase::Instance())
 		, m_MusicDatabase(MusicDatabase::Instance())
 		, m_MasterVolume(1.0f)
 		, m_SoundVolume(1.0f)
 		, m_MusicVolume(1.0f)
+		, m_PlaylistIndex(0)
+		, m_PlaylistVolume(0.f)
+		, m_PlaylistCurrent(nullptr)
 	{
 		auto& n = EventManager::Instance();
 		n.Register<PlayMusicEvent>(this);
@@ -40,13 +60,31 @@ namespace Game
 	}
 	void AudioManager::OnEvent(const LoadingStart& event)
 	{
+		_ResetPlaylist();
 		UnloadAll();
 	}
 	void AudioManager::OnEvent(const LoadingComplete& event)
 	{
-		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr && !event.m_MapData->BgAudioPath.empty())
+		// Main menu: play the dedicated menu playlist.
+		if (event.m_GameMode == GameMode::MainMenu)
 		{
-			PlayMusic(event.m_MapData->BgAudioPath, true, 65.f);
+			PlayPlaylist((std::filesystem::path("Musics") / "0.Menus").string(), 60.f);
+			return;
+		}
+
+		// In-game: prefer the playlist field on the MapData; fall back to the legacy single
+		// BgAudioPath for backward compatibility with old maps.
+		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr)
+		{
+			const MapData& md = *event.m_MapData;
+			if (!md.BgPlaylist.empty())
+			{
+				PlayPlaylist(md.BgPlaylist, 65.f);
+			}
+			else if (!md.BgAudioPath.empty())
+			{
+				PlayMusic(md.BgAudioPath, true, 65.f);
+			}
 		}
 	}
 	void AudioManager::PlaySound(const std::string& path, float volume)
@@ -156,6 +194,17 @@ namespace Game
 	void AudioManager::Update()
 	{
 		_PurgedFinishedSounds();
+
+		// Playlist auto-advance: when the currently-playing track has stopped on its own (track end),
+		// move to the next one. If the user explicitly stopped it (StopPlaylist) m_PlaylistCurrent
+		// is reset to nullptr first so we don't loop again.
+		if (!m_PlaylistFolder.empty() && m_PlaylistCurrent != nullptr)
+		{
+			if (m_PlaylistCurrent->getStatus() == sf::Music::Status::Stopped)
+			{
+				_AdvancePlaylist();
+			}
+		}
 	}
 	void AudioManager::_PurgedFinishedSounds()
 	{
@@ -190,5 +239,104 @@ namespace Game
 				m->setVolume(previousVol * m_MusicVolume * m_MasterVolume);
 			}
 		}
+	}
+
+	void AudioManager::PlayPlaylist(const std::string& folder, float volume)
+	{
+		if (folder.empty()) return;
+
+		// Stop and clear any previous playlist so PlayMusic below doesn't fight with an old track.
+		StopPlaylist();
+
+		// Resolve the playlist folder against the asset root used by MusicDatabase.
+		// MusicDatabase::Load already prepends DatabasePath (the assets dir), so for the FS scan
+		// we need to do the same here.
+		std::filesystem::path baseDir = std::filesystem::path(m_MusicDatabase.DatabasePath) / folder;
+		std::error_code ec;
+		if (!std::filesystem::is_directory(baseDir, ec))
+		{
+			// No directory: nothing to play. Keep playlist inactive.
+			m_PlaylistFolder.clear();
+			m_PlaylistTracks.clear();
+			return;
+		}
+
+		// Collect all audio files in the folder. We store paths *relative to assets/* so that
+		// MusicDatabase::Load_Impl resolves them correctly via its DatabasePath prefix.
+		m_PlaylistTracks.clear();
+		for (auto const& entry : std::filesystem::directory_iterator(baseDir, ec))
+		{
+			if (ec) break;
+			if (!entry.is_regular_file()) continue;
+			if (!_IsAudioFile(entry.path())) continue;
+
+			std::filesystem::path rel = std::filesystem::path(folder) / entry.path().filename();
+			m_PlaylistTracks.push_back(rel.string());
+		}
+
+		if (m_PlaylistTracks.empty())
+		{
+			m_PlaylistFolder.clear();
+			return;
+		}
+
+		// Shuffle for variety. New std::mt19937 seeded by random_device per call.
+		std::random_device rd;
+		std::mt19937 gen(rd());
+		std::shuffle(m_PlaylistTracks.begin(), m_PlaylistTracks.end(), gen);
+
+		m_PlaylistFolder = folder;
+		m_PlaylistIndex  = 0;
+		m_PlaylistVolume = volume;
+
+		// Start the first track. Looping is OFF on every playlist track so that Update() can detect
+		// the natural end-of-track and move on.
+		const std::string& firstPath = m_PlaylistTracks[m_PlaylistIndex];
+		PlayMusic(firstPath, /*loop*/ false, m_PlaylistVolume);
+		m_PlaylistCurrent = m_MusicDatabase.GetAsset(firstPath);
+	}
+
+	void AudioManager::StopPlaylist()
+	{
+		if (m_PlaylistCurrent != nullptr)
+		{
+			if (m_PlaylistCurrent->getStatus() != sf::Music::Status::Stopped)
+			{
+				m_PlaylistCurrent->stop();
+			}
+		}
+		_ResetPlaylist();
+	}
+
+	void AudioManager::_AdvancePlaylist()
+	{
+		if (m_PlaylistTracks.empty())
+		{
+			_ResetPlaylist();
+			return;
+		}
+
+		m_PlaylistIndex++;
+		if (m_PlaylistIndex >= m_PlaylistTracks.size())
+		{
+			// End of playlist: re-shuffle and loop back so consecutive listening still feels fresh.
+			std::random_device rd;
+			std::mt19937 gen(rd());
+			std::shuffle(m_PlaylistTracks.begin(), m_PlaylistTracks.end(), gen);
+			m_PlaylistIndex = 0;
+		}
+
+		const std::string& nextPath = m_PlaylistTracks[m_PlaylistIndex];
+		PlayMusic(nextPath, /*loop*/ false, m_PlaylistVolume);
+		m_PlaylistCurrent = m_MusicDatabase.GetAsset(nextPath);
+	}
+
+	void AudioManager::_ResetPlaylist()
+	{
+		m_PlaylistFolder.clear();
+		m_PlaylistTracks.clear();
+		m_PlaylistIndex = 0;
+		m_PlaylistVolume = 0.f;
+		m_PlaylistCurrent = nullptr;
 	}
 }
