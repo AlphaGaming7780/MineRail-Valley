@@ -4,6 +4,7 @@
   "Difficulty": 2,
   "BgPlaylist": "Musics\\4.Zen",
   "Biome": "Forest",
+  "MapPreview": "Textures\\MapsPreview\\ForestValley.png",
   "tiles": [
     "Tiles\\grass.json",
     "Tiles\\grass.json",

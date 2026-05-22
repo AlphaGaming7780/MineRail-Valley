@@ -4,6 +4,7 @@
   "Difficulty": 1,
   "BgPlaylist": "Musics\\3.Lo-Fi_Journey",
   "Biome": "Plain",
+  "MapPreview": "Textures\\MapsPreview\\Plain.png",
   "tiles": [
     "Tiles\\coarse_dirt.json",
     "Tiles\\coarse_dirt.json",

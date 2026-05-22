@@ -4,6 +4,7 @@
   "Difficulty": 4,
   "BgPlaylist": "Musics\\5.Neons_n_Rain",
   "Biome": "Neon",
+  "MapPreview": "Textures\\MapsPreview\\NeonCity.png",
   "tiles": [
     "Tiles\\prismarine.json",
     "Tiles\\prismarine.json",

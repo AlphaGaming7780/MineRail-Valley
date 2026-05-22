@@ -1,6 +1,7 @@
 {
   "MapSize": 32,
   "Difficulty": 1,
+  "MapPreview": "Textures\\MapsPreview\\DEFAULT.png",
   "tiles": [
     "Tiles\\DEFAULT.json",
     "Tiles\\DEFAULT.json",

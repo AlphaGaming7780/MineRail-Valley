@@ -4,6 +4,7 @@
   "Difficulty": 4,
   "BgPlaylist": "Musics\\2.Industrial_Ambiant",
   "Biome": "Volcanic",
+  "MapPreview": "Textures\\MapsPreview\\VolcanicWastes.png",
   "tiles": [
     "Tiles\\lava.json",
     "Tiles\\lava.json",

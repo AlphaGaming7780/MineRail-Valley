@@ -4,6 +4,7 @@
   "Difficulty": 3,
   "BgPlaylist": "Musics\\3.Lo-Fi_Journey",
   "Biome": "Desert",
+  "MapPreview": "Textures\\MapsPreview\\DesertCanyon.png",
   "tiles": [
     "Tiles\\water.json",
     "Tiles\\water.json",

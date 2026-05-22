@@ -24,6 +24,8 @@ namespace Game
 		// Purely informational metadata for now — used by the audio/UI layer for theming.
 		std::string Biome;
 
+		std::string MapPreview;
+
 		std::vector<std::string> tiles;
 	};
 }

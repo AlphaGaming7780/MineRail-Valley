@@ -26,6 +26,7 @@ namespace Game
             std::string mapPath;   // e.g. "Maps\\Plain.json"
             std::string title;     // displayed name, e.g. "Plain"
             std::string biome;     // displayed biome, e.g. "Plain"
+            std::string mapPreview;
             int         difficulty = 1;
             bool        locked     = false;  // if true, render the locked variant
         };

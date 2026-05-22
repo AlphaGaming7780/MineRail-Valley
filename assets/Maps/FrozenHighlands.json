@@ -4,6 +4,7 @@
   "Difficulty": 3,
   "BgPlaylist": "Musics\\4.Zen",
   "Biome": "Frozen",
+  "MapPreview": "Textures\\MapsPreview\\FrozenHighlands.png",
   "tiles": [
     "Tiles\\ice.json",
     "Tiles\\ice.json",

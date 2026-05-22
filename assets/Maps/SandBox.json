@@ -4,6 +4,7 @@
   "Difficulty": 1,
   "BgPlaylist": "Musics\\1.Night_Drive",
   "Biome": "Default",
+  "MapPreview": "Textures\\MapsPreview\\SandBox.png",
   "tiles": [
     "Tiles\\sand.json",
     "Tiles\\sand.json",

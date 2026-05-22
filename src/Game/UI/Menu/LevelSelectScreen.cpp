@@ -36,13 +36,13 @@ namespace Game
         // Default level set — replace by reading the Maps directory or by a
         // call to SetLevels() right after constructing the screen.
         SetLevels({
-            { "Maps\\Plain.json",            "Plain",            "Plain",    1, false },
-            { "Maps\\ForestValley.json",     "Forest Valley",    "Forest",   2, false },
-            { "Maps\\FrozenHighlands.json",  "Frozen Highlands", "Frozen",   3, false },
-            { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert",   3, false },
-            { "Maps\\VolcanicWastes.json",   "Volcanic Wastes",  "Volcanic", 4, false },
-            { "Maps\\NeonCity.json",         "Neon City",        "Neon",     4, false },
-            { "Maps\\SandBox.json",          "Sandbox",          "Default",  1, false },
+            { "Maps\\Plain.json",            "Plain",            "Plain",  "Textures\\MapsPreview\\Plain.png",              1, false },
+            { "Maps\\ForestValley.json",     "Forest Valley",    "Forest", "Textures\\MapsPreview\\ForestValley.png",       2, false },
+            { "Maps\\FrozenHighlands.json",  "Frozen Highlands", "Frozen", "Textures\\MapsPreview\\FrozenHighlands.png",    3, false },
+            { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert", "Textures\\MapsPreview\\Plain.png",              3, false },
+            { "Maps\\VolcanicWastes.json",   "Volcanic Wastes",  "Volcanic", "Textures\\MapsPreview\\VolcanicWastes.png",   4, false },
+            { "Maps\\NeonCity.json",         "Neon City",        "Neon", "Textures\\MapsPreview\\NeonCity.png",             4, false },
+            { "Maps\\SandBox.json",          "Sandbox",          "Default", "Textures\\MapsPreview\\SandBox.png",           1, false },
         });
     }
 
@@ -101,6 +101,8 @@ namespace Game
             for (int d = 0; d < L.difficulty; ++d) sub += "*";
             card->AddChild(new UILabel(sub, { 16, 44 }, UIAnchor::TopLeft,
                                         m_Font, 14, { 207, 182, 151 }));
+
+
 
             // Play button uses join_* if unlocked, warning_* if locked
             sf::Texture* nrm = L.locked ? m_WarnTex      : m_JoinTex;
