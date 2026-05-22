@@ -30,6 +30,8 @@ namespace Game
         void OnUpdate();
         void OnShutdown();
 
+        void MainMenu();
+
         GameState GetCurrentState() const { return m_CurrentState; }
 		GameMode GetCurrentMode() const { return m_CurrentMode; }
 
