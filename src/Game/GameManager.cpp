@@ -4,6 +4,7 @@
 #include <Game/Rendering/RenderingManager.hpp>
 #include <Game/AssetDatabase/MapDatabase.h>
 #include <Game/UI/Menus/InGameUI.h>
+#include <Game/UI/Menus/TitleScreen.hpp>
 
 extern "C" {
 	__declspec(dllexport) unsigned long NvOptimusEnablement = 0x00000001; // NVIDIA
@@ -64,8 +65,10 @@ namespace Game
 		World::Instance().GetOrCreateSystem<TrackToolSystem>();
 		World::Instance().GetOrCreateSystem<TrainSystem>();
      
-		Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\VolcanicWastes.json"));
-		UIManager::Instance().SetRoot<InGameUI>();
+		MainMenu();
+
+		//Load(GameMode::InGame, Purpose::NewGame, MapDatabase::Instance().Load("Maps\\VolcanicWastes.json"));
+		//UIManager::Instance().SetRoot<InGameUI>();
     }
 
     void GameManager::OnUpdate()
@@ -77,6 +80,12 @@ namespace Game
     {
 		m_Logger.Info("OnShutdown");
     }
+
+	void GameManager::MainMenu()
+	{
+		Load(GameMode::MainMenu, Purpose::Cleanup);
+		UIManager::Instance().SetRoot<TitleScreen>();
+	}
 
     void GameManager::MainLoop()
 	{

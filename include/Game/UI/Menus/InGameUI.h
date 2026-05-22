@@ -2,6 +2,7 @@
 
 #include <string>
 #include <Game/UI.hpp>
+#include <Game/UI/Widgets/UIMusicPlayer.hpp>
 
 namespace Game
 {
@@ -16,6 +17,11 @@ namespace Game
 		void Draw(sf::RenderTexture& canvas) override;
 
 		void SetStatus(const std::string& text);
+
+		// Returns the embedded music player so the game layer can wire its
+		// callbacks (Prev / Play-Pause / Next / Stop) directly to AudioManager.
+		// See UI_INTEGRATION.md for the recommended wiring snippet.
+		UIMusicPlayer* GetMusicPlayer() { return m_MusicPlayer; }
 
 	private:
 		sf::Texture* m_ButtonTexture = nullptr;
@@ -33,6 +39,9 @@ namespace Game
 		UILabel* m_StatusLabel = nullptr;
 
 		UIButton* m_PauseButton = nullptr;
+
+		// New: persistent mini music player in the top-right corner.
+		UIMusicPlayer* m_MusicPlayer = nullptr;
 
 		void SelectDefaultTool();
 		void SelectTrackTool();
