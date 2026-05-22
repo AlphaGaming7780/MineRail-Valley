@@ -2,6 +2,7 @@
 #include <Game/UI/Menus/InGameUI.h>
 #include <Game/AssetDatabase.h>
 #include <Game/GameManager.hpp>
+#include <Game/UI/Menus/SettingsScreen.hpp>
 
 namespace Game
 {
@@ -49,7 +50,7 @@ namespace Game
             m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
 
         m_ResumeButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<InGameUI>(); });
-        m_SettingsButton->SetCallback([this] { if (m_OnSettings) m_OnSettings(); });
+        m_SettingsButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<SettingsScreen>(); });
         m_MainMenuButton->SetCallback([this] { GameManager::Instance().RequestMainMenu(); });
         m_QuitButton->SetCallback([this] { GameManager::Instance().Exit(); });
 

@@ -16,6 +16,7 @@ namespace Game
 
         // Gestion hiérarchie
         void AddChild(UIElement* child);
+        void AddChildFirst(UIElement* child);
         void RemoveChild(UIElement* child);
         UIElement* GetParent() const { return m_Parent; }
 

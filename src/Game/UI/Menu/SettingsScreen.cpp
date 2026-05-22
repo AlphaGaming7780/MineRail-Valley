@@ -1,9 +1,11 @@
 #include <Game/UI/Menus/SettingsScreen.hpp>
 #include <Game/Settings/GameSettings.hpp>
 #include <Game/UI/Menus/TitleScreen.hpp>
+#include <Game/UI/Menus/PauseMenu.hpp>
 #include <Game/AudioManager.hpp>
 #include <Game/Rendering/GameWindow.hpp>
 #include <Game/AssetDatabase.h>
+#include <Game/GameManager.hpp>
 
 namespace Game
 {
@@ -84,22 +86,9 @@ namespace Game
         AddChild(m_VSyncLabel);
         AddChild(m_VSyncToggle);
 
-        // ── Action buttons ─────────────────────────────────────────────────
-        m_ApplyButton = new UIButton({ 80, 60 }, { 180, 48 }, UIAnchor::BottomLeft,
-                                     m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
-        m_ApplyButton->SetCallback([this] {
-            if (m_OnApply) {
-                GameSettings s; ReadInto(s);
-                m_OnApply(s);
-            }
-        });
-        m_ApplyButton->AddChild(new UILabel("Apply", { 0, 0 }, UIAnchor::Center,
-                                            m_Font, 22, { 243, 231, 207 }));
-        //AddChild(m_ApplyButton);
-
         m_BackButton = new UIButton({ 80, 60 }, { 180, 48 }, UIAnchor::BottomLeft,
                                     m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
-        m_BackButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<TitleScreen>(); });
+        m_BackButton->SetCallback([this] { GameManager::Instance().GetCurrentMode() == GameMode::InGame ? UIManager::Instance().RequestNewRoot<PauseMenu>() : UIManager::Instance().RequestNewRoot<TitleScreen>(); });
         m_BackButton->AddChild(new UILabel("Back", { 0, 0 }, UIAnchor::Center,
                                            m_Font, 22, { 243, 231, 207 }));
         AddChild(m_BackButton);
@@ -120,24 +109,6 @@ namespace Game
         tx.Unload("UI\\Checkboxes\\on_hover.png");
         tx.Unload("UI\\Panels\\popup_bg.png");
         fn.Unload("Fonts\\Minecraft.ttf");
-    }
-
-    void SettingsScreen::SetCurrent(const GameSettings& s)
-    {
-        if (m_MasterSlider) m_MasterSlider->SetValue(s.MasterVolume);
-        if (m_SoundSlider)  m_SoundSlider ->SetValue(s.SoundVolume);
-        if (m_MusicSlider)  m_MusicSlider ->SetValue(s.MusicVolume);
-        if (m_FullscreenToggle) m_FullscreenToggle->SetChecked(s.Fullscreen);
-        if (m_VSyncToggle)      m_VSyncToggle     ->SetChecked(s.VSync);
-    }
-
-    void SettingsScreen::ReadInto(GameSettings& out) const
-    {
-        if (m_MasterSlider) out.MasterVolume = m_MasterSlider->GetValue();
-        if (m_SoundSlider)  out.SoundVolume  = m_SoundSlider ->GetValue();
-        if (m_MusicSlider)  out.MusicVolume  = m_MusicSlider ->GetValue();
-        if (m_FullscreenToggle) out.Fullscreen = m_FullscreenToggle->IsChecked();
-        if (m_VSyncToggle)      out.VSync      = m_VSyncToggle     ->IsChecked();
     }
 
     void SettingsScreen::UpdateLayout(const sf::View& view)

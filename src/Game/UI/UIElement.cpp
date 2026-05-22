@@ -5,9 +5,41 @@ namespace Game
 {
     void UIElement::AddChild(UIElement* child)
     {
-        if (child->m_Parent) m_Parent->RemoveChild(child);
+        if (!child || child == this) return;
+
+        if (child->m_Parent == this)
+            return;
+
+        if (child->m_Parent)
+            child->m_Parent->RemoveChild(child);
+
         child->m_Parent = this;
-        m_Children.push_back(child);
+
+        if (std::find(m_Children.begin(), m_Children.end(), child) == m_Children.end())
+        {
+            m_Children.push_back(child);
+            ReDraw();
+        }
+    }
+
+    void UIElement::AddChildFirst(UIElement* child)
+    {
+        if (!child || child == this) return;
+
+        if (child->m_Parent == this)
+            return;
+
+        if (child->m_Parent)
+            child->m_Parent->RemoveChild(child);
+
+        child->m_Parent = this;
+
+        // Évite les doublons
+        if (std::find(m_Children.begin(), m_Children.end(), child) == m_Children.end())
+        {
+            m_Children.insert(m_Children.begin(), child);
+            ReDraw();
+        }
     }
 
     void UIElement::RemoveChild(UIElement* child)
@@ -17,6 +49,7 @@ namespace Game
         {
             if (child) child->m_Parent = nullptr;
             m_Children.erase(it);
+            ReDraw();
         }
     }
 
@@ -34,8 +67,12 @@ namespace Game
 
         bool result = false;
 
-        for (UIElement* child : m_Children)
+        auto childrenCopy = m_Children;
+
+        for (UIElement* child : childrenCopy)
         {
+            if (!child) continue; // sécurité
+
             if (child->HandleMouseEvent(mousePos, mousePressed))
             {
                 if (m_IsHovered && !contains)
