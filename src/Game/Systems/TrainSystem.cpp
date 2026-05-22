@@ -5,6 +5,9 @@
 #include <Game/Utils/Time.hpp>
 #include <random>
 
+#include <Game/UI/Menus/GameOverScreen.hpp>
+#include <Game/UI/Menus/VictoryScreen.hpp>
+
 namespace Game
 {
 	void TrainSystem::OnCreate()
@@ -40,8 +43,11 @@ namespace Game
 				m_InWave = false;
 				if (m_StationSpawnPool.size() <= 0)
 				{
-					// Remplacer par la victoire
-					//SetEnable(false);
+					m_World->Pause();
+					UIManager::Instance().RequestNewRoot<VictoryScreen>();
+					// TODO : jouer sont de victoire
+					SetEnable(false);
+					return;
 				}
 				SpawnStationFromPool();
 				SpawnWaveTrains();
@@ -379,6 +385,8 @@ namespace Game
 	void TrainSystem::OnTrainCollision(TrainObject* a, TrainObject* b, sf::Vector2f collisionCenter)
 	{
 		m_Logger.InfoO("Collision de train en ", collisionCenter);
+
+		UIManager::Instance().RequestNewRoot<GameOverScreen>();
 
 		DestroyTrain(a);
 		DestroyTrain(b);

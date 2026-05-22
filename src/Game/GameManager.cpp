@@ -87,7 +87,7 @@ namespace Game
 	void GameManager::MainMenu()
 	{
 		Load(GameMode::MainMenu, Purpose::Cleanup);
-		UIManager::Instance().SetRoot<TitleScreen>();
+		UIManager::Instance().RequestNewRoot<TitleScreen>();
 	}
 
 	void GameManager::RequestLoadGame(const std::string mapDataPath)
@@ -103,6 +103,14 @@ namespace Game
 
 			this->Load(mode, purpose, map);
 		};
+	}
+
+	void GameManager::RequestMainMenu()
+	{
+		m_PendingLoad = [this]()
+			{
+				this->MainMenu();
+			};
 	}
 
 	void GameManager::Exit()

@@ -36,6 +36,7 @@ namespace Game
         GameState GetCurrentState() const { return m_CurrentState; }
 		GameMode GetCurrentMode() const { return m_CurrentMode; }
 
+        void RequestMainMenu();
         void RequestLoadGame(const std::string mapDataPath);
 
         void Exit();

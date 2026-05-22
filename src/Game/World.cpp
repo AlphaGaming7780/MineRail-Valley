@@ -7,6 +7,9 @@
 
 #include <Game/GameObjects/Tiles/TileObject.h>
 
+#include <Game/UI/Menus/InGameUI.h>
+#include <Game/UI/Menus/PauseMenu.hpp>
+
 namespace Game
 {
     World::~World()
@@ -45,6 +48,24 @@ namespace Game
         if (m_PauseBinding->justPressed)
         {
             Pause(!m_Paused);
+        }
+
+        if (m_EscapeBinding->justPressed)
+        {
+
+            if (m_EscapeMenuOpen)
+            {
+                m_EscapeMenuOpen = false;
+                if(!m_WasPausedBeforeEscape) Pause(false);
+                UIManager::Instance().RequestNewRoot<InGameUI>();
+            }
+            else
+            {
+                m_EscapeMenuOpen = true;
+                m_WasPausedBeforeEscape = m_Paused;
+                if (!m_Paused) Pause(true);
+                UIManager::Instance().RequestNewRoot<PauseMenu>();
+            }
         }
 
         for (auto& [type, sys] : m_Systems) 

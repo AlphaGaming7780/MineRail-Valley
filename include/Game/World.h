@@ -62,16 +62,20 @@ namespace Game {
             EventManager::Instance().Register<LoadingStart>(this);
             m_InputManager.Register<GameInputs>();
             m_PauseBinding = &m_InputManager.GetBinding(GameAction::Pause);
+            m_EscapeBinding = &m_InputManager.GetBinding(GameAction::ESC);
         }
 
         pallas::Logger m_Logger = pallas::Logger("World");
 
         bool m_Paused = false;
+        bool m_WasPausedBeforeEscape = false;
+        bool m_EscapeMenuOpen = false;
 
         std::unordered_map<std::type_index, SystemBase*> m_Systems;
         std::vector<GameObject*> m_GameObjects;
 
         InputBindingState* m_PauseBinding = nullptr;
+        InputBindingState* m_EscapeBinding = nullptr;
 
         void CreateMap(MapData* mapData);
 
