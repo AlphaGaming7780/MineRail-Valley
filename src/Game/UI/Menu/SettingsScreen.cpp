@@ -1,6 +1,8 @@
 #include <Game/UI/Menus/SettingsScreen.hpp>
 #include <Game/Settings/GameSettings.hpp>
 #include <Game/UI/Menus/TitleScreen.hpp>
+#include <Game/AudioManager.hpp>
+#include <Game/Rendering/GameWindow.hpp>
 #include <Game/AssetDatabase.h>
 
 namespace Game
@@ -27,32 +29,49 @@ namespace Game
         AddChild(m_TitleLabel);
 
         // ── Volume sliders ─────────────────────────────────────────────────
-        auto addSlider = [&](const std::string& label, float y, UILabel*& outLbl,
-                             UISlider*& outSld, UILabel*& outVal, float init) {
-            outLbl = new UILabel(label, { 80, y }, UIAnchor::TopLeft,
-                                 m_Font, 22, { 236, 222, 190 });
-            outSld = new UISlider(m_TrackTex, m_HandleTex,
-                                  { 300, y }, { 320, 24 }, UIAnchor::TopLeft,
-                                  0.f, 100.f, init);
-            outVal = new UILabel("0", { 640, y }, UIAnchor::TopLeft,
-                                 m_Font, 22, { 207, 182, 151 });
-            outSld->SetCallback([outVal](float v) {
-                outVal->SetText(std::to_string(static_cast<int>(v)));
-            });
-            AddChild(outLbl);
-            AddChild(outSld);
-            AddChild(outVal);
-        };
+        auto addSlider = [&](const std::string& label,
+            float y,
+            UILabel*& outLbl,
+            UISlider*& outSld,
+            UILabel*& outVal,
+            float init,
+            std::function<void(float)> onChange)
+            {
+                outLbl = new UILabel(label, { 80, y }, UIAnchor::TopLeft,
+                    m_Font, 22, { 236, 222, 190 });
 
-        addSlider("Master Volume", 110, m_MasterLabel, m_MasterSlider, m_MasterValueLabel, 70);
-        addSlider("Sound Volume",  160, m_SoundLabel,  m_SoundSlider,  m_SoundValueLabel,  85);
-        addSlider("Music Volume",  210, m_MusicLabel,  m_MusicSlider,  m_MusicValueLabel,  60);
+                outSld = new UISlider(m_TrackTex, m_HandleTex,
+                    { 300, y }, { 320, 24 }, UIAnchor::TopLeft,
+                    0.f, 100.f, init);
+
+                outVal = new UILabel("0", { 640, y }, UIAnchor::TopLeft,
+                    m_Font, 22, { 207, 182, 151 });
+
+                outSld->SetCallback([outVal, onChange](float v)
+                    {
+                        outVal->SetText(std::to_string(static_cast<int>(v)));
+
+                        if (onChange)
+                            onChange(v);
+                    });
+
+                AddChild(outLbl);
+                AddChild(outSld);
+                AddChild(outVal);
+            };
+
+
+        addSlider("Master Volume", 110, m_MasterLabel, m_MasterSlider, m_MasterValueLabel, 100, [](float v) { AudioManager::Instance().SetMasterVolume(v); });
+        addSlider("Sound Volume", 160, m_SoundLabel, m_SoundSlider, m_SoundValueLabel, 100, [](float v) { AudioManager::Instance().SetSoundVolume(v); });
+        addSlider("Music Volume", 210, m_MusicLabel, m_MusicSlider, m_MusicValueLabel, 100, [](float v) { AudioManager::Instance().SetMusicVolume(v); });
 
         // ── Toggles ────────────────────────────────────────────────────────
         m_FullscreenLabel = new UILabel("Fullscreen", { 80, 290 }, UIAnchor::TopLeft,
                                         m_Font, 22, { 236, 222, 190 });
         m_FullscreenToggle = new UIToggle({ 300, 290 }, { 24, 24 }, UIAnchor::TopLeft,
                                           m_CbOffTex, m_CbOffHoverTex, m_CbOnTex, m_CbOnHoverTex);
+        m_FullscreenToggle->SetChecked(GameWindow::Instance().IsFullscreen());
+        m_FullscreenToggle->SetCallback([](bool v) { GameWindow::Instance().ToggleFullscreen(v); });
         AddChild(m_FullscreenLabel);
         AddChild(m_FullscreenToggle);
 

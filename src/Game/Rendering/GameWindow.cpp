@@ -98,6 +98,18 @@ namespace Game {
         SetState(m_state == sf::State::Windowed ? sf::State::Fullscreen : sf::State::Windowed);
     }
 
+    void GameWindow::ToggleFullscreen(bool fullscreen)
+    {
+        if ((m_state == sf::State::Fullscreen && fullscreen) ||
+            (m_state == sf::State::Windowed && !fullscreen)) return;
+        SetState(fullscreen ? sf::State::Fullscreen : sf::State::Windowed);
+    }
+
+    bool GameWindow::IsFullscreen() const
+    {
+        return m_state == sf::State::Fullscreen;
+    }
+
     sf::State GameWindow::GetState() const { return m_state; }
 
     // --- Style (fenêtré uniquement) ---

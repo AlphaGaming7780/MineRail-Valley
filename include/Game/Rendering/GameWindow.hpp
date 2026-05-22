@@ -51,6 +51,10 @@ namespace Game {
 
         void ToggleFullscreen();
 
+        void ToggleFullscreen(bool fullscreen);
+
+        bool IsFullscreen() const;
+
         sf::State GetState() const;
 
         // --- Style (fenêtré uniquement) ---
