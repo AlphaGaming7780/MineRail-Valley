@@ -36,5 +36,8 @@ namespace Game
 		InputBindingState* m_moveLeftBinding = nullptr;
 		InputBindingState* m_moveRightBinding = nullptr;
 		InputBindingState* m_zoomBinding = nullptr;
+
+		sf::Vector2f m_MapSize;
+
 	};
 }

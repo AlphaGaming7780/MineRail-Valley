@@ -61,6 +61,11 @@ namespace Game
         tx.Unload("UI\\LevelSelect\\warning_hover.png");
         tx.Unload("UI\\Panels\\popup_bg.png");
         fn.Unload("Fonts\\Minecraft.ttf");
+
+        for (auto& lvl : m_Levels)
+        {
+            TextureDatabase::Instance().Unload(lvl.mapPreview);
+        }
     }
 
     void LevelSelectScreen::SetLevels(const std::vector<LevelInfo>& levels)
@@ -75,9 +80,9 @@ namespace Game
         for (auto* c : m_Cards) { RemoveChild(c); delete c; }
         m_Cards.clear();
 
-        const sf::Vector2f CARD_SZ{ 280, 160 };
+        const sf::Vector2f CARD_SZ{ 280, 360 };
         const float GAP_X = 24, GAP_Y = 24;
-        const int   COLS = 3;
+        const int   COLS = 6;
 
         for (size_t i = 0; i < m_Levels.size(); ++i)
         {
@@ -98,7 +103,7 @@ namespace Game
             // -----------------------------
             card->AddChild(new UILabel(
                 L.title,
-                { 16, 12 },              // offset inside card
+                { 8, 25 },              // offset inside card
                 UIAnchor::TopLeft,
                 m_Font, 22,
                 { 236, 222, 190 }
@@ -112,9 +117,9 @@ namespace Game
 
             card->AddChild(new UILabel(
                 sub,
-                { -16, 12 },             // offset from top-right
+                { 8, 35 },             // offset from top-right
                 UIAnchor::TopRight,
-                m_Font, 14,
+                m_Font, 16,
                 { 207, 182, 151 }
             ));
 
@@ -124,7 +129,7 @@ namespace Game
             auto* img = new UIImage(
                 TextureDatabase::Instance().Load(L.mapPreview),        // texture de preview
                 { 0, 0 },                // centré
-                { 96, 96 },              // taille (à ajuster)
+                { 200, 200 },              // taille (à ajuster)
                 UIAnchor::Center
             );
             card->AddChild(img);
@@ -136,7 +141,7 @@ namespace Game
             sf::Texture* hov = L.locked ? m_WarnHoverTex : m_JoinHoverTex;
 
             auto* play = new UIButton(
-                { -16, -16 },            // offset depuis bottom-right
+                { 8, 16 },            // offset depuis bottom-right
                 { 70, 36 },
                 UIAnchor::BottomRight,
                 nrm, hov, nrm

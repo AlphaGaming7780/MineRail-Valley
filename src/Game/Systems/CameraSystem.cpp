@@ -27,6 +27,12 @@ namespace Game
 	{
 		m_Logger.InfoO("CameraSystem received OnGameLoadingStart, GameMode: ", magic_enum::enum_name(mode), " | Purpose: ", magic_enum::enum_name(purpose));
 
+        if(mapData)
+            m_MapSize = {
+                mapData->MapSize* 100.f,
+                mapData->MapHeight * 100.f
+            };
+
 		SetEnable(false);
 	}
 
@@ -44,31 +50,41 @@ namespace Game
 		m_inputManager.EnableBlock<CameraAction>(enabled);
 	}
 
-	void CameraSystem::OnUpdate()
-	{
+    void CameraSystem::OnUpdate()
+    {
+        Camera& cam = Camera::Instance();
 
-		Camera& cam = Camera::Instance();
+        float zoom = cam.GetZoom();
+        const float dt = Time::GetDeltaTime().asSeconds();
 
-		float zoom = cam.GetZoom();
+        // Zoom
+        if (m_zoomBinding->wheelDelta != 0.f)
+        {
+            zoom -= m_zoomBinding->wheelDelta * 0.1f;
+            zoom = std::clamp(zoom, CamZoomMin, CamZoomMax);
+            cam.SetZoom(zoom);
+        }
 
-		const float dt = Time::GetDeltaTime().asSeconds();
+        // Direction
+        sf::Vector2f dir{ 0.f, 0.f };
+        if (m_moveUpBinding->pressed)    dir.y -= 1.f;
+        if (m_moveDownBinding->pressed)  dir.y += 1.f;
+        if (m_moveLeftBinding->pressed)  dir.x -= 1.f;
+        if (m_moveRightBinding->pressed) dir.x += 1.f;
 
-		if (m_zoomBinding->wheelDelta != 0.f)
-		{
-			zoom -= m_zoomBinding->wheelDelta * 0.1f;
-			zoom = std::clamp(zoom, CamZoomMin, CamZoomMax);
-			cam.SetZoom(zoom);
-		}
+        if (dir == sf::Vector2f{ 0.f, 0.f })
+            return;
 
-		sf::Vector2f dir{ 0.f, 0.f };
+        // Nouveau centre
+        sf::Vector2f newCenter =
+            cam.GetCenter() + dir.normalized() * (CamMoveSpeed * dt * zoom);
 
-		if (m_moveUpBinding->pressed)		dir.y -= 1.f;
-		if (m_moveDownBinding->pressed)		dir.y += 1.f;
-		if (m_moveLeftBinding->pressed)     dir.x -= 1.f;
-		if (m_moveRightBinding->pressed)    dir.x += 1.f;
+        // -----------------------------
+        // CLAMP DU CENTRE DE LA CAMÉRA
+        // -----------------------------
+        newCenter.x = std::clamp(newCenter.x, 0.f, m_MapSize.x);
+        newCenter.y = std::clamp(newCenter.y, 0.f, m_MapSize.y);
 
-		if(dir == sf::Vector2f{ 0.f, 0.f }) return;
-
-		cam.SetCenter( cam.GetCenter() + dir.normalized() * (CamMoveSpeed * dt * zoom));
-	}
+        cam.SetCenter(newCenter);
+    }
 }
