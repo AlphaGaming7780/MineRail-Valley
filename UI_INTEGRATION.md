@@ -133,7 +133,11 @@ mp->SetOnPrev([] {
     // restarts the track at that index.
 });
 
-mp->SetOnStop([] {
+// SetOnStop was removed — the Stop button is no longer part of the player.
+// If you need to stop the playlist programmatically, call:
+//   AudioManager::Instance().StopPlaylist();
+// directly. The line below is kept as a no-op placeholder for reference.
+([] {
     AudioManager::Instance().StopPlaylist();
 });
 ```

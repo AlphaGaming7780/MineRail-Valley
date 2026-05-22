@@ -27,8 +27,9 @@ namespace Game
         m_PlayHoverTex   = tx.Load("UI\\MusicControls\\play_hover.png");
         m_PauseTex       = tx.Load("UI\\MusicControls\\pause_normal.png");
         m_PauseHoverTex  = tx.Load("UI\\MusicControls\\pause_hover.png");
-        m_StopTex        = tx.Load("UI\\MusicControls\\stop_normal.png");
-        m_StopHoverTex   = tx.Load("UI\\MusicControls\\stop_hover.png");
+        // Stop button textures intentionally NOT loaded — the Stop button was
+        // removed from the player. The PNGs still live in assets/UI/MusicControls/
+        // and can be re-introduced if a future feature needs them.
 
         m_BarBgTex       = tx.Load("UI\\Bars\\blue_bg.png");
         m_BarFgTex       = tx.Load("UI\\Bars\\blue_fg.png");
@@ -45,67 +46,55 @@ namespace Game
                                    m_Font, 16, { 236, 222, 190 });
         AddChild(m_TitleLabel);
 
-        // ── Transport buttons (Prev / PlayPause / Next / Stop) ─────────────
+        // ── Transport buttons (Prev / PlayPause / Next) ────────────────────
+        // Three buttons of 30 px wide with 10 px gaps = 110 px total.
+        // Center them horizontally on the m_Size.x panel width.
         const sf::Vector2f BTN_SZ{ 30, 30 };
-        const float btn_y = 32.f;
+        const float btn_y     = 32.f;
+        const float cluster_w = 3 * BTN_SZ.x + 2 * 10.f;        // = 110
+        const float btn_x0    = (m_Size.x - cluster_w) * 0.5f;  // center
 
-        m_PrevButton = new UIButton({ 10,  btn_y }, BTN_SZ, UIAnchor::TopLeft,
+        m_PrevButton = new UIButton({ btn_x0,                       btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_PrevTex, m_PrevHoverTex, m_PrevTex);
-        m_PrevButton->SetCallback([this]() 
-            { 
-                AudioManager& am = AudioManager::Instance();
-
-                if (m_Playing)
-                    am.RewindPlaylist();
-            });
+        m_PrevButton->SetCallback([]() {
+            AudioManager::Instance().RewindPlaylist();
+        });
         AddChild(m_PrevButton);
 
-        m_PlayButton = new UIButton({ 50,  btn_y }, BTN_SZ, UIAnchor::TopLeft,
+        m_PlayButton = new UIButton({ btn_x0 + BTN_SZ.x + 10.f,     btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_PlayTex, m_PlayHoverTex, m_PlayTex);
-        m_PlayButton->SetCallback([this]() {
-            AudioManager& am = AudioManager::Instance();
-            am.TogglePlaylistPause();
-            SetPlaying(!m_Playing); // visually toggle; the real state should be
-                                    // re-pushed by the host via SetPlaying() if
-                                    // the AudioManager refuses the request.
+        m_PlayButton->SetCallback([]() {
+            AudioManager::Instance().TogglePlaylistPause();
+            // The visual play/pause icon is refreshed by UpdatePlayer()
+            // (driven by AudioManager::Update), so we DON'T flip m_Playing
+            // locally here — doing so used to create a flip-flop between the
+            // click and the next sync.
         });
         AddChild(m_PlayButton);
 
-        m_NextButton = new UIButton({ 90,  btn_y }, BTN_SZ, UIAnchor::TopLeft,
+        m_NextButton = new UIButton({ btn_x0 + 2*(BTN_SZ.x + 10.f), btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_NextTex, m_NextHoverTex, m_NextTex);
-        m_NextButton->SetCallback([this]() 
-            {
-                AudioManager& am = AudioManager::Instance();
-                if (m_Playing)
-                    am.AdvancePlaylist();
-            });
+        m_NextButton->SetCallback([]() {
+            AudioManager::Instance().AdvancePlaylist();
+        });
         AddChild(m_NextButton);
 
-        m_StopButton = new UIButton({ 130, btn_y }, BTN_SZ, UIAnchor::TopLeft,
-                                    m_StopTex, m_StopHoverTex, m_StopTex);
-        m_StopButton->SetCallback([this]() 
-            {
-                AudioManager& am = AudioManager::Instance();
-                if (m_Playing)
-                {
-                    am.StopPlaylist();
-                }
-            });
-        AddChild(m_StopButton);
-
         // ── Progress bar + time label ──────────────────────────────────────
-        // We use UIProgressBar with bar textures from assets/UI/Bars/. The
-        // existing UIProgressBar expects (frame, bar, endCap). We don't have
-        // an end cap in the boss_bar set, so we pass the bg texture as a poor-
-        // man's endCap — visually it's a 1-pixel gradient terminator.
-        m_Progress = new UIProgressBar(m_BarBgTex, m_BarFgTex, m_BarBgTex,
-                                       { 10, 70 }, { m_Size.x - 60, 8 },
+        // Pass nullptr for the endCap — we have no real endCap art in the
+        // boss_bar pack, and the old version reused the bg texture as a
+        // poor-man's endCap which was then scaled to the full bar size and
+        // overflowed the player by ~110 px on the right side.
+        m_Progress = new UIProgressBar(m_BarBgTex, m_BarFgTex, nullptr,
+                                       { 10, 70 }, { m_Size.x - 80, 8 },
                                        UIAnchor::TopLeft);
         m_Progress->SetValue(0.f);
         AddChild(m_Progress);
 
+        // Time label is positioned with TopLeft anchor + an explicit X close to
+        // the right edge. The previous TopRight anchor caused overflow because
+        // UILabel doesn't measure text width to feed back into m_Size.
         m_TimeLabel = new UILabel("0:00 / 0:00",
-                                  { 10, 70 }, UIAnchor::TopRight,
+                                  { m_Size.x - 70, 64 }, UIAnchor::TopLeft,
                                   m_Font, 12, { 207, 182, 151 });
         AddChild(m_TimeLabel);
 
@@ -128,8 +117,7 @@ namespace Game
         tx.Unload("UI\\MusicControls\\play_hover.png");
         tx.Unload("UI\\MusicControls\\pause_normal.png");
         tx.Unload("UI\\MusicControls\\pause_hover.png");
-        tx.Unload("UI\\MusicControls\\stop_normal.png");
-        tx.Unload("UI\\MusicControls\\stop_hover.png");
+        // No stop_* unloads — we no longer load those textures.
         tx.Unload("UI\\Bars\\blue_bg.png");
         tx.Unload("UI\\Bars\\blue_fg.png");
         fn.Unload("Fonts\\Minecraft.ttf");
@@ -175,9 +163,12 @@ namespace Game
             m_PlayButton = new UIButton(pos, sz, UIAnchor::TopLeft,
                                         m_PlayTex, m_PlayHoverTex, m_PlayTex);
 
-        m_PlayButton->SetCallback([this]() {
-            if (m_OnPlayPause) m_OnPlayPause();
-            SetPlaying(!m_Playing);
+        // CRITICAL: the recreated button must keep the same callback wiring as
+        // the one built in the ctor — talk to AudioManager directly. The
+        // previous version called m_OnPlayPause which was never assigned, so
+        // after the first toggle the button became a no-op.
+        m_PlayButton->SetCallback([]() {
+            AudioManager::Instance().TogglePlaylistPause();
         });
         AddChild(m_PlayButton);
         ReDraw();

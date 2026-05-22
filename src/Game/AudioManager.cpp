@@ -28,9 +28,9 @@ namespace Game
 		, m_MusicVolume(1.0f)
 		, m_PlaylistIndex(0)
 		, m_PlaylistVolume(0.f)
-		, m_PlaylistCurrent(nullptr)
 		, m_MusicPlayer(nullptr)
 	{
+		m_PlaylistCurrent = { nullptr, 0.f };
 		auto& n = EventManager::Instance();
 		n.Register<PlayMusicEvent>(this);
 		n.Register<PlaySoundEvent>(this);
@@ -61,13 +61,31 @@ namespace Game
 	}
 	void AudioManager::OnEvent(const LoadingStart& event)
 	{
+		_ResetPlaylist();
 		UnloadAll();
 	}
 	void AudioManager::OnEvent(const LoadingComplete& event)
 	{
-		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr && !event.m_MapData->BgAudioPath.empty())
+		// Main menu: play the dedicated menu playlist.
+		if (event.m_GameMode == GameMode::MainMenu)
 		{
-			PlayMusic(event.m_MapData->BgAudioPath, true, 65.f);
+			PlayPlaylist((std::filesystem::path("Musics") / "0.Menus").string(), 60.f);
+			return;
+		}
+
+		// In-game: prefer the playlist field on the MapData; fall back to the legacy single
+		// BgAudioPath for backward compatibility with old maps.
+		if (event.m_GameMode == GameMode::InGame && event.m_MapData != nullptr)
+		{
+			const MapData& md = *event.m_MapData;
+			if (!md.BgPlaylist.empty())
+			{
+				PlayPlaylist(md.BgPlaylist, 65.f);
+			}
+			else if (!md.BgAudioPath.empty())
+			{
+				PlayMusic(md.BgAudioPath, true, 65.f);
+			}
 		}
 	}
 	void AudioManager::PlaySound(const std::string& path, float volume)
@@ -88,19 +106,20 @@ namespace Game
 	void AudioManager::PlayMusic(const std::string& path, bool loop, float volume)
 	{
 		sf::Music* music = m_MusicDatabase.GetAsset(path);
-		float finalVolume = volume * m_MusicVolume * m_MasterVolume;
-		if (music != nullptr)
+		if (music == nullptr)
 		{
-			if (music->getStatus() != sf::Music::Status::Stopped) return;
-			music->setLooping(loop);
-			music->setVolume(finalVolume);
-			music->play();
-			return;
+			music = m_MusicDatabase.Load(path);
+
+			if (music == nullptr) return;
 		}
-		music = m_MusicDatabase.Load(path);
+
+		float finalVolume = volume * m_MusicVolume * m_MasterVolume;
+
 		music->setLooping(loop);
 		music->setVolume(finalVolume);
 		music->play();
+
+		m_PlaylistCurrent = { music, finalVolume };
 	}
 	void AudioManager::PlayPlaylist(const std::string& folder, float volume)
 	{
@@ -154,27 +173,27 @@ namespace Game
 		// the natural end-of-track and move on.
 		const std::string& firstPath = m_PlaylistTracks[m_PlaylistIndex];
 		PlayMusic(firstPath, /*loop*/ false, m_PlaylistVolume);
-		m_PlaylistCurrent = m_MusicDatabase.GetAsset(firstPath);
+		m_PlaylistCurrent.music = m_MusicDatabase.GetAsset(firstPath);
 	}
 	void AudioManager::StopPlaylist()
 	{
-		if (m_PlaylistCurrent != nullptr)
+		if (m_PlaylistCurrent.music != nullptr)
 		{
-			if (m_PlaylistCurrent->getStatus() != sf::Music::Status::Stopped)
+			if (m_PlaylistCurrent.music->getStatus() != sf::Music::Status::Stopped)
 			{
-				m_PlaylistCurrent->stop();
+				m_PlaylistCurrent.music->stop();
 			}
 		}
 		_ResetPlaylist();
 	}
 	void AudioManager::TogglePlaylistPause()
 	{
-		if (m_PlaylistCurrent == nullptr) return;
-		const auto st = m_PlaylistCurrent->getStatus();
+		if (m_PlaylistCurrent.music == nullptr) return;
+		const auto st = m_PlaylistCurrent.music->getStatus();
 		if (st == sf::Music::Status::Playing)
-			m_PlaylistCurrent->pause();
+			m_PlaylistCurrent.music->pause();
 		else if (st == sf::Music::Status::Paused)
-			m_PlaylistCurrent->play();
+			m_PlaylistCurrent.music->play();
 	}
 	void AudioManager::AdvancePlaylist()
 	{
@@ -185,22 +204,32 @@ namespace Game
 	void AudioManager::RewindPlaylist()
 	{
 		if (m_PlaylistTracks.empty()) return;
+
+		// Stop the currently-playing track via the pointer (more reliable than
+		// going through StopMusic(path) which has to re-resolve via the asset
+		// database and would silently no-op if the path mapping was stale).
+		if (m_PlaylistCurrent.music != nullptr
+			&& m_PlaylistCurrent.music->getStatus() != sf::Music::Status::Stopped)
+		{
+			m_PlaylistCurrent.music->stop();
+		}
+
 		if (m_PlaylistIndex == 0) m_PlaylistIndex = m_PlaylistTracks.size() - 1;
 		else                       m_PlaylistIndex--;
-		const std::string& path = m_PlaylistTracks[m_PlaylistIndex];
-		PlayMusic(path, /*loop*/ false, m_PlaylistVolume);
-		m_PlaylistCurrent = m_MusicDatabase.GetAsset(path);
+		const std::string& nextPath = m_PlaylistTracks[m_PlaylistIndex];
+		PlayMusic(nextPath, /*loop*/ false, m_PlaylistVolume);
+		m_PlaylistCurrent.music = m_MusicDatabase.GetAsset(nextPath);
 	}
 	// ─── Introspection ────────────────────────────────────────────────────────
 	bool AudioManager::IsPlaylistPlaying() const
 	{
-		return m_PlaylistCurrent != nullptr
-			&& m_PlaylistCurrent->getStatus() == sf::Music::Status::Playing;
+		return m_PlaylistCurrent.music != nullptr
+			&& m_PlaylistCurrent.music->getStatus() == sf::Music::Status::Playing;
 	}
 	bool AudioManager::IsPlaylistPaused() const
 	{
-		return m_PlaylistCurrent != nullptr
-			&& m_PlaylistCurrent->getStatus() == sf::Music::Status::Paused;
+		return m_PlaylistCurrent.music != nullptr
+			&& m_PlaylistCurrent.music->getStatus() == sf::Music::Status::Paused;
 	}
 	std::string AudioManager::GetCurrentTrackPath() const
 	{
@@ -222,17 +251,17 @@ namespace Game
 	}
 	sf::Time AudioManager::GetCurrentTrackTime() const
 	{
-		return m_PlaylistCurrent ? m_PlaylistCurrent->getPlayingOffset() : sf::Time::Zero;
+		return m_PlaylistCurrent.music ? m_PlaylistCurrent.music->getPlayingOffset() : sf::Time::Zero;
 	}
 	sf::Time AudioManager::GetCurrentTrackDuration() const
 	{
-		return m_PlaylistCurrent ? m_PlaylistCurrent->getDuration() : sf::Time::Zero;
+		return m_PlaylistCurrent.music ? m_PlaylistCurrent.music->getDuration() : sf::Time::Zero;
 	}
 	float AudioManager::GetCurrentTrackPosition01() const
 	{
-		if (m_PlaylistCurrent == nullptr) return 0.f;
-		const sf::Time t = m_PlaylistCurrent->getPlayingOffset();
-		const sf::Time d = m_PlaylistCurrent->getDuration();
+		if (m_PlaylistCurrent.music == nullptr) return 0.f;
+		const sf::Time t = m_PlaylistCurrent.music->getPlayingOffset();
+		const sf::Time d = m_PlaylistCurrent.music->getDuration();
 		if (d.asMicroseconds() <= 0) return 0.f;
 		float r = t.asSeconds() / d.asSeconds();
 		return std::clamp(r, 0.f, 1.f);;
@@ -312,6 +341,20 @@ namespace Game
 	void AudioManager::Update()
 	{
 		_PurgedFinishedSounds();
+
+		// Playlist auto-advance: when the current track has stopped naturally
+		// (i.e. end-of-file), move on to the next one. This must run
+		// *unconditionally* (not gated by the UI widget) — without it the
+		// playlist would just stop after the first track.
+		if (!m_PlaylistFolder.empty()
+			&& m_PlaylistCurrent.music != nullptr
+			&& m_PlaylistCurrent.music->getStatus() == sf::Music::Status::Stopped)
+		{
+			_AdvancePlaylist();
+		}
+
+		// UI refresh at 1 Hz — title/time/progress only need second-level
+		// resolution, no need to spam ReDraw at 60 fps.
 		if (!m_MusicPlayer) return;
 		m_UiUpdateTimer += Time::GetDeltaTime().asMilliseconds();
 		if (m_UiUpdateTimer >= 1000.f)
@@ -347,20 +390,27 @@ namespace Game
 	}
 	void AudioManager::_UpdateVolume()
 	{
+
+		// Sounds
 		for (auto& s : m_PlayingSounds)
 		{
-			if (s != nullptr) {
-				float previousVol = s->getVolume();
-				s->setVolume(previousVol * m_SoundVolume * m_MasterVolume);
+			if (s != nullptr)
+			{
+				s->setVolume(100.f * m_SoundVolume * m_MasterVolume);
 			}
 		}
-		for (auto& m : m_MusicDatabase.GetAssets())
+
+		// Musique actuelle
+		if (m_PlaylistCurrent.music != nullptr)
 		{
-			if (m != nullptr) {
-				float previousVol = m->getVolume();
-				m->setVolume(previousVol * m_MusicVolume * m_MasterVolume);
-			}
+			float finalVol =
+				m_PlaylistCurrent.baseVolume *
+				m_MusicVolume *
+				m_MasterVolume;
+
+			m_PlaylistCurrent.music->setVolume(finalVol);
 		}
+
 	}
 	void AudioManager::_AdvancePlaylist()
 	{
@@ -368,6 +418,17 @@ namespace Game
 		{
 			_ResetPlaylist();
 			return;
+		}
+
+		// CRITICAL: stop the previously playing track before starting the next
+		// one. Without this, when the user pressed "Next" while the current
+		// track was still playing, the two tracks would overlap (the user-
+		// reported "musiques s'additionnent" bug). It's a no-op when called
+		// from the auto-advance path because the track is already Stopped.
+		if (m_PlaylistCurrent.music != nullptr
+			&& m_PlaylistCurrent.music->getStatus() != sf::Music::Status::Stopped)
+		{
+			m_PlaylistCurrent.music->stop();
 		}
 
 		m_PlaylistIndex++;
@@ -382,7 +443,7 @@ namespace Game
 
 		const std::string& nextPath = m_PlaylistTracks[m_PlaylistIndex];
 		PlayMusic(nextPath, /*loop*/ false, m_PlaylistVolume);
-		m_PlaylistCurrent = m_MusicDatabase.GetAsset(nextPath);
+		m_PlaylistCurrent.music = m_MusicDatabase.GetAsset(nextPath);
 	}
 	void AudioManager::_ResetPlaylist()
 	{
@@ -390,6 +451,6 @@ namespace Game
 		m_PlaylistTracks.clear();
 		m_PlaylistIndex = 0;
 		m_PlaylistVolume = 0.f;
-		m_PlaylistCurrent = nullptr;
+		m_PlaylistCurrent = { nullptr, 0.f };
 	}
 }

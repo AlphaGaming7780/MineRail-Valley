@@ -25,6 +25,12 @@ namespace Game
 			return inst;
 		}
 
+		struct MusicInstance
+		{
+			sf::Music* music;
+			float baseVolume;
+		};
+
 		void OnEvent(const PlaySoundEvent& event) override;
 		void OnEvent(const PlayMusicEvent& event) override;
 		void OnEvent(const PauseEvent& event) override; 
@@ -104,6 +110,6 @@ namespace Game
 		std::size_t              m_PlaylistIndex = 0;
 		std::string              m_PlaylistFolder;
 		float                    m_PlaylistVolume = 0.f;
-		sf::Music*               m_PlaylistCurrent = nullptr;
+		MusicInstance            m_PlaylistCurrent;
 	};
 }
