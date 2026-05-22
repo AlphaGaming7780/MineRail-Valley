@@ -53,6 +53,9 @@ namespace Game {
 
         void OnEvent(const LoadingStart& ev);
 
+        void GameLost();
+        void GameWin();
+
     private:
 
         InputManager& m_InputManager = InputManager::Instance();

@@ -28,10 +28,6 @@ namespace Game
         // the label list, so call it once before pushing the screen.
         void SetStats(const std::vector<StatLine>& stats);
 
-        void SetOnReplay   (std::function<void()> cb) { m_OnReplay    = std::move(cb); }
-        void SetOnNextLevel(std::function<void()> cb) { m_OnNextLevel = std::move(cb); }
-        void SetOnMainMenu (std::function<void()> cb) { m_OnMainMenu  = std::move(cb); }
-
     private:
         sf::Font*    m_Font          = nullptr;
         sf::Texture* m_BtnTex        = nullptr;
@@ -47,9 +43,5 @@ namespace Game
         UIButton* m_ReplayButton    = nullptr;
         UIButton* m_NextLevelButton = nullptr;
         UIButton* m_MainMenuButton  = nullptr;
-
-        std::function<void()> m_OnReplay;
-        std::function<void()> m_OnNextLevel;
-        std::function<void()> m_OnMainMenu;
     };
 }

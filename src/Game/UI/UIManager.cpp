@@ -188,8 +188,6 @@ namespace Game
 
         sf::Vector2f mousePos = InputManager::Instance().GetMouseUIPos();
 
-        m_Logger.InfoO("Mouse pos: ", mousePos, ", Ui view sizze: ", m_UIView.getSize());
-
         bool mousePressed = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
 
         if(m_Root) 

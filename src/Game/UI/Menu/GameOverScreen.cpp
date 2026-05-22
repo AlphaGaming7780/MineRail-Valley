@@ -1,6 +1,10 @@
 #include <Game/UI/Menus/GameOverScreen.hpp>
 #include <Game/AssetDatabase.h>
 
+#include <Game/UI/Menus/InGameUI.h>
+
+#include <Game/GameManager.hpp>
+
 namespace Game
 {
     GameOverScreen::GameOverScreen()
@@ -34,8 +38,8 @@ namespace Game
         m_MenuButton  = new UIButton({ 0, 80 }, BTN_SZ, UIAnchor::BottomLeft,
                                      m_WarnTex, m_WarnHoverTex, m_WarnTex);
 
-        m_RetryButton->SetCallback([this] { if (m_OnRetry)    m_OnRetry();    });
-        m_MenuButton ->SetCallback([this] { if (m_OnMainMenu) m_OnMainMenu(); });
+        m_RetryButton->SetCallback([this] { GameManager::Instance().RequestLoad<InGameUI>(GameMode::InGame, Purpose::NewGame, GameManager::Instance().GetCurrentMapData()); });
+        m_MenuButton->SetCallback([this] { GameManager::Instance().RequestMainMenu(); });
 
         m_RetryButton->AddChild(new UILabel("Retry",     { 0, 0 }, UIAnchor::Center, m_Font, 22, { 243, 231, 207 }));
         m_MenuButton ->AddChild(new UILabel("Main Menu", { 0, 0 }, UIAnchor::Center, m_Font, 22, { 243, 231, 207 }));

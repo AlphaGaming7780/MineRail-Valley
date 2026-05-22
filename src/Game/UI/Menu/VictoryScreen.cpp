@@ -1,6 +1,8 @@
 #include <Game/UI/Menus/VictoryScreen.hpp>
 #include <Game/AssetDatabase.h>
 #include <Game/AudioManager.hpp>
+#include <Game/GameManager.hpp>
+#include <Game/UI/Menus/LevelSelectScreen.hpp>
 
 namespace Game
 {
@@ -38,9 +40,9 @@ namespace Game
         m_MainMenuButton  = new UIButton({ 0, 80 }, BTN_SZ, UIAnchor::BottomLeft,
                                          m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
 
-        m_ReplayButton   ->SetCallback([this] { if (m_OnReplay)    m_OnReplay();    });
-        m_NextLevelButton->SetCallback([this] { if (m_OnNextLevel) m_OnNextLevel(); });
-        m_MainMenuButton ->SetCallback([this] { if (m_OnMainMenu)  m_OnMainMenu();  });
+        m_ReplayButton   ->SetCallback([this] { GameManager::Instance().RequestLoadGame(GameManager::Instance().GetCurrentMapData());});
+        m_NextLevelButton->SetCallback([this] { GameManager::Instance().RequestLoad<LevelSelectScreen>(GameMode::MainMenu, Purpose::Cleanup, nullptr); });
+        m_MainMenuButton ->SetCallback([this] { GameManager::Instance().RequestMainMenu();  });
 
         m_ReplayButton   ->AddChild(new UILabel("Replay",     { 0, 0 }, UIAnchor::Center, m_Font, 22, { 243, 231, 207 }));
         m_NextLevelButton->AddChild(new UILabel("Next Level", { 0, 0 }, UIAnchor::Center, m_Font, 22, { 243, 231, 207 }));

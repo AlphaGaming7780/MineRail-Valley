@@ -41,9 +41,6 @@ namespace Game
         // grid (deletes the previous level cards). Safe to call at any time.
         void SetLevels(const std::vector<LevelInfo>& levels);
 
-        void SetOnPlayLevel(std::function<void(const std::string&)> cb) { m_OnPlay = std::move(cb); }
-        void SetOnBack     (std::function<void()> cb)                   { m_OnBack = std::move(cb); }
-
     private:
         // Builds (or rebuilds) the visual cards from m_Levels.
         void Rebuild();
@@ -65,8 +62,5 @@ namespace Game
 
         std::vector<LevelInfo> m_Levels;
         std::vector<UIElement*> m_Cards;        // current card widgets (for cleanup)
-
-        std::function<void(const std::string&)> m_OnPlay;
-        std::function<void()>                   m_OnBack;
     };
 }

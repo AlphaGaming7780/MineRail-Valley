@@ -9,6 +9,8 @@
 
 #include <Game/UI/Menus/InGameUI.h>
 #include <Game/UI/Menus/PauseMenu.hpp>
+#include <Game/UI/Menus/GameOverScreen.hpp>
+#include <Game/UI/Menus/VictoryScreen.hpp>
 
 namespace Game
 {
@@ -123,6 +125,28 @@ namespace Game
             {
                 ClearWorld();
             }
+        }
+    }
+
+    void World::GameLost()
+    {
+        Pause();
+        UIManager::Instance().RequestNewRoot<GameOverScreen>();
+        // TODO : jouer sont de victoire
+        for (auto& pair : m_Systems)
+        {
+            pair.second->SetEnable(false);
+        }
+    }
+
+    void World::GameWin()
+    {
+        Pause();
+        UIManager::Instance().RequestNewRoot<VictoryScreen>();
+        // TODO : jouer sont de victoire
+        for (auto& pair : m_Systems)
+        {
+            pair.second->SetEnable(false);
         }
     }
 
