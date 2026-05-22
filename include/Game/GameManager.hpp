@@ -38,8 +38,21 @@ namespace Game
 
         void RequestMainMenu();
         void RequestLoadGame(const std::string mapDataPath);
+        void RequestLoadGame(MapData* mapData);
+
+        template<typename TUIGroup>
+        void RequestLoad(GameMode mode, Purpose purpose, MapData* mapData)
+        {
+            m_PendingLoad = [this, mapData, mode, purpose]()
+                {
+                    this->Load(mode, purpose, mapData);
+                    UIManager::Instance().RequestNewRoot<TUIGroup>();
+                };
+        }
 
         void Exit();
+
+        MapData* GetCurrentMapData();
 
     private:
         GameManager() = default;
@@ -48,6 +61,8 @@ namespace Game
 
         GameState m_CurrentState = GameState::Booting;
 		GameMode m_CurrentMode = GameMode::None;
+
+        MapData* m_CurrentMap = nullptr;
 
         std::function<void()> m_PendingLoad = nullptr;
 

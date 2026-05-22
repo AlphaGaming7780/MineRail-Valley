@@ -36,13 +36,13 @@ namespace Game
         // Default level set — replace by reading the Maps directory or by a
         // call to SetLevels() right after constructing the screen.
         SetLevels({
-            { "Maps\\Plain.json",            "Plain",            "Plain",  "Textures\\MapsPreview\\Plain.png",              1, false },
-            { "Maps\\ForestValley.json",     "Forest Valley",    "Forest", "Textures\\MapsPreview\\ForestValley.png",       2, false },
-            { "Maps\\FrozenHighlands.json",  "Frozen Highlands", "Frozen", "Textures\\MapsPreview\\FrozenHighlands.png",    3, false },
-            { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert", "Textures\\MapsPreview\\DesertCanyon.png",       3, false },
+            { "Maps\\Plain.json",            "Plain",            "Plain",    "Textures\\MapsPreview\\Plain.png",            1, false },
+            { "Maps\\ForestValley.json",     "Forest Valley",    "Forest",   "Textures\\MapsPreview\\ForestValley.png",     2, false },
+            { "Maps\\FrozenHighlands.json",  "Frozen Highlands", "Frozen",   "Textures\\MapsPreview\\FrozenHighlands.png",  3, false },
+            { "Maps\\DesertCanyon.json",     "Desert Canyon",    "Desert",   "Textures\\MapsPreview\\DesertCanyon.png",     3, false },
             { "Maps\\VolcanicWastes.json",   "Volcanic Wastes",  "Volcanic", "Textures\\MapsPreview\\VolcanicWastes.png",   4, false },
-            { "Maps\\NeonCity.json",         "Neon City",        "Neon", "Textures\\MapsPreview\\NeonCity.png",             4, false },
-            { "Maps\\SandBox.json",          "Sandbox",          "Default", "Textures\\MapsPreview\\SandBox.png",           1, false },
+            { "Maps\\NeonCity.json",         "Neon City",        "Neon",     "Textures\\MapsPreview\\NeonCity.png",         4, false },
+            { "Maps\\SandBox.json",          "Sandbox",          "Default",  "Textures\\MapsPreview\\SandBox.png",          1, false },
         });
     }
 
@@ -75,48 +75,86 @@ namespace Game
         for (auto* c : m_Cards) { RemoveChild(c); delete c; }
         m_Cards.clear();
 
-        // Layout in a 3-column grid; positions are absolute relative to the
-        // screen origin and finalized by UpdateLayout (which centers the grid).
         const sf::Vector2f CARD_SZ{ 280, 160 };
         const float GAP_X = 24, GAP_Y = 24;
-        const int   COLS  = 3;
+        const int   COLS = 3;
 
         for (size_t i = 0; i < m_Levels.size(); ++i)
         {
             const auto& L = m_Levels[i];
             int row = int(i) / COLS;
             int col = int(i) % COLS;
+
             sf::Vector2f cardPos = {
                 col * (CARD_SZ.x + GAP_X) + 24,
                 row * (CARD_SZ.y + GAP_Y) + 96
             };
 
+            // Card panel (anchor top-left)
             auto* card = new UIPanel(m_PanelTex, cardPos, CARD_SZ, UIAnchor::TopLeft);
 
-            // Title
-            card->AddChild(new UILabel(L.title, { 16, 12 }, UIAnchor::TopLeft,
-                                        m_Font, 22, { 236, 222, 190 }));
-            // Biome + difficulty
+            // -----------------------------
+            // TITLE (TOP-LEFT)
+            // -----------------------------
+            card->AddChild(new UILabel(
+                L.title,
+                { 16, 12 },              // offset inside card
+                UIAnchor::TopLeft,
+                m_Font, 22,
+                { 236, 222, 190 }
+            ));
+
+            // -----------------------------
+            // SUBTEXT (TOP-RIGHT)
+            // -----------------------------
             std::string sub = L.biome + "   Diff:";
             for (int d = 0; d < L.difficulty; ++d) sub += "*";
-            card->AddChild(new UILabel(sub, { 16, 44 }, UIAnchor::TopLeft,
-                                        m_Font, 14, { 207, 182, 151 }));
 
+            card->AddChild(new UILabel(
+                sub,
+                { -16, 12 },             // offset from top-right
+                UIAnchor::TopRight,
+                m_Font, 14,
+                { 207, 182, 151 }
+            ));
 
+            // -----------------------------
+            // CENTER IMAGE
+            // -----------------------------
+            auto* img = new UIImage(
+                TextureDatabase::Instance().Load(L.mapPreview),        // texture de preview
+                { 0, 0 },                // centré
+                { 96, 96 },              // taille (à ajuster)
+                UIAnchor::Center
+            );
+            card->AddChild(img);
 
-            // Play button uses join_* if unlocked, warning_* if locked
-            sf::Texture* nrm = L.locked ? m_WarnTex      : m_JoinTex;
+            // -----------------------------
+            // PLAY BUTTON (BOTTOM-RIGHT)
+            // -----------------------------
+            sf::Texture* nrm = L.locked ? m_WarnTex : m_JoinTex;
             sf::Texture* hov = L.locked ? m_WarnHoverTex : m_JoinHoverTex;
-            auto* play = new UIButton({ CARD_SZ.x - 90, CARD_SZ.y - 50 },
-                                      { 70, 36 }, UIAnchor::TopLeft, nrm, hov, nrm);
+
+            auto* play = new UIButton(
+                { -16, -16 },            // offset depuis bottom-right
+                { 70, 36 },
+                UIAnchor::BottomRight,
+                nrm, hov, nrm
+            );
+
             std::string mapPath = L.mapPath;
             bool locked = L.locked;
+
             play->SetCallback([this, mapPath, locked] {
-                if (locked) return;
-                GameManager::Instance().RequestLoadGame(mapPath);
-            });
+                if (!locked)
+                    GameManager::Instance().RequestLoadGame(mapPath);
+                });
+
             card->AddChild(play);
 
+            // -----------------------------
+            // Add card to screen
+            // -----------------------------
             AddChild(card);
             m_Cards.push_back(card);
         }
