@@ -73,6 +73,10 @@ namespace Game {
         }
     }
 
+    bool GameWindow::IsVSync() const {
+        return m_vsync;
+    }
+
     void GameWindow::SetFramerateLimit(unsigned limit) {
         m_fpsLimit = limit;
         if (m_window.isOpen() && !m_vsync) m_window.setFramerateLimit(m_fpsLimit);

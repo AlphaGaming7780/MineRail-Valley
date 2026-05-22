@@ -55,6 +55,8 @@ namespace Game {
 
         bool IsFullscreen() const;
 
+        bool IsVSync() const;
+
         sf::State GetState() const;
 
         // --- Style (fenêtré uniquement) ---

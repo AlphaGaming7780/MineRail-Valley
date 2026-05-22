@@ -79,6 +79,8 @@ namespace Game
                                    m_Font, 22, { 236, 222, 190 });
         m_VSyncToggle = new UIToggle({ 300, 330 }, { 24, 24 }, UIAnchor::TopLeft,
                                      m_CbOffTex, m_CbOffHoverTex, m_CbOnTex, m_CbOnHoverTex);
+        m_VSyncToggle->SetChecked(GameWindow::Instance().IsVSync());
+        m_VSyncToggle->SetCallback([](bool v) { GameWindow::Instance().SetVSync(v); });
         AddChild(m_VSyncLabel);
         AddChild(m_VSyncToggle);
 
@@ -93,9 +95,9 @@ namespace Game
         });
         m_ApplyButton->AddChild(new UILabel("Apply", { 0, 0 }, UIAnchor::Center,
                                             m_Font, 22, { 243, 231, 207 }));
-        AddChild(m_ApplyButton);
+        //AddChild(m_ApplyButton);
 
-        m_BackButton = new UIButton({ 280, 60 }, { 180, 48 }, UIAnchor::BottomLeft,
+        m_BackButton = new UIButton({ 80, 60 }, { 180, 48 }, UIAnchor::BottomLeft,
                                     m_BtnTex, m_BtnHoverTex, m_BtnClickedTex);
         m_BackButton->SetCallback([this] { UIManager::Instance().RequestNewRoot<TitleScreen>(); });
         m_BackButton->AddChild(new UILabel("Back", { 0, 0 }, UIAnchor::Center,
