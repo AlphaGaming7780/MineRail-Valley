@@ -80,6 +80,7 @@ namespace Game
         // The host (GameManager / Update loop) is responsible for wiring
         // its callbacks to AudioManager — see UI_INTEGRATION.md.
         m_MusicPlayer = new UIMusicPlayer({ 10, 10 }, { 280, 90 }, UIAnchor::BottomRight);
+
         AddChild(m_MusicPlayer);
     }
 

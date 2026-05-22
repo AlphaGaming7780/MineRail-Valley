@@ -50,6 +50,7 @@ namespace Game
         void SetProgress(float p01);                    // 0..1, drives the progress bar
         void SetTimeLabels(const std::string& current,  // e.g. "1:32"
                            const std::string& total);   // e.g. "4:18"
+        void UpdatePlayer();
 
     private:
         sf::Font*    m_Font          = nullptr;

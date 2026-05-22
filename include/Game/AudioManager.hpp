@@ -3,6 +3,7 @@
 #include <vector>
 #include <Game/Events.h>
 #include <Game/AssetDatabase.h>
+#include<Game/UI/Widgets/UIMusicPlayer.hpp>
 #include <string>
 #include <map>
 
@@ -74,6 +75,9 @@ namespace Game
 
 		void Update();
 
+		void RegisterMusicPlayer(UIMusicPlayer* player);
+		void UnRegisterMusicPlayer();
+
 	private:
 		AudioManager();
 
@@ -85,11 +89,15 @@ namespace Game
 		SoundDatabase& m_SoundDatabase;
 		MusicDatabase& m_MusicDatabase;
 
+		UIMusicPlayer* m_MusicPlayer;
+
 		std::vector<sf::Sound*> m_PlayingSounds;
 
 		float m_MasterVolume;
 		float m_SoundVolume;
 		float m_MusicVolume;
+
+		float m_UiUpdateTimer = 0.f;
 
 		// Playlist state. Empty m_PlaylistFolder means no playlist is currently active.
 		std::vector<std::string> m_PlaylistTracks;   // shuffled order, paths relative to assets/

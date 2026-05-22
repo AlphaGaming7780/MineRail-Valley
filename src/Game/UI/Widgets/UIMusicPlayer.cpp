@@ -1,5 +1,6 @@
 #include <Game/UI/Widgets/UIMusicPlayer.hpp>
 #include <Game/AssetDatabase.h>
+#include<Game/AudioManager.hpp>
 
 namespace Game
 {
@@ -50,13 +51,20 @@ namespace Game
 
         m_PrevButton = new UIButton({ 10,  btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_PrevTex, m_PrevHoverTex, m_PrevTex);
-        m_PrevButton->SetCallback([this]() { if (m_OnPrev) m_OnPrev(); });
+        m_PrevButton->SetCallback([this]() 
+            { 
+                AudioManager& am = AudioManager::Instance();
+
+                if (m_Playing)
+                    am.RewindPlaylist();
+            });
         AddChild(m_PrevButton);
 
         m_PlayButton = new UIButton({ 50,  btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_PlayTex, m_PlayHoverTex, m_PlayTex);
         m_PlayButton->SetCallback([this]() {
-            if (m_OnPlayPause) m_OnPlayPause();
+            AudioManager& am = AudioManager::Instance();
+            am.TogglePlaylistPause();
             SetPlaying(!m_Playing); // visually toggle; the real state should be
                                     // re-pushed by the host via SetPlaying() if
                                     // the AudioManager refuses the request.
@@ -65,12 +73,24 @@ namespace Game
 
         m_NextButton = new UIButton({ 90,  btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_NextTex, m_NextHoverTex, m_NextTex);
-        m_NextButton->SetCallback([this]() { if (m_OnNext) m_OnNext(); });
+        m_NextButton->SetCallback([this]() 
+            {
+                AudioManager& am = AudioManager::Instance();
+                if (m_Playing)
+                    am.AdvancePlaylist();
+            });
         AddChild(m_NextButton);
 
         m_StopButton = new UIButton({ 130, btn_y }, BTN_SZ, UIAnchor::TopLeft,
                                     m_StopTex, m_StopHoverTex, m_StopTex);
-        m_StopButton->SetCallback([this]() { if (m_OnStop) m_OnStop(); });
+        m_StopButton->SetCallback([this]() 
+            {
+                AudioManager& am = AudioManager::Instance();
+                if (m_Playing)
+                {
+                    am.StopPlaylist();
+                }
+            });
         AddChild(m_StopButton);
 
         // ── Progress bar + time label ──────────────────────────────────────
@@ -88,6 +108,9 @@ namespace Game
                                   { 10, 70 }, UIAnchor::TopRight,
                                   m_Font, 12, { 207, 182, 151 });
         AddChild(m_TimeLabel);
+
+        auto& am = AudioManager::Instance();
+        am.RegisterMusicPlayer(this);
     }
 
     UIMusicPlayer::~UIMusicPlayer()
@@ -110,6 +133,9 @@ namespace Game
         tx.Unload("UI\\Bars\\blue_bg.png");
         tx.Unload("UI\\Bars\\blue_fg.png");
         fn.Unload("Fonts\\Minecraft.ttf");
+
+        auto& am = AudioManager::Instance();
+        am.UnRegisterMusicPlayer();
     }
 
     void UIMusicPlayer::UpdateLayout(const sf::View& view)
@@ -165,5 +191,37 @@ namespace Game
     void UIMusicPlayer::SetTimeLabels(const std::string& current, const std::string& total)
     {
         if (m_TimeLabel) m_TimeLabel->SetText(current + " / " + total);
+    }
+    void UIMusicPlayer::UpdatePlayer()
+    {
+
+        AudioManager& am = AudioManager::Instance();
+
+        // État lecture
+        bool isPlaying = am.IsPlaylistPlaying();
+        SetPlaying(isPlaying);
+
+        // Progression
+        float progress = am.GetCurrentTrackPosition01(); // 0 → 1
+        SetProgress(progress);
+
+        // Temps
+        float current = am.GetCurrentTrackTime().asSeconds();
+        float total = am.GetCurrentTrackDuration().asSeconds();
+
+        auto formatTime = [](float t)
+            {
+                int m = static_cast<int>(t) / 60;
+                int s = static_cast<int>(t) % 60;
+                char buffer[16];
+                std::snprintf(buffer, sizeof(buffer), "%d:%02d", m, s);
+                return std::string(buffer);
+            };
+
+        SetTimeLabels(formatTime(current), formatTime(total));
+
+        // Titre
+        SetTrackTitle(am.GetCurrentTrackName());
+
     }
 }

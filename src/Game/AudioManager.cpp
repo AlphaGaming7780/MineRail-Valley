@@ -1,5 +1,6 @@
 #pragma once
 #include <Game/AudioManager.hpp>
+#include<Game/Utils/Time.hpp>
 
 #include <algorithm>
 #include <filesystem>
@@ -28,6 +29,7 @@ namespace Game
 		, m_PlaylistIndex(0)
 		, m_PlaylistVolume(0.f)
 		, m_PlaylistCurrent(nullptr)
+		, m_MusicPlayer(nullptr)
 	{
 		auto& n = EventManager::Instance();
 		n.Register<PlayMusicEvent>(this);
@@ -310,6 +312,21 @@ namespace Game
 	void AudioManager::Update()
 	{
 		_PurgedFinishedSounds();
+		if (!m_MusicPlayer) return;
+		m_UiUpdateTimer += Time::GetDeltaTime().asMilliseconds();
+		if (m_UiUpdateTimer >= 1000.f)
+		{
+			m_UiUpdateTimer -= 1000.f;
+			m_MusicPlayer->UpdatePlayer();
+		}
+	}
+	void AudioManager::RegisterMusicPlayer(UIMusicPlayer* player)
+	{
+		m_MusicPlayer = player;
+	}
+	void AudioManager::UnRegisterMusicPlayer()
+	{
+		m_MusicPlayer = nullptr;
 	}
 	void AudioManager::_PurgedFinishedSounds()
 	{
